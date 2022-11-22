@@ -1,16 +1,14 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader
+public class SceneLoader : MonoBehaviour
 {
     static SceneLoader instance = null;
-    private SceneLoader() {}
 
-    private Dictionary<string, int> scenedata = new Dictionary<string, int>();
+    private SerializableDictionary<string, int> scenedata = new SerializableDictionary<string, int>();
 
     public static SceneLoader the() {
-        if (instance == null) instance = new SceneLoader();
+        if (instance == null) instance = FindObjectOfType<SceneLoader>();
         return instance;
     }
 
@@ -31,13 +29,17 @@ public class SceneLoader
     }
 
     public void UnloadAScene(string scene) {
-        Debug.Assert(scenedata.ContainsKey(scene));
+        // if (!scenedata.ContainsKey(scene)) {
+        //     Debug.LogWarning($"Key for scene {scene} not found, assuming reload");
+        //     scenedata[scene] = 0;
+        // }
         scenedata[scene]--;
         if (scenedata[scene] > 0) {
             Debug.Log($"Scene {scene} still being loaded");
             return;
         }
 
+        scenedata[scene] = 0;
         SceneManager.UnloadSceneAsync(scene).completed += (op) => {
             Debug.Log($"Unloaded scene {scene}");
             Resources.UnloadUnusedAssets();

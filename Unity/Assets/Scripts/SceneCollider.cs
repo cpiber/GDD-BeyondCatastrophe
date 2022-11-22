@@ -9,12 +9,10 @@ public class SceneCollider : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        Debug.Log($"Collison with {collider}");
         SceneLoader.the().LoadAScene(scene);
     }
 
     void OnTriggerExit2D(Collider2D collider) {
-        Debug.Log($"Collison with {collider}");
         SceneLoader.the().UnloadAScene(scene);
     }
 }

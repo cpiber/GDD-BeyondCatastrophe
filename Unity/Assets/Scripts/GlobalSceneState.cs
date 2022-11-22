@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class GlobalSceneState
+public class GlobalSceneState : MonoBehaviour
 {
+    [Serializable]
     public struct State {
         public bool exists;
         public Vector3 position;
@@ -14,12 +15,11 @@ public class GlobalSceneState
     }
 
     static GlobalSceneState instance = null;
-    private GlobalSceneState() {}
 
-    private Dictionary<string, State> objectdata = new Dictionary<string, State>();
+    private SerializableDictionary<string, State> objectdata = new SerializableDictionary<string, State>();
 
     public static GlobalSceneState the() {
-        if (instance == null) instance = new GlobalSceneState();
+        if (instance == null) instance = FindObjectOfType<GlobalSceneState>();
         return instance;
     }
 
