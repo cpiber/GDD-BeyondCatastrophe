@@ -204,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 469458061}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.5, y: -0.49, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.9655232, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -244,7 +244,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010378361, y: 0.6780571}
+  m_Offset: {x: 0.010378361, y: 0.3565963}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0.03125, z: 0, w: 0.9375}
     pivot: {x: 0.5, y: 0}
@@ -255,7 +255,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.67480946, y: 1.3597853}
+  m_Size: {x: 0.67480946, y: 0.71686375}
   m_EdgeRadius: 0
 --- !u!114 &469458066
 MonoBehaviour:
@@ -269,6 +269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a67fdd7ab21322c685ab042e68d571d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  tiredness: 0
+  hunger: 0
+  thirst: 0
   characterIndex: 0
   spriteList:
   - left: {fileID: 21300004, guid: ec47f75fe8aff1644ac73998f4ad31b5, type: 3}
