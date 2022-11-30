@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] int health = 100;
+    [SerializeField] int tiredness = 0;
+    [SerializeField] int hunger = 0;
+    [SerializeField] int thirst = 0;
 
     [Serializable]
     public struct Sprites {
@@ -27,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
         MovePlayer();
+        UpdatePlayerStatus();
     }
 
     void MovePlayer(){
@@ -40,7 +45,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void UpdateSprite(Vector2 move_vec){
-        // 
+    
         if(move_vec.x > 0){
             spriteRenderer.sprite = spriteList[characterIndex].right; 
             spriteRenderer.flipX = true;
@@ -69,4 +74,26 @@ public class PlayerController : MonoBehaviour
         }
         else if (s) s.Destroy();
     }
+
+    void UpdatePlayerStatus(){
+        if(health <= 0){
+            Destroy(gameObject);
+            // TODO: load menue/end-screen
+        }
+
+        if(tiredness > 100){
+            // TODO: do something
+        }
+
+
+        if(hunger > 100){
+            // TODO: do something
+        }
+
+
+        if(thirst > 100){
+            // TODO: do something
+        }
+    }
+
 }
