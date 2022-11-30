@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-
-namespace DefaultNamespace
+public class Border : MonoBehaviour
 {
-    public class Border : MonoBehaviour
-    {
         void Start()
         {
             
@@ -20,5 +17,4 @@ namespace DefaultNamespace
             Debug.Log("Collision with object - ", col);
         }
         
-    }
 }
