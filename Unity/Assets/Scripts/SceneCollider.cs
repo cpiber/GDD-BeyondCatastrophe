@@ -9,10 +9,15 @@ public class SceneCollider : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        SceneLoader.the().LoadAScene(scene);
+
+        if(collider.tag == "Player"){
+            SceneLoader.the().LoadAScene(scene);
+        }
     }
 
     void OnTriggerExit2D(Collider2D collider) {
-        SceneLoader.the().UnloadAScene(scene);
+        if(collider.tag == "Player"){
+            SceneLoader.the().UnloadAScene(scene);
+        }
     }
 }
