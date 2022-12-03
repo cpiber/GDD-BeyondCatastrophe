@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InventoryManager inventory;
 
     private bool isItemButtonPressed = false;
+    private bool isItemInteractPressed = false;
+
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
     void Update(){
         MovePlayer();
         UseItem();
+        Inventory();
         UpdatePlayerStatus();
     }
 
@@ -46,6 +49,17 @@ public class PlayerController : MonoBehaviour
             }
         } else {
             isItemButtonPressed = false;
+        }
+    }
+
+    void Inventory() {
+        if (Input.GetAxis("Interact") > 0){
+            if (!isItemInteractPressed) {
+                isItemInteractPressed = true;
+                inventory.UseItem("Bag");
+            }
+        } else {
+            isItemInteractPressed = false;
         }
     }
 
