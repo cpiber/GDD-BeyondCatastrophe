@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Apple : NonPermanentItem
 {
-    public override void UseItem() {
-
+    public override void UseConcreteItem() {
+        Debug.Log("Apple is now used");
     }
 
     public override string GetItemName() {

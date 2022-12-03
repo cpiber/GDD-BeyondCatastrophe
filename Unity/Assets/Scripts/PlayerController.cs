@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Vector2 speed = new Vector2(5, 5);
 
+    [SerializeField] InventoryManager inventory;
+
+    private bool isItemButtonPressed = false;
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -31,7 +34,19 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
         MovePlayer();
+        UseItem();
         UpdatePlayerStatus();
+    }
+
+    void UseItem() {
+        if (Input.GetAxis("UseItem") > 0){
+            if (!isItemButtonPressed) {
+                isItemButtonPressed = true;
+                inventory.UseItem("Apple");
+            }
+        } else {
+            isItemButtonPressed = false;
+        }
     }
 
     void MovePlayer(){
