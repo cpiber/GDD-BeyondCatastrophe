@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private bool isItemInteractPressed = false;
     private bool isItemCollectPressed = false;
     private bool isItemOpenMenuPressed = false;
+    private string possibleCollectItem = "";
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -44,10 +45,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void CollectItem() {
-        if (Input.GetAxis("CollectItem") > 0) {
+        if (Input.GetAxis("CollectItem") > 0 && possibleCollectItem != "") {
             // TODO add collision check and other collect features
             isItemCollectPressed = true;
-            inventory.AddBagItem("Apple");
+            inventory.AddBagItem(possibleCollectItem);
         } else {
             isItemCollectPressed = false;
         }
@@ -128,6 +129,14 @@ public class PlayerController : MonoBehaviour
             this.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
         }
         else if (s) s.Destroy();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider) {
+        possibleCollectItem = collider.gameObject.name;
+    }
+
+    private void OnTriggerExit2D(Collider2D collider) {
+        possibleCollectItem = "";
     }
 
     void UpdatePlayerStatus(){
