@@ -21,4 +21,9 @@ public abstract class Item : MonoBehaviour
     abstract public bool IsReusable();
     abstract public bool IsItemEmpty();
     abstract public string GetItemDescription();
+    [SerializeField] Sprite sprite;
+
+    public Sprite GetSprite() {
+        return sprite;
+    }
 }
