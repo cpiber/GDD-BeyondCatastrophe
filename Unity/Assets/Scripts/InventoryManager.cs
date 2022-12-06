@@ -16,6 +16,21 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] SerializableDictionary<string, Item> items;
     [SerializeField] GameObject bagInventoryItems;
+    private bool isOpen = false;
+
+    public void Open() {
+        bagInventoryItems.SetActive(true);
+        isOpen = true;
+    }
+
+    public void Close() {
+        bagInventoryItems.SetActive(false);
+        isOpen = false;
+    }
+
+    public bool IsOpen() {
+        return isOpen;
+    }
 
     public void UseItem(string itemName) {
         Item itemToUse = items[itemName];

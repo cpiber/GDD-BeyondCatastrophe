@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private bool isItemButtonPressed = false;
     private bool isItemInteractPressed = false;
     private bool isItemCollectPressed = false;
-
+    private bool isItemOpenMenuPressed = false;
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -72,6 +72,20 @@ public class PlayerController : MonoBehaviour
             }
         } else {
             isItemInteractPressed = false;
+        }
+
+        if (Input.GetAxis("OpenMenu") > 0) {
+            if (!isItemOpenMenuPressed) {
+                if (inventory.IsOpen()) {
+                    isItemOpenMenuPressed = true;
+                    inventory.Close();
+                } else {
+                    isItemOpenMenuPressed = true;
+                    inventory.Open();
+                }
+            }
+        } else {
+            isItemOpenMenuPressed = false;
         }
     }
 
