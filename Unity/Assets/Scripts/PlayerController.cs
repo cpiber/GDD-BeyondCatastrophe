@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isItemButtonPressed = false;
     private bool isItemInteractPressed = false;
+    private bool isItemCollectPressed = false;
 
 
     void Start(){
@@ -38,7 +39,18 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         UseItem();
         Inventory();
+        CollectItem();
         UpdatePlayerStatus();
+    }
+
+    void CollectItem() {
+        if (Input.GetAxis("CollectItem") > 0) {
+            // TODO add collision check and other collect features
+            isItemCollectPressed = true;
+            inventory.AddBagItem("Apple");
+        } else {
+            isItemCollectPressed = false;
+        }
     }
 
     void UseItem() {

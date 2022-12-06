@@ -7,4 +7,8 @@ public abstract class PermanentItem : Item
     public override bool IsReusable () {
         return true;
     }
+
+    public override bool IsItemEmpty() {
+        return false;
+    }
 }

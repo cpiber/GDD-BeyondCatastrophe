@@ -13,6 +13,10 @@ public abstract class NonPermanentItem : Item
         numberOfUsagesLeft += 1;
     }
 
+    public override bool IsItemEmpty() {
+        return false;
+    }
+
     public override bool IsReusable() {
         return isReusable;
     }

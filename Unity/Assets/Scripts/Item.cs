@@ -19,5 +19,6 @@ public abstract class Item : MonoBehaviour
     abstract public void UseItem ();
     abstract public string GetItemName();
     abstract public bool IsReusable();
+    abstract public bool IsItemEmpty();
     abstract public string GetItemDescription();
 }
