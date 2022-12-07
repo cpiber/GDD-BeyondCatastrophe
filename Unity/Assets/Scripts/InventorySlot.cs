@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     [SerializeField] Item item;
-    Transform icon;
+    [SerializeField] Transform icon;
 
     public void Start() {
         icon = transform.Find("ItemIcon");
@@ -31,6 +31,10 @@ public class InventorySlot : MonoBehaviour
 
     public bool IsSlotEmpty() {
         return item.IsItemEmpty();
+    }
+
+    public Item GetItem() {
+        return item;
     }
 
 }

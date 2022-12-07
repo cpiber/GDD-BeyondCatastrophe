@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour
     private bool isItemInteractPressed = false;
     private bool isItemCollectPressed = false;
     private bool isItemOpenMenuPressed = false;
-    private string possibleCollectItem = "";
+
+    private GameObject possibleCollectItem;
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -45,10 +46,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void CollectItem() {
-        if (Input.GetAxis("CollectItem") > 0 && possibleCollectItem != "") {
+        if (Input.GetAxis("CollectItem") > 0 && possibleCollectItem != null) {
             // TODO add collision check and other collect features
             isItemCollectPressed = true;
-            inventory.AddBagItem(possibleCollectItem);
+            inventory.AddBagItem(possibleCollectItem.name);
+            possibleCollectItem.SetActive(false);
+            possibleCollectItem = null;
         } else {
             isItemCollectPressed = false;
         }
@@ -132,11 +135,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        possibleCollectItem = collider.gameObject.name;
+        possibleCollectItem = collider.gameObject;
     }
 
     private void OnTriggerExit2D(Collider2D collider) {
-        possibleCollectItem = "";
+        possibleCollectItem = null;
     }
 
     void UpdatePlayerStatus(){

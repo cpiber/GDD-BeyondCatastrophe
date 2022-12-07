@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class NonPermanentItem : Item
 {
-    bool isReusable;
     [SerializeField] int numberOfUsagesLeft; 
 
     public abstract void UseConcreteItem();
@@ -18,7 +17,7 @@ public abstract class NonPermanentItem : Item
     }
 
     public override bool IsReusable() {
-        return isReusable;
+        return false;
     }
 
     public override void UseItem() {

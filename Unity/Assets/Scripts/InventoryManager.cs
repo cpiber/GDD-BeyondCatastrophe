@@ -13,7 +13,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
     [SerializeField] SerializableDictionary<string, Item> items;
     [SerializeField] GameObject bagInventoryItems;
     private bool isOpen = false;
@@ -52,7 +51,13 @@ public class InventoryManager : MonoBehaviour
         }
 
         if (itemFound) {
-            //....
+            
+            Item itemScript = itemFound.GetComponent<InventorySlot>().GetItem();
+            System.Type test = itemScript.GetType();
+            if (itemScript is NonPermanentItem) {
+                NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
+                nonPermanentItem.IncreaseItemCount();
+            }
             return;
         } 
 
