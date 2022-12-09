@@ -20,22 +20,26 @@ public class Chest : PermanentItem
     public override void UseItem () {
         // open chest overlay (chest and inventory)
         if (isOpen) {
-            CloseChest();
+            Close();
         } else {
-            ShowChest();
+            Open();
         }
     }
 
-    public void ShowChest() {
+    public void Open() {
         isOpen = true;
         bagItems.SetActive(true);
         chestItems.SetActive(true);
     }
 
-    public void CloseChest() {
+    public void Close() {
         isOpen = false;
         bagItems.SetActive(false);
         chestItems.SetActive(false);
+    }
+
+    public bool IsOpen() {
+        return isOpen;
     }
 
     public override string GetItemName() {

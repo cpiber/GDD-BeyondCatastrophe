@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    [SerializeField] SerializableDictionary<string, Item> items;
+    [SerializeField] GameObject bagInventoryItems;
+    [SerializeField] GameObject chestInventoryItems;
+    [SerializeField] Chest chest;
+    [SerializeField] Bag bag;
+    private GameObject selectedItemToMove = null;
+
 
     void Start() {
         GameObject itemsObjects = GameObject.Find("Items");
@@ -13,25 +20,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    [SerializeField] SerializableDictionary<string, Item> items;
-    [SerializeField] GameObject bagInventoryItems;
-    [SerializeField] GameObject chestInventoryItems;
-    private GameObject selectedItemToMove = null;
-
-    private bool isOpen = false;
-
-    public void Open() {
-        bagInventoryItems.SetActive(true);
-        isOpen = true;
+    public void UseBag() {
+        if (!chest.IsOpen()) {
+            bag.UseItem();
+        }
+        selectedItemToMove = null;
     }
 
-    public void Close() {
-        bagInventoryItems.SetActive(false);
-        isOpen = false;
-    }
-
-    public bool IsOpen() {
-        return isOpen;
+    public void UseChest() {
+        if (!bag.IsOpen()) {
+            chest.UseItem();
+        }
+        selectedItemToMove = null;
     }
 
     public void UseItem(string itemName) {
@@ -40,34 +40,7 @@ public class InventoryManager : MonoBehaviour
     }  
 
     public void AddBagItem(string itemName) {
-        Transform itemFound = null;
-        Transform firstFreeSlot = null;
-        foreach(Transform itemSlot in bagInventoryItems.transform) {
-            InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
-            if (slot.GetSlotItemName() == itemName) {
-                itemFound = itemSlot;
-                break;
-            }
-            if (slot.IsSlotEmpty() && firstFreeSlot == null) {
-                firstFreeSlot = itemSlot;
-            }
-        }
-
-        if (itemFound) {
-            
-            Item itemScript = itemFound.GetComponent<InventorySlot>().GetItem();
-            System.Type test = itemScript.GetType();
-            if (itemScript is NonPermanentItem) {
-                NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
-                nonPermanentItem.IncreaseItemCount();
-            }
-            return;
-        } 
-
-        // set free item slot to apple
-        firstFreeSlot.GetComponent<InventorySlot>().SetSlot(items[itemName]);
-        return;
-        // if item is first time in inventory
+       bag.AddBagItem(items[itemName]);
     }
 
     public void SelectItemToMove(GameObject itemToMove) {
