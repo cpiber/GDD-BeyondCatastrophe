@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -70,8 +71,6 @@ public class InventoryManager : MonoBehaviour
             selectedItemToMove = itemToMove;
         } else {
             // if second item is selected => swap
-
-            
             InventorySlot firstItemSlot = selectedItemToMove.GetComponent<InventorySlot>();
             InventorySlot secondItemSlot = itemToMove.GetComponent<InventorySlot>();
 
@@ -81,17 +80,22 @@ public class InventoryManager : MonoBehaviour
             // check if item is swappable
 
             if (firstItemSlot.name.Contains("Armor") && !secondItem.IsArmor()) {
-                selectedItemToMove = null;
+                UnselectButtons();
                 return;
             } 
             if (secondItemSlot.name.Contains("Armor") && !firstItem.IsArmor()) {
-                selectedItemToMove = null;
+                UnselectButtons();
                 return;
             } 
 
             firstItemSlot.SetSlot(secondItem);
             secondItemSlot.SetSlot(firstItem);
-            selectedItemToMove = null;
+            UnselectButtons();
         }
+    }
+
+    public void UnselectButtons() {
+        EventSystem.current.SetSelectedGameObject(null);
+        selectedItemToMove = null;
     }
 }
