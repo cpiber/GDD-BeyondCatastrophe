@@ -9,8 +9,11 @@ public class Bag : PermanentItem
     private bool isOpen = false;
 
     public override void UseItem () {
-        // change scene
-        Debug.Log("Bag opened");
+         if (isOpen) {
+            Close();
+        } else {
+            Open();
+        }
     }
 
     public override string GetItemName() {

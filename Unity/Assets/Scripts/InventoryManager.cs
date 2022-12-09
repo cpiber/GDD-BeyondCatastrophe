@@ -44,7 +44,6 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void SelectItemToMove(GameObject itemToMove) {
-        Debug.Log("Selected item to move");
         if (selectedItemToMove == null) {
             // if first item is selected
             selectedItemToMove = itemToMove;
