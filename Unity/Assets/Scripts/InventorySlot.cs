@@ -7,14 +7,14 @@ public class InventorySlot : MonoBehaviour
 {
     [SerializeField] Item item;
     [SerializeField] Transform icon;
+    [SerializeField] Item emptyItem;
 
     public void Start() {
         icon = transform.Find("ItemIcon");
     }
 
     public void ResetSlot() {
-        item = null;
-
+        SetSlot(emptyItem);
     }
 
     public string GetSlotItemName() {

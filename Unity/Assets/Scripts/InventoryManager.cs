@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] GameObject chestInventoryItems;
     [SerializeField] Chest chest;
     [SerializeField] Bag bag;
+    [SerializeField] InventorySlot[] equippedItems;
     private GameObject selectedItemToMove = null;
 
 
@@ -19,6 +20,26 @@ public class InventoryManager : MonoBehaviour
             items[item.gameObject.name] = item.gameObject.GetComponent<Item>();
         }
     }
+
+    // list is 0 indexed (three weapons => 0,1,2 slot)
+    public void UseEquippedItem(int slotIndex) {
+        if (equippedItems.Length <= slotIndex) {
+            Debug.Log("Such an equiment slot does not exist!");
+            return;
+        }
+        InventorySlot itemSlot = equippedItems[slotIndex];
+        Item itemToUse = itemSlot.GetItem();
+        itemToUse.UseItem();
+
+        // if item has no use left => reset item slot to no item
+        if (!itemToUse.IsReusable()) {
+            NonPermanentItem item = (NonPermanentItem)itemToUse;
+            // if item is out of usage => remove item from inventory
+            if (!item.CanBeUsed()) {
+                itemSlot.ResetSlot();
+            }
+        } 
+    }   
 
     public void UseBag() {
         if (!chest.IsOpen()) {

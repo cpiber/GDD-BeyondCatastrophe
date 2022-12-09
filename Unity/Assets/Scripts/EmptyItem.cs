@@ -6,7 +6,7 @@ public class EmptyItem : Item
 {
 
     public override void UseItem() {
-
+        Debug.Log("No item equipped");
     }
 
     public override string GetItemName() {
@@ -22,7 +22,7 @@ public class EmptyItem : Item
     }
 
     public override bool IsReusable() {
-        return false;
+        return true;
     }
 
     public override bool IsArmor() {

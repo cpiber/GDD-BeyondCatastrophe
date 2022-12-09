@@ -61,7 +61,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("UseItem") > 0){
             if (!isItemButtonPressed) {
                 isItemButtonPressed = true;
-                inventory.UseItem("Apple");
+                // get equipped Item
+                inventory.UseEquippedItem(0);
             }
         } else {
             isItemButtonPressed = false;
