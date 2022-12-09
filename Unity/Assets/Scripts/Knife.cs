@@ -16,4 +16,8 @@ public class Knife : PermanentItem
     public override string GetItemDescription() {
         return "The knife is a handy item which can be used for several tasks like opening a can.";
     } 
+
+    public override bool IsArmor() {
+        return false;
+    }
 }

@@ -49,15 +49,27 @@ public class InventoryManager : MonoBehaviour
             selectedItemToMove = itemToMove;
         } else {
             // if second item is selected => swap
+
+            
             InventorySlot firstItemSlot = selectedItemToMove.GetComponent<InventorySlot>();
             InventorySlot secondItemSlot = itemToMove.GetComponent<InventorySlot>();
 
             Item firstItem = firstItemSlot.GetItem();
             Item secondItem = secondItemSlot.GetItem();
 
+            // check if item is swappable
+
+            if (firstItemSlot.name.Contains("Armor") && !secondItem.IsArmor()) {
+                selectedItemToMove = null;
+                return;
+            } 
+            if (secondItemSlot.name.Contains("Armor") && !firstItem.IsArmor()) {
+                selectedItemToMove = null;
+                return;
+            } 
+
             firstItemSlot.SetSlot(secondItem);
             secondItemSlot.SetSlot(firstItem);
-
             selectedItemToMove = null;
         }
     }

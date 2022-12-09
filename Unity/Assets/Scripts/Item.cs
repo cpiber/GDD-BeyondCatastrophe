@@ -20,6 +20,7 @@ public abstract class Item : MonoBehaviour
     abstract public string GetItemName();
     abstract public bool IsReusable();
     abstract public bool IsItemEmpty();
+    abstract public bool IsArmor();
     abstract public string GetItemDescription();
     [SerializeField] Sprite sprite;
 

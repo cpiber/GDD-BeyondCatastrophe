@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmptyItem : Item
+public class Helmet : PermanentItem
 {
 
     public override void UseItem() {
@@ -10,20 +10,12 @@ public class EmptyItem : Item
     }
 
     public override string GetItemName() {
-        return "No item";
+        return "Helmet";
     }
 
     public override string GetItemDescription() {
-        return "No item";
+        return "The helmet increases your defense";
     } 
-
-    public override bool IsItemEmpty() {
-        return true;
-    }
-
-    public override bool IsReusable() {
-        return false;
-    }
 
     public override bool IsArmor() {
         return true;

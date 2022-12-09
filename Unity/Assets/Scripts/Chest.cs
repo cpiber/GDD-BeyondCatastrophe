@@ -56,4 +56,7 @@ public class Chest : PermanentItem
         return "A classic chest which can hold items.";
     }
 
+    public override bool IsArmor() {
+        return false;
+    }
 }

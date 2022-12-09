@@ -72,4 +72,8 @@ public class Bag : PermanentItem
 
         firstFreeSlot.GetComponent<InventorySlot>().SetSlot(item);
     }
+
+    public override bool IsArmor() {
+        return false;
+    }
 }
