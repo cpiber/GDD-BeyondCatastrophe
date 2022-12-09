@@ -69,10 +69,11 @@ public class PlayerController : MonoBehaviour
     }
 
     void Inventory() {
-        if (Input.GetAxis("Interact") > 0){
+        if (Input.GetAxis("Interact") > 0 && possibleCollectItem != null && possibleCollectItem.name == "Chest" ){
             if (!isItemInteractPressed) {
                 isItemInteractPressed = true;
-                inventory.UseItem("Bag");
+                // if one opens a chest
+                inventory.UseItem("Chest");
             }
         } else {
             isItemInteractPressed = false;

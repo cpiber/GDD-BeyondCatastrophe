@@ -15,6 +15,9 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] SerializableDictionary<string, Item> items;
     [SerializeField] GameObject bagInventoryItems;
+    [SerializeField] GameObject chestInventoryItems;
+    private GameObject selectedItemToMove = null;
+
     private bool isOpen = false;
 
     public void Open() {
@@ -65,6 +68,25 @@ public class InventoryManager : MonoBehaviour
         firstFreeSlot.GetComponent<InventorySlot>().SetSlot(items[itemName]);
         return;
         // if item is first time in inventory
+    }
 
+    public void SelectItemToMove(GameObject itemToMove) {
+        Debug.Log("Selected item to move");
+        if (selectedItemToMove == null) {
+            // if first item is selected
+            selectedItemToMove = itemToMove;
+        } else {
+            // if second item is selected => swap
+            InventorySlot firstItemSlot = selectedItemToMove.GetComponent<InventorySlot>();
+            InventorySlot secondItemSlot = itemToMove.GetComponent<InventorySlot>();
+
+            Item firstItem = firstItemSlot.GetItem();
+            Item secondItem = secondItemSlot.GetItem();
+
+            firstItemSlot.SetSlot(secondItem);
+            secondItemSlot.SetSlot(firstItem);
+
+            selectedItemToMove = null;
+        }
     }
 }
