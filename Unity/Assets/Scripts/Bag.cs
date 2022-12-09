@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Bag : PermanentItem
 {
-
+    [SerializeField] GameObject bagUI;
+    [SerializeField] GameObject armorUI;
+    [SerializeField] GameObject equippedUI;
     [SerializeField] GameObject bagInventoryItems;
     private bool isOpen = false;
 
@@ -30,12 +32,16 @@ public class Bag : PermanentItem
 
     public void Open() {
         isOpen = true;
-        bagInventoryItems.SetActive(true);
+        bagUI.SetActive(true);
+        armorUI.SetActive(true);
+        equippedUI.SetActive(true);
     } 
 
     public void Close() {
         isOpen = false;
-        bagInventoryItems.SetActive(false);
+        bagUI.SetActive(false);
+        armorUI.SetActive(false);
+        equippedUI.SetActive(false);
     }
 
     public void AddBagItem(Item item) {

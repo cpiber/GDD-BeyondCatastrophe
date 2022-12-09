@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Chest : PermanentItem
 {
-    [SerializeField] GameObject bagItems;
-    [SerializeField] GameObject chestItems;
+    [SerializeField] GameObject bagUI;
+    [SerializeField] GameObject chestUI;
+    [SerializeField] GameObject armorUI;
+    [SerializeField] GameObject equippedUI;
     [SerializeField] List<Item> items;
     private bool isOpen = false;
 
@@ -28,14 +30,18 @@ public class Chest : PermanentItem
 
     public void Open() {
         isOpen = true;
-        bagItems.SetActive(true);
-        chestItems.SetActive(true);
+        bagUI.SetActive(true);
+        chestUI.SetActive(true);
+        armorUI.SetActive(true);
+        equippedUI.SetActive(true);
     }
 
     public void Close() {
         isOpen = false;
-        bagItems.SetActive(false);
-        chestItems.SetActive(false);
+        bagUI.SetActive(false);
+        chestUI.SetActive(false);
+        armorUI.SetActive(false);
+        equippedUI.SetActive(false);
     }
 
     public bool IsOpen() {
