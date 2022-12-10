@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    String TEST_SCENE = "TestRoom";
+    
     [SerializeField] int health = 100;
     [SerializeField] int tiredness = 0;
     [SerializeField] int hunger = 0;
@@ -50,7 +53,17 @@ public class PlayerController : MonoBehaviour
             // TODO add collision check and other collect features
             isItemCollectPressed = true;
             inventory.AddBagItem(possibleCollectItem.name);
-            possibleCollectItem.SetActive(false);
+            int sceneCount = SceneManager.sceneCount;
+            bool testRoom = false;
+            for (int i = 0; i < sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).name.Equals(TEST_SCENE))
+                {
+                    testRoom = true;
+                    break;
+                }
+            }
+            possibleCollectItem.SetActive(testRoom);
             possibleCollectItem = null;
         } else {
             isItemCollectPressed = false;
