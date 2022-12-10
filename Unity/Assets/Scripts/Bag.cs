@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Bag : PermanentItem
 {
@@ -60,12 +61,13 @@ public class Bag : PermanentItem
         }
 
         if (itemFound) {
-            
-            Item itemScript = itemFound.GetComponent<InventorySlot>().GetItem();
+            InventorySlot slot = itemFound.GetComponent<InventorySlot>();
+            Item itemScript = slot.GetItem();
             System.Type test = itemScript.GetType();
             if (itemScript is NonPermanentItem) {
                 NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
                 nonPermanentItem.IncreaseItemCount();
+                slot.SetCount();
             }
             return;
         } 

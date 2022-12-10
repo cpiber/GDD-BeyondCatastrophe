@@ -31,6 +31,7 @@ public class InventoryManager : MonoBehaviour
         InventorySlot itemSlot = equippedItems[slotIndex];
         Item itemToUse = itemSlot.GetItem();
         itemToUse.UseItem();
+        itemSlot.SetCount();
 
         // if item has no use left => reset item slot to no item
         if (!itemToUse.IsReusable()) {
