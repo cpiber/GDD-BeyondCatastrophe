@@ -24,6 +24,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Vector2 speed = new Vector2(5, 5);
 
+    [SerializeField] InventoryManager inventory;
+
+    private bool isItemButtonPressed = false;
+    private bool isItemInteractPressed = false;
+    private bool isItemCollectPressed = false;
+    private bool isItemOpenMenuPressed = false;
+
+    private GameObject possibleCollectItem;
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -31,7 +39,54 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
         MovePlayer();
+        UseItem();
+        Inventory();
+        CollectItem();
         UpdatePlayerStatus();
+    }
+
+    void CollectItem() {
+        if (Input.GetAxis("CollectItem") > 0 && possibleCollectItem != null) {
+            // TODO add collision check and other collect features
+            isItemCollectPressed = true;
+            inventory.AddBagItem(possibleCollectItem.name);
+            possibleCollectItem.SetActive(false);
+            possibleCollectItem = null;
+        } else {
+            isItemCollectPressed = false;
+        }
+    }
+
+    void UseItem() {
+        if (Input.GetAxis("UseItem") > 0){
+            if (!isItemButtonPressed) {
+                isItemButtonPressed = true;
+                // get equipped Item
+                inventory.UseEquippedItem(0);
+            }
+        } else {
+            isItemButtonPressed = false;
+        }
+    }
+
+    void Inventory() {
+        if (Input.GetAxis("Interact") > 0 && possibleCollectItem != null && possibleCollectItem.name == "Chest" ){
+            if (!isItemInteractPressed) {
+                isItemInteractPressed = true;
+                inventory.UseChest();
+            }
+        } else {
+            isItemInteractPressed = false;
+        }
+
+        if (Input.GetAxis("OpenMenu") > 0) {
+            if (!isItemOpenMenuPressed) {
+                isItemOpenMenuPressed = true;
+                inventory.UseBag();
+            }
+        } else {
+            isItemOpenMenuPressed = false;
+        }
     }
 
     void MovePlayer(){
@@ -73,6 +128,14 @@ public class PlayerController : MonoBehaviour
             this.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
         }
         else if (s) s.Destroy();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider) {
+        possibleCollectItem = collider.gameObject;
+    }
+
+    private void OnTriggerExit2D(Collider2D collider) {
+        possibleCollectItem = null;
     }
 
     void UpdatePlayerStatus(){
