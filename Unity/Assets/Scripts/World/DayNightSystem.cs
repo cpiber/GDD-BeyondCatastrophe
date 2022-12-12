@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+
 public class DayNightSystem : MonoBehaviour
 {
     [SerializeField] float time = 0;
@@ -14,15 +15,22 @@ public class DayNightSystem : MonoBehaviour
     public int Day => (int) time / secondsPerDay;
     public float TimeInDay => time % secondsPerDay;
 
+#if UNITY_EDITOR
+    [SerializeField] bool paused = false;
+#endif
+
     [SerializeField] private AnimationCurve brightnessCurve = null;
     [SerializeField] private Light2D globalLight = null;
 
     void Start() {
-        time = 0;
+        time = secondsPerDay / 2; // midday
         ComputeCurve();
     }
 
     void FixedUpdate() {
+#if UNITY_EDITOR
+        if (!paused)
+#endif
         time += UnityEngine.Time.deltaTime;
         globalLight.intensity = Brightness;
     }
