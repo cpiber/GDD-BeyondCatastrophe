@@ -14,7 +14,7 @@ public class GlobalSceneState : MonoBehaviour
         }
     }
 
-    static GlobalSceneState instance = null;
+    [SerializeReference] static GlobalSceneState instance = null;
 
     private SerializableDictionary<string, State> objectdata = new SerializableDictionary<string, State>();
 

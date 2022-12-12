@@ -29,11 +29,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] InventoryManager inventory;
 
-    private bool isItemButtonPressed = false;
-    private bool isItemInteractPressed = false;
-    private bool isItemCollectPressed = false;
-    private bool isItemOpenMenuPressed = false;
-
     private GameObject possibleCollectItem;
 
     void Start(){
@@ -43,8 +38,9 @@ public class PlayerController : MonoBehaviour
     void Update(){
         MovePlayer();
         UseItem();
-        Inventory();
+        InteractItem();
         CollectItem();
+        Inventory();
         UpdatePlayerStatus();
     }
 
@@ -52,9 +48,8 @@ public class PlayerController : MonoBehaviour
         Item collectItem = null;
         if (possibleCollectItem != null) possibleCollectItem.TryGetComponent<Item>(out collectItem);
 
-        if (Input.GetAxis("CollectItem") > 0 && collectItem != null && collectItem.IsCollectible()) {
+        if (Input.GetButtonDown("CollectItem") && collectItem != null && collectItem.IsCollectible()) {
             // TODO add collision check and other collect features
-            isItemCollectPressed = true;
             inventory.AddBagItem(possibleCollectItem.name);
             int sceneCount = SceneManager.sceneCount;
             for (int i = 0; i < sceneCount; i++)
@@ -66,44 +61,27 @@ public class PlayerController : MonoBehaviour
             }
             possibleCollectItem.SetActive(false);
             possibleCollectItem = null;
-        } else {
-            isItemCollectPressed = false;
         }
     }
 
     void UseItem() {
-        if (Input.GetAxis("UseItem") > 0){
-            if (!isItemButtonPressed) {
-                isItemButtonPressed = true;
-                // get equipped Item
-                inventory.UseEquippedItem(0);
-            }
-        } else {
-            isItemButtonPressed = false;
+        if (Input.GetButtonDown("UseItem")) {
+            inventory.UseEquippedItem(0);
+        }
+    }
+
+    void InteractItem() {
+        Item collectItem = null;
+        if (possibleCollectItem != null) possibleCollectItem.TryGetComponent<Item>(out collectItem);
+
+        if (Input.GetButtonDown("Interact") && collectItem != null && collectItem.IsInteractible()) {
+            collectItem.UseItem();
         }
     }
 
     void Inventory() {
-        Item collectItem = null;
-        if (possibleCollectItem != null) possibleCollectItem.TryGetComponent<Item>(out collectItem);
-
-        if (Input.GetAxis("Interact") > 0 && collectItem != null && collectItem.IsInteractible()){
-            if (!isItemInteractPressed) {
-                isItemInteractPressed = true;
-                if (possibleCollectItem.name == "Chest") inventory.UseChest();
-                else collectItem.UseItem();
-            }
-        } else {
-            isItemInteractPressed = false;
-        }
-
-        if (Input.GetAxis("OpenMenu") > 0) {
-            if (!isItemOpenMenuPressed) {
-                isItemOpenMenuPressed = true;
-                inventory.UseBag();
-            }
-        } else {
-            isItemOpenMenuPressed = false;
+        if (Input.GetButtonDown("OpenMenu")) {
+            inventory.UseBag();
         }
     }
 

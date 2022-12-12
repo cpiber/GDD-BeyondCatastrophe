@@ -8,10 +8,15 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] SerializableDictionary<string, Item> items;
     [SerializeField] GameObject bagInventoryItems;
     [SerializeField] GameObject chestInventoryItems;
-    [SerializeField] Chest chest;
     [SerializeField] Bag bag;
     [SerializeField] InventorySlot[] equippedItems;
     private GameObject selectedItemToMove = null;
+    [SerializeReference] static InventoryManager instance = null;
+
+    public static InventoryManager the() {
+        if (instance == null) instance = FindObjectOfType<InventoryManager>();
+        return instance;
+    }
 
 
     void Start() {
@@ -25,7 +30,7 @@ public class InventoryManager : MonoBehaviour
     // list is 0 indexed (three weapons => 0,1,2 slot)
     public void UseEquippedItem(int slotIndex) {
         if (equippedItems.Length <= slotIndex) {
-            Debug.Log("Such an equiment slot does not exist!");
+            Debug.LogWarning("Such an equiment slot does not exist!");
             return;
         }
         InventorySlot itemSlot = equippedItems[slotIndex];
@@ -44,25 +49,29 @@ public class InventoryManager : MonoBehaviour
     }   
 
     public void UseBag() {
-        if (!chest.IsOpen()) {
-            bag.UseItem();
-        }
-        selectedItemToMove = null;
+        InventoryUIManager.the().ToggleBagUI();
+        UnselectButtons();
     }
 
     public void UseChest() {
-        if (!bag.IsOpen()) {
-            chest.UseItem();
-        }
-        selectedItemToMove = null;
+        InventoryUIManager.the().ToggleChestUI();
+        UnselectButtons();
     }
 
     public void UseItem(string itemName) {
+        if (!items.ContainsKey(itemName)) {
+            Debug.LogWarning($"Such an item ({itemName}) does not exist!");
+            return;
+        }
         Item itemToUse = items[itemName];
         itemToUse.UseItem();
     }  
 
     public void AddBagItem(string itemName) {
+        if (!items.ContainsKey(itemName)) {
+            Debug.LogWarning($"Such an item ({itemName}) does not exist!");
+            return;
+        }
        bag.AddBagItem(items[itemName]);
     }
 

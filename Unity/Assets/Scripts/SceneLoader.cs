@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    static SceneLoader instance = null;
+    [SerializeReference] static SceneLoader instance = null;
 
     private SerializableDictionary<string, int> scenedata = new SerializableDictionary<string, int>();
 

@@ -5,18 +5,11 @@ using TMPro;
 
 public class Bag : PermanentItem
 {
-    [SerializeField] GameObject bagUI;
-    [SerializeField] GameObject armorUI;
-    [SerializeField] GameObject equippedUI;
     [SerializeField] GameObject bagInventoryItems;
-    private bool isOpen = false;
 
     public override void UseItem () {
-         if (isOpen) {
-            Close();
-        } else {
-            Open();
-        }
+        // open chest overlay (chest and inventory)
+        InventoryUIManager.the().ToggleBagUI();
     }
 
     public override string GetItemName() {
@@ -25,24 +18,6 @@ public class Bag : PermanentItem
 
     public override string GetItemDescription() {
         return "A classic bag which can hold items.";
-    }
-
-    public bool IsOpen() {
-        return isOpen;
-    }
-
-    public void Open() {
-        isOpen = true;
-        bagUI.SetActive(true);
-        armorUI.SetActive(true);
-        equippedUI.SetActive(true);
-    } 
-
-    public void Close() {
-        isOpen = false;
-        bagUI.SetActive(false);
-        armorUI.SetActive(false);
-        equippedUI.SetActive(false);
     }
 
     public void AddBagItem(Item item) {

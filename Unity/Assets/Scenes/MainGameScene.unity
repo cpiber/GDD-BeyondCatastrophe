@@ -365,9 +365,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  bagUI: {fileID: 370429769}
-  armorUI: {fileID: 1014366861}
-  equippedUI: {fileID: 2109922340}
   bagInventoryItems: {fileID: 211577086}
 --- !u!224 &32489187 stripped
 RectTransform:
@@ -4034,6 +4031,7 @@ GameObject:
   m_Component:
   - component: {fileID: 669796243}
   - component: {fileID: 669796244}
+  - component: {fileID: 669796245}
   m_Layer: 0
   m_Name: InventoryManager
   m_TagString: Untagged
@@ -4073,12 +4071,28 @@ MonoBehaviour:
     values: []
   bagInventoryItems: {fileID: 211577086}
   chestInventoryItems: {fileID: 0}
-  chest: {fileID: 1197334682}
   bag: {fileID: 19450502}
   equippedItems:
   - {fileID: 1225262402}
   - {fileID: 95044985}
   - {fileID: 1809836146}
+--- !u!114 &669796245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669796242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c94010d60781fe4bb09a246deda293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bagUI: {fileID: 370429769}
+  chestUI: {fileID: 163447466}
+  armorUI: {fileID: 1014366861}
+  equippedUI: {fileID: 2109922340}
+  itemDescUI: {fileID: 1815432411}
 --- !u!1 &672152772 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8025458902138306710, guid: 5171066d43850be43a80e258714db863,
@@ -6008,18 +6022,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5171066d43850be43a80e258714db863, type: 3}
---- !u!114 &1197334682 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7126883571446916399, guid: f7f0518236f99ec4e8d8fa324cbc96a3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1866354594}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d46da51ff7a89af4daa55235b558343d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1216984186
 PrefabInstance:
   m_ObjectHideFlags: 0
