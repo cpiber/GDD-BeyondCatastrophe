@@ -1,18 +1,12 @@
 using UnityEngine;
 
-public class InventoryUIManager : MonoBehaviour
+public class InventoryUIManager : GenericSingleton<InventoryUIManager>
 {
     [SerializeField] GameObject bagUI;
     [SerializeField] GameObject chestUI;
     [SerializeField] GameObject armorUI;
     [SerializeField] GameObject equippedUI;
     [SerializeField] GameObject itemDescUI;
-    [SerializeReference] static InventoryUIManager instance = null;
-
-    public static InventoryUIManager the() {
-        if (instance == null) instance = FindObjectOfType<InventoryUIManager>();
-        return instance;
-    }
     
     enum UI {
         Closed,

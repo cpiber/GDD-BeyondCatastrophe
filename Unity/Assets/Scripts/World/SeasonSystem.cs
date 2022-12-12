@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SeasonSystem : MonoBehaviour
+public class SeasonSystem : GenericSingleton<SeasonSystem>
 {
     [SerializeField] DayNightSystem dayNightSystem;
     [SerializeField] int daysPerSeason = 20;

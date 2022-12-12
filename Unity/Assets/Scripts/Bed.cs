@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Bed : PermanentItem
 {
-    [SerializeField] DayNightSystem dayNightSystem;
-    [SerializeField] SeasonSystem seasonSystem;
     [SerializeField] float bedTimeSeconds = 2f;
 
     public override void UseItem () {
@@ -13,11 +11,11 @@ public class Bed : PermanentItem
 
     IEnumerator Sleep() {
         // TODO disable moving
-        yield return StartCoroutine(dayNightSystem.GoToSleep());
-        seasonSystem.AllowUpdateSeason();
-        // TODO dayNightSystem.AdvanceToTimeInDay()
+        yield return StartCoroutine(DayNightSystem.the().GoToSleep());
+        SeasonSystem.the().AllowUpdateSeason();
+        // TODO DayNightSystem.the().AdvanceToTimeInDay()
         yield return new WaitForSeconds(bedTimeSeconds);
-        yield return StartCoroutine(dayNightSystem.WakeUp());
+        yield return StartCoroutine(DayNightSystem.the().WakeUp());
     }
 
     public override string GetItemName() {

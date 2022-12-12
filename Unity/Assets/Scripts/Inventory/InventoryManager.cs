@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : GenericSingleton<InventoryManager>
 {
     [SerializeField] SerializableDictionary<string, Item> items;
     [SerializeField] GameObject bagInventoryItems;
@@ -11,13 +9,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Bag bag;
     [SerializeField] InventorySlot[] equippedItems;
     private GameObject selectedItemToMove = null;
-    [SerializeReference] static InventoryManager instance = null;
-
-    public static InventoryManager the() {
-        if (instance == null) instance = FindObjectOfType<InventoryManager>();
-        return instance;
-    }
-
 
     void Start() {
         GameObject itemsObjects = GameObject.Find("Items");

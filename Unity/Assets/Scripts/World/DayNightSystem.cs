@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class DayNightSystem : MonoBehaviour
+public class DayNightSystem : GenericSingleton<DayNightSystem>
 {
     [SerializeField] float time = 0;
     [SerializeField] int secondsPerDay = 5 * 60;
