@@ -15,10 +15,6 @@ public class Apple : NonPermanentItem
     public override string GetItemDescription() {
         return "An apple a day keeps the doctor away.";
     }
-
-    public override bool IsArmor() {
-        return false;
-    }
 }
 
 // inventory manager

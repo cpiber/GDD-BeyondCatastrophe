@@ -54,16 +54,14 @@ public class PlayerController : MonoBehaviour
             isItemCollectPressed = true;
             inventory.AddBagItem(possibleCollectItem.name);
             int sceneCount = SceneManager.sceneCount;
-            bool testRoom = false;
             for (int i = 0; i < sceneCount; i++)
             {
                 if (SceneManager.GetSceneAt(i).name.Equals(TEST_SCENE))
                 {
-                    testRoom = true;
-                    break;
+                    return;
                 }
             }
-            possibleCollectItem.SetActive(testRoom);
+            possibleCollectItem.SetActive(false);
             possibleCollectItem = null;
         } else {
             isItemCollectPressed = false;
