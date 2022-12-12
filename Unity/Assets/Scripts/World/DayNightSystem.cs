@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -8,16 +9,14 @@ public class DayNightSystem : MonoBehaviour
     [SerializeField] [Range(0, 1)] float darknessPercent = 0.3f;
     [SerializeField] [Range(0, 1)] float darknessEasingPercent = 0.08f;
     [SerializeField] [Range(0, 1)] float minBrightness = 0.2f;
+    [SerializeField] float fadeTimeFactor = 0.5f;
     public float MinBrightness => minBrightness;
     public float Brightness => brightnessCurve.Evaluate(time);
 
     public float Time => time;
     public int Day => (int) time / secondsPerDay;
     public float TimeInDay => time % secondsPerDay;
-
-#if UNITY_EDITOR
     [SerializeField] bool paused = false;
-#endif
 
     [SerializeField] private AnimationCurve brightnessCurve = null;
     [SerializeField] private Light2D globalLight = null;
@@ -28,11 +27,10 @@ public class DayNightSystem : MonoBehaviour
     }
 
     void FixedUpdate() {
-#if UNITY_EDITOR
-        if (!paused)
-#endif
-        time += UnityEngine.Time.deltaTime;
-        globalLight.intensity = Brightness;
+        if (!paused) {
+            time += UnityEngine.Time.deltaTime;
+            globalLight.intensity = Brightness;
+        }
     }
 
     void ComputeCurve() {
@@ -47,6 +45,29 @@ public class DayNightSystem : MonoBehaviour
         );
         brightnessCurve.preWrapMode = WrapMode.Loop;
         brightnessCurve.postWrapMode = WrapMode.Loop;
+    }
+
+    public IEnumerator GoToSleep() {
+        paused = true;
+        // darken to 0
+        while (globalLight.intensity > 0) {
+            globalLight.intensity = Mathf.Max(0.0f, globalLight.intensity - UnityEngine.Time.deltaTime * fadeTimeFactor);
+            yield return null;
+        }
+    }
+
+    public void AdvanceToTimeInDay(float targetTime) {
+        if (targetTime > TimeInDay) time += targetTime - TimeInDay;
+        else time += ((float) secondsPerDay - TimeInDay) + targetTime;
+    }
+
+    public IEnumerator WakeUp() {
+        // go to regular brightness
+        while (globalLight.intensity < Brightness) {
+            globalLight.intensity = Mathf.Min(Brightness, globalLight.intensity + UnityEngine.Time.deltaTime * fadeTimeFactor);
+            yield return null;
+        }
+        paused = false;
     }
 
 #if UNITY_EDITOR

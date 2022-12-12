@@ -21,6 +21,8 @@ public abstract class Item : MonoBehaviour
     abstract public bool IsReusable();
     abstract public bool IsItemEmpty();
     virtual public bool IsArmor() => false;
+    virtual public bool IsInteractible() => false;
+    virtual public bool IsCollectible() => true;
     abstract public string GetItemDescription();
     [SerializeField] Sprite sprite;
 

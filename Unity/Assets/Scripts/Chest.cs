@@ -55,4 +55,12 @@ public class Chest : PermanentItem
     public override string GetItemDescription() {
         return "A classic chest which can hold items.";
     }
+
+    public override bool IsInteractible() {
+        return true;
+    }
+
+    public override bool IsCollectible() {
+        return false;
+    }
 }

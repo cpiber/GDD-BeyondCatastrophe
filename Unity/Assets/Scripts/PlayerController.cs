@@ -49,7 +49,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void CollectItem() {
-        if (Input.GetAxis("CollectItem") > 0 && possibleCollectItem != null) {
+        Item collectItem = null;
+        if (possibleCollectItem != null) possibleCollectItem.TryGetComponent<Item>(out collectItem);
+
+        if (Input.GetAxis("CollectItem") > 0 && collectItem != null && collectItem.IsCollectible()) {
             // TODO add collision check and other collect features
             isItemCollectPressed = true;
             inventory.AddBagItem(possibleCollectItem.name);
@@ -81,10 +84,14 @@ public class PlayerController : MonoBehaviour
     }
 
     void Inventory() {
-        if (Input.GetAxis("Interact") > 0 && possibleCollectItem != null && possibleCollectItem.name == "Chest" ){
+        Item collectItem = null;
+        if (possibleCollectItem != null) possibleCollectItem.TryGetComponent<Item>(out collectItem);
+
+        if (Input.GetAxis("Interact") > 0 && collectItem != null && collectItem.IsInteractible()){
             if (!isItemInteractPressed) {
                 isItemInteractPressed = true;
-                inventory.UseChest();
+                if (possibleCollectItem.name == "Chest") inventory.UseChest();
+                else collectItem.UseItem();
             }
         } else {
             isItemInteractPressed = false;
