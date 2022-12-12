@@ -13,7 +13,8 @@ public class Bed : PermanentItem
         // TODO disable moving
         yield return StartCoroutine(DayNightSystem.the().GoToSleep());
         SeasonSystem.the().AllowUpdateSeason();
-        // TODO DayNightSystem.the().AdvanceToTimeInDay()
+        if (DayNightSystem.the().SectionInDay == DayNightSystem.DaySection.Night) DayNightSystem.the().AdvanceToDawn();
+        else DayNightSystem.the().AdvanceToDusk();
         yield return new WaitForSeconds(bedTimeSeconds);
         yield return StartCoroutine(DayNightSystem.the().WakeUp());
     }

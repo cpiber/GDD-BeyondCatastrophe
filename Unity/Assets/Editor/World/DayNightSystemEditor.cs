@@ -10,5 +10,6 @@ public class DayNightSystemEditor : Editor
         EditorGUILayout.LabelField("Day", sys.Day.ToString());
         EditorGUILayout.LabelField("Time in Day", sys.TimeInDay.ToString());
         EditorGUILayout.LabelField("Brightness", sys.Brightness.ToString());
+        EditorGUILayout.LabelField("Day Section", sys.SectionInDay.ToString());
     }
 }

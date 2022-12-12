@@ -21,6 +21,22 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
     [SerializeField] private AnimationCurve brightnessCurve = null;
     [SerializeField] private Light2D globalLight = null;
 
+    public enum DaySection {
+        Night,
+        Dawn,
+        Day,
+        Dusk,
+    }
+    public DaySection SectionInDay {
+        get {
+            float b = Brightness;
+            if (Mathf.Approximately(b, minBrightness)) return DaySection.Night;
+            if (Mathf.Approximately(b, 1)) return DaySection.Day;
+            if (TimeInDay < secondsPerDay / 2) return DaySection.Dawn;
+            return DaySection.Dusk;
+        }
+    }
+
     void Start() {
         time = secondsPerDay / 2; // midday
         ComputeCurve();
@@ -56,11 +72,6 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
         }
     }
 
-    public void AdvanceToTimeInDay(float targetTime) {
-        if (targetTime > TimeInDay) time += targetTime - TimeInDay;
-        else time += ((float) secondsPerDay - TimeInDay) + targetTime;
-    }
-
     public IEnumerator WakeUp() {
         // go to regular brightness
         while (globalLight.intensity < Brightness) {
@@ -68,6 +79,17 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
             yield return null;
         }
         paused = false;
+    }
+
+    public void AdvanceToTimeInDay(float targetTime) {
+        if (targetTime > TimeInDay) time += targetTime - TimeInDay;
+        else time += ((float) secondsPerDay - TimeInDay) + targetTime;
+    }
+    public void AdvanceToDusk() {
+        AdvanceToTimeInDay((1 - darknessPercent / 2) * (float) secondsPerDay);
+    }
+    public void AdvanceToDawn() {
+        AdvanceToTimeInDay(darknessPercent / 2 * (float) secondsPerDay);
     }
 
 #if UNITY_EDITOR

@@ -3471,7 +3471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0
-  secondsPerDay: 5
+  secondsPerDay: 120
   darknessPercent: 0.3
   darknessEasingPercent: 0.1
   minBrightness: 0.2
@@ -3490,7 +3490,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5
+      time: 12.000001
       value: 0.2
       inSlope: 0
       outSlope: 0
@@ -3499,7 +3499,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 24
       value: 1
       inSlope: 0
       outSlope: 0
@@ -3508,7 +3508,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 4
+      time: 96
       value: 1
       inSlope: 0
       outSlope: 0
@@ -3517,7 +3517,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 4.5
+      time: 108
       value: 0.2
       inSlope: 0
       outSlope: 0
@@ -3526,7 +3526,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 5
+      time: 120
       value: 0.2
       inSlope: 0
       outSlope: 0
@@ -3567,8 +3567,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dayNightSystem: {fileID: 634734438}
-  daysPerSeason: 10
-  transitionDays: 1
+  daysPerSeason: 20
+  transitionDays: 2
   lastSeason: 0
 --- !u!224 &645580622 stripped
 RectTransform:
