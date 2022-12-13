@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    String TEST_SCENE = "TestRoom";
+    [SerializeField] [SceneProperty] string testScene;
     
     [SerializeField] int health = 100;
     [SerializeField] int tiredness = 0;
@@ -54,10 +54,8 @@ public class PlayerController : MonoBehaviour
             int sceneCount = SceneManager.sceneCount;
             for (int i = 0; i < sceneCount; i++)
             {
-                if (SceneManager.GetSceneAt(i).name.Equals(TEST_SCENE))
-                {
+                if (SceneManager.GetSceneAt(i).path == testScene)
                     return;
-                }
             }
             possibleCollectItem.SetActive(false);
             possibleCollectItem = null;

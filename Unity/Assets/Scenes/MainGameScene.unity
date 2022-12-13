@@ -2826,6 +2826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a67fdd7ab21322c685ab042e68d571d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testScene: Assets/Scenes/TestRoom.unity
   health: 100
   tiredness: 0
   hunger: 0
