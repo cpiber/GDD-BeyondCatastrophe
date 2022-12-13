@@ -84,4 +84,8 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         // TODO game over
         Destroy(player);
     }
+
+    public void Sleep() {
+        tiredness = 100;
+    }
 }
