@@ -8,8 +8,8 @@ public class InventoryManager : GenericSingleton<InventoryManager>
     [SerializeField] GameObject bagInventoryItems;
     [SerializeField] GameObject chestInventoryItems;
     [SerializeField] GameObject armorInventoryItems;
+    [SerializeField] GameObject equippedInventoryItems;
     [SerializeField] Bag bag;
-    [SerializeField] InventorySlot[] equippedItems;
     private GameObject selectedItemToMove = null;
 
     void Start() {
@@ -22,11 +22,11 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
     // list is 0 indexed (three weapons => 0,1,2 slot)
     public void UseEquippedItem(int slotIndex) {
-        if (equippedItems.Length <= slotIndex) {
+        if (equippedInventoryItems.transform.childCount <= slotIndex) {
             Debug.LogWarning("Such an equiment slot does not exist!");
             return;
         }
-        InventorySlot itemSlot = equippedItems[slotIndex];
+        InventorySlot itemSlot = equippedInventoryItems.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
         Item itemToUse = itemSlot.GetItem();
         itemToUse.UseItem();
         itemSlot.SetCount();
@@ -102,6 +102,8 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         selectedItemToMove = null;
     }
 
+    // TODO This does a lot of calls to GetComponent<>, which is slow
+    //      For future performance improvements, we might want to cache this
     private IEnumerable<Item> GetItemsFromSlot(GameObject inv) {
         foreach (Transform child in armorInventoryItems.transform) {
             var slot = child.gameObject.GetComponent<InventorySlot>();
@@ -109,7 +111,16 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         }
     }
 
+    public IEnumerable<Item> GetBagItems() {
+        return GetItemsFromSlot(bagInventoryItems);
+    }
+    public IEnumerable<Item> GetChestItems() {
+        return GetItemsFromSlot(chestInventoryItems);
+    }
     public IEnumerable<Item> GetArmorItems() {
         return GetItemsFromSlot(armorInventoryItems);
+    }
+    public IEnumerable<Item> GetEquippedItems() {
+        return GetItemsFromSlot(equippedInventoryItems);
     }
 }

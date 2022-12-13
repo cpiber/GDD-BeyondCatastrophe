@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -30,15 +28,10 @@ public class InventorySlot : MonoBehaviour
         Image iconImage = icon.gameObject.GetComponent<Image>();
         iconImage.sprite = item.GetSprite();
         icon.gameObject.SetActive(true);
-        if (item is NonPermanentItem) {
-            SetCount(); 
-        } else {
-            usageLeft.SetActive(false); 
-        }
+        SetCount();
     }
 
     public void SetCount() {
-
         if (item is not NonPermanentItem) {
             usageLeft.SetActive(false); 
             return;

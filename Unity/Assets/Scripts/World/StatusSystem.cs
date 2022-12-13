@@ -67,7 +67,6 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         var target = bodyTemperatureSpan * (ex / (ex + 1) - 0.5f) + targetBodyTemperature;
         var change = target - bodyTemperature;
         var req = bodyTemperatureEnergyRequirements * evaluation * evaluation * Time.deltaTime;
-        Debug.Log($"evaluation={evaluation}, bodyTemperature={bodyTemperature}, target={target}/{target-targetBodyTemperature}, change={change}, req={req}");
         bodyTemperature += Mathf.Min(Mathf.Sign(change) * bodyTemperatureCreep, change);
         energy = Mathf.Max(0, energy - req);
     }
