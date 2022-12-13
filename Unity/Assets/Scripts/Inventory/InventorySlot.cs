@@ -28,7 +28,7 @@ public class InventorySlot : MonoBehaviour
         item = newItem;
 
         Image iconImage = icon.gameObject.GetComponent<Image>();
-        iconImage.sprite = item.GetComponent<Item>().GetSprite();
+        iconImage.sprite = item.GetSprite();
         icon.gameObject.SetActive(true);
         if (item is NonPermanentItem) {
             SetCount(); 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,6 +7,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
     [SerializeField] SerializableDictionary<string, Item> items;
     [SerializeField] GameObject bagInventoryItems;
     [SerializeField] GameObject chestInventoryItems;
+    [SerializeField] GameObject armorInventoryItems;
     [SerializeField] Bag bag;
     [SerializeField] InventorySlot[] equippedItems;
     private GameObject selectedItemToMove = null;
@@ -98,5 +100,16 @@ public class InventoryManager : GenericSingleton<InventoryManager>
     public void UnselectButtons() {
         EventSystem.current.SetSelectedGameObject(null);
         selectedItemToMove = null;
+    }
+
+    private IEnumerable<Item> GetItemsFromSlot(GameObject inv) {
+        foreach (Transform child in armorInventoryItems.transform) {
+            var slot = child.gameObject.GetComponent<InventorySlot>();
+            yield return slot.GetItem();
+        }
+    }
+
+    public IEnumerable<Item> GetArmorItems() {
+        return GetItemsFromSlot(armorInventoryItems);
     }
 }

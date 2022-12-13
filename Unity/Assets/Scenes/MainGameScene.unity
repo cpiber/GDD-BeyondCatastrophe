@@ -4174,7 +4174,8 @@ MonoBehaviour:
     keys: []
     values: []
   bagInventoryItems: {fileID: 211577086}
-  chestInventoryItems: {fileID: 0}
+  chestInventoryItems: {fileID: 1220980464}
+  armorInventoryItems: {fileID: 1081293565}
   bag: {fileID: 19450502}
   equippedItems:
   - {fileID: 1225262402}
