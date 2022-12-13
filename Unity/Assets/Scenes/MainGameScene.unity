@@ -3451,6 +3451,7 @@ GameObject:
   - component: {fileID: 634734439}
   - component: {fileID: 634734438}
   - component: {fileID: 634734440}
+  - component: {fileID: 634734441}
   m_Layer: 0
   m_Name: WorldSystem
   m_TagString: Untagged
@@ -3471,9 +3472,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0
-  secondsPerDay: 120
-  darknessPercent: 0.3
-  darknessEasingPercent: 0.1
+  dayNightParams:
+    secondsPerDay: 120
+    darknessPercent: 0.3
+    darknessEasingPercent: 0.08
   minBrightness: 0.2
   fadeTimeFactor: 0.5
   paused: 0
@@ -3490,7 +3492,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 12.000001
+      time: 13.200001
       value: 0.2
       inSlope: 0
       outSlope: 0
@@ -3499,7 +3501,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 24
+      time: 22.800001
       value: 1
       inSlope: 0
       outSlope: 0
@@ -3508,7 +3510,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 96
+      time: 97.2
       value: 1
       inSlope: 0
       outSlope: 0
@@ -3517,7 +3519,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 108
+      time: 106.799995
       value: 0.2
       inSlope: 0
       outSlope: 0
@@ -3566,10 +3568,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe7f22c6fb00cf2e8d5d050e7144799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayNightSystem: {fileID: 634734438}
   daysPerSeason: 20
   transitionDays: 2
   lastSeason: 0
+  OnSeasonChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &634734441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634734437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73251492354e047699e79c528e94bc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallBaseTemperature: 5
+  winterBaseTemperature: -15
+  springBaseTemperature: 15
+  summerBaseTemperature: 30
+  dayTemperatureOffsetMin: -15
+  dayTemperatureOffsetMax: 15
+  easingMultiplier: 2
+  temperatureCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -10
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 8.400001
+      value: -10
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 27.6
+      value: 20
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 92.4
+      value: 20
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 111.6
+      value: -10
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 120
+      value: -10
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 1
+    m_PostInfinity: 1
+    m_RotationOrder: 4
 --- !u!224 &645580622 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8025458902138306711, guid: 5171066d43850be43a80e258714db863,

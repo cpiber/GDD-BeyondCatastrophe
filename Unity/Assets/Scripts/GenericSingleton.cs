@@ -10,12 +10,12 @@ public class GenericSingleton<T> : MonoBehaviour
         return instance;
     }
 
-    void Awake() {
-        Debug.Assert(instance == null);
+    public virtual void Awake() {
+        Debug.Assert(instance == null || instance == this, this);
         instance = (T) this;
     }
 
-    void Destroy() {
+    public virtual void Destroy() {
         instance = null;
     }
 }

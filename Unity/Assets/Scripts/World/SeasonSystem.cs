@@ -1,11 +1,16 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SeasonSystem : GenericSingleton<SeasonSystem>
 {
-    [SerializeField] DayNightSystem dayNightSystem;
+    [Serializable]
+     public class SeasonChangeEvent : UnityEvent<Seasons> { }
+
     [SerializeField] int daysPerSeason = 20;
     [SerializeField] int transitionDays = 2;
     [SerializeField] Seasons lastSeason = Seasons.Fall;
+    public SeasonChangeEvent OnSeasonChange;
 
     public enum Seasons {
         Fall,
@@ -14,7 +19,7 @@ public class SeasonSystem : GenericSingleton<SeasonSystem>
         Summer,
     }
 
-    public int DayInYear => dayNightSystem.Day % (daysPerSeason * 2 + transitionDays * 2);
+    public int DayInYear => DayNightSystem.the().Day % (daysPerSeason * 2 + transitionDays * 2);
     public Seasons CalculatedSeason {
         get {
             int d = DayInYear;
@@ -32,21 +37,13 @@ public class SeasonSystem : GenericSingleton<SeasonSystem>
     /// The currently active season
     /// </summary>
     /// <remarks>
-    /// As opposed to CalculatedSeason, this will not change during the "day". See <see cref="AllowUpdateSeason"/>.
+    /// As opposed to <seealso cref="CalculatedSeason"/>, this will not change during the "day". See <see cref="AllowUpdateSeason"/>.
     /// </remarks>
     public Seasons CurrentSeason => lastSeason;
 
-    void Awake() {
-        dayNightSystem = this.GetComponent<DayNightSystem>();
-    }
-
     public void AllowUpdateSeason() {
-        lastSeason = CalculatedSeason;
+        var newSeason = CalculatedSeason;
+        if (newSeason != lastSeason) OnSeasonChange.Invoke(newSeason);
+        lastSeason = newSeason;
     }
-    
-#if UNITY_EDITOR
-    void OnValidate() {
-        dayNightSystem = this.GetComponent<DayNightSystem>();
-    }
-#endif
 }

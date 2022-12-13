@@ -1,21 +1,36 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class DayNightSystem : GenericSingleton<DayNightSystem>
 {
+    [Serializable]
+    public struct DayNightParams {
+        public int secondsPerDay;
+        [Range(0, 1)] public float darknessPercent;
+        [Range(0, 1)] public float darknessEasingPercent;
+        public int DarknessSeconds => (int) (secondsPerDay * darknessPercent);
+        public int DarknessEasingSeconds => (int) (secondsPerDay * darknessEasingPercent);
+
+        public DayNightParams(int secondsPerDay, float darknessPercent, float darknessEasingPercent) {
+            this.secondsPerDay = secondsPerDay;
+            this.darknessPercent = darknessPercent;
+            this.darknessEasingPercent = darknessEasingPercent;
+        }
+    }
+
     [SerializeField] float time = 0;
-    [SerializeField] int secondsPerDay = 5 * 60;
-    [SerializeField] [Range(0, 1)] float darknessPercent = 0.3f;
-    [SerializeField] [Range(0, 1)] float darknessEasingPercent = 0.08f;
+    [SerializeField] DayNightParams dayNightParams = new DayNightParams(5 * 60, 0.3f, 0.08f);
     [SerializeField] [Range(0, 1)] float minBrightness = 0.2f;
     [SerializeField] float fadeTimeFactor = 0.5f;
     public float MinBrightness => minBrightness;
     public float Brightness => brightnessCurve.Evaluate(time);
 
     public float Time => time;
-    public int Day => (int) time / secondsPerDay;
-    public float TimeInDay => time % secondsPerDay;
+    public int Day => (int) time / dayNightParams.secondsPerDay;
+    public float TimeInDay => time % dayNightParams.secondsPerDay;
+    public DayNightParams GetParams => dayNightParams;
     [SerializeField] bool paused = false;
 
     [SerializeField] private AnimationCurve brightnessCurve = null;
@@ -32,13 +47,13 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
             float b = Brightness;
             if (Mathf.Approximately(b, minBrightness)) return DaySection.Night;
             if (Mathf.Approximately(b, 1)) return DaySection.Day;
-            if (TimeInDay < secondsPerDay / 2) return DaySection.Dawn;
+            if (TimeInDay < dayNightParams.secondsPerDay / 2) return DaySection.Dawn;
             return DaySection.Dusk;
         }
     }
 
     void Start() {
-        time = secondsPerDay / 2; // midday
+        time = dayNightParams.secondsPerDay / 2; // midday
         ComputeCurve();
     }
 
@@ -50,17 +65,25 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
     }
 
     void ComputeCurve() {
-        Debug.Log($"Recomputing curve with minBrightness={minBrightness}, darknessPercent={darknessPercent}, darknessEasingPercent={darknessEasingPercent}, secondsPerDay={secondsPerDay}");
-        brightnessCurve = new AnimationCurve(
-            new Keyframe(0, minBrightness), // midnight
-            new Keyframe((darknessPercent - darknessEasingPercent) / 2 * (float) secondsPerDay, minBrightness), // to dawn (dark)
-            new Keyframe((darknessPercent + darknessEasingPercent) / 2 * (float) secondsPerDay, 1), // to dawn (light)
-            new Keyframe((1 - (darknessPercent + darknessEasingPercent) / 2) * (float) secondsPerDay, 1), // to dusk (light)
-            new Keyframe((1 - (darknessPercent - darknessEasingPercent) / 2) * (float) secondsPerDay, minBrightness), // to dusk (dark)
-            new Keyframe((float) secondsPerDay, minBrightness) // midnight
+        var secondsPerDay = dayNightParams.secondsPerDay;
+        var darknessPercent = dayNightParams.darknessPercent;
+        var darknessEasingPercent = dayNightParams.darknessEasingPercent;
+        Debug.Log($"Recomputing brightness curve with minBrightness={minBrightness}, darknessPercent={darknessPercent}, darknessEasingPercent={darknessEasingPercent}, secondsPerDay={secondsPerDay}");
+        brightnessCurve = ComputeDayCurve(secondsPerDay, minBrightness, 1, darknessPercent, darknessEasingPercent);
+    }
+
+    public static AnimationCurve ComputeDayCurve(float duration, float vMin, float vMax, float darknessPercent, float darknessEasingPercent) {
+        var curve = new AnimationCurve(
+            new Keyframe(0, vMin), // midnight
+            new Keyframe((darknessPercent - darknessEasingPercent) / 2 * duration, vMin), // to dawn (dark)
+            new Keyframe((darknessPercent + darknessEasingPercent) / 2 * duration, vMax), // to dawn (light)
+            new Keyframe((1 - (darknessPercent + darknessEasingPercent) / 2) * duration, vMax), // to dusk (light)
+            new Keyframe((1 - (darknessPercent - darknessEasingPercent) / 2) * duration, vMin), // to dusk (dark)
+            new Keyframe(duration, vMin) // midnight
         );
-        brightnessCurve.preWrapMode = WrapMode.Loop;
-        brightnessCurve.postWrapMode = WrapMode.Loop;
+        curve.preWrapMode = WrapMode.Loop;
+        curve.postWrapMode = WrapMode.Loop;
+        return curve;
     }
 
     public IEnumerator GoToSleep() {
@@ -73,6 +96,7 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
     }
 
     public IEnumerator WakeUp() {
+        Debug.Assert(paused, "Script relies on intensity being free to manipulate");
         // go to regular brightness
         while (globalLight.intensity < Brightness) {
             globalLight.intensity = Mathf.Min(Brightness, globalLight.intensity + UnityEngine.Time.deltaTime * fadeTimeFactor);
@@ -83,13 +107,13 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
 
     public void AdvanceToTimeInDay(float targetTime) {
         if (targetTime > TimeInDay) time += targetTime - TimeInDay;
-        else time += ((float) secondsPerDay - TimeInDay) + targetTime;
+        else time += ((float) dayNightParams.secondsPerDay - TimeInDay) + targetTime;
     }
     public void AdvanceToDusk() {
-        AdvanceToTimeInDay((1 - darknessPercent / 2) * (float) secondsPerDay);
+        AdvanceToTimeInDay((1 - dayNightParams.darknessPercent / 2) * (float) dayNightParams.secondsPerDay);
     }
     public void AdvanceToDawn() {
-        AdvanceToTimeInDay(darknessPercent / 2 * (float) secondsPerDay);
+        AdvanceToTimeInDay(dayNightParams.darknessPercent / 2 * (float) dayNightParams.secondsPerDay);
     }
 
 #if UNITY_EDITOR
