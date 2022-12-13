@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Helmet : Armor
+public class Helmet : ArmorItem
 {    
     public override void UseItem() {
 
