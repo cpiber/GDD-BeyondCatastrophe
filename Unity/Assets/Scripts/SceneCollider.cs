@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SceneCollider : MonoBehaviour
 {
-    public string scene;
+    [SerializeField] [SceneProperty] string scene;
 
     void Start() {
         Destroy(this.GetComponent<SpriteRenderer>());
