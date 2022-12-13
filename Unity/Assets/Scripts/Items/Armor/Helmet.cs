@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Helmet : PermanentItem
-{
-
+public class Helmet : Armor
+{    
     public override void UseItem() {
 
     }
@@ -15,9 +14,9 @@ public class Helmet : PermanentItem
 
     public override string GetItemDescription() {
         return "The helmet increases your defense";
-    } 
+    }
 
-    public override bool IsArmor() {
-        return true;
+    public override float TemperatureBuff() {
+        return 5f;
     }
 }
