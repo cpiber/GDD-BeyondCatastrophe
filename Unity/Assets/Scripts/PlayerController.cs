@@ -5,11 +5,6 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] [SceneProperty] string testScene;
-    
-    [SerializeField] int health = 100;
-    [SerializeField] int tiredness = 0;
-    [SerializeField] int hunger = 0;
-    [SerializeField] int thirst = 0;
 
     [Serializable]
     public struct Sprites {
@@ -41,7 +36,6 @@ public class PlayerController : MonoBehaviour
         InteractItem();
         CollectItem();
         Inventory();
-        UpdatePlayerStatus();
     }
 
     void CollectItem() {
@@ -131,26 +125,4 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collider) {
         possibleCollectItem = null;
     }
-
-    void UpdatePlayerStatus(){
-        if(health <= 0){
-            Destroy(gameObject);
-            // TODO: load menue/end-screen
-        }
-
-        if(tiredness > 100){
-            // TODO: do something
-        }
-
-
-        if(hunger > 100){
-            // TODO: do something
-        }
-
-
-        if(thirst > 100){
-            // TODO: do something
-        }
-    }
-
 }

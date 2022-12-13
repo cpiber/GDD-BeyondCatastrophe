@@ -7,6 +7,7 @@ public class TemperatureSystemEditor : Editor
     {
         var sys = target as TemperatureSystem;
         DrawDefaultInspector();
+        EditorGUILayout.LabelField("Outside Temperature", sys.OutsideTemperature.ToString());
         EditorGUILayout.LabelField("Temperature", sys.Temperature.ToString());
     }
 }

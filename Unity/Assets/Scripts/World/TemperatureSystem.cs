@@ -10,7 +10,9 @@ public class TemperatureSystem : GenericSingleton<TemperatureSystem>
     [SerializeField] float dayTemperatureOffsetMax = 15f;
     [SerializeField] [Min(0)] float easingMultiplier = 2f;
 
-    public float Temperature => temperatureCurve.Evaluate(DayNightSystem.the().Time);
+    // TODO this should consider if we're in a heated room -> add colliders and heat sources
+    public float Temperature => OutsideTemperature;
+    public float OutsideTemperature => temperatureCurve.Evaluate(DayNightSystem.the().Time);
 
     [SerializeField] private AnimationCurve temperatureCurve = null;
 
@@ -31,6 +33,7 @@ public class TemperatureSystem : GenericSingleton<TemperatureSystem>
         }
     }
     
+    [ContextMenu("Recompute Curve")]
     void ComputeCurve() {
         ComputeCurve(SeasonSystem.the().CurrentSeason);
     }

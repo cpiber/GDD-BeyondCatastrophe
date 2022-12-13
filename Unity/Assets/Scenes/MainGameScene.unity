@@ -2827,10 +2827,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testScene: Assets/Scenes/TestRoom.unity
-  health: 100
-  tiredness: 0
-  hunger: 0
-  thirst: 0
   characterIndex: 0
   spriteList:
   - left: {fileID: 21300004, guid: ec47f75fe8aff1644ac73998f4ad31b5, type: 3}
@@ -3453,6 +3449,7 @@ GameObject:
   - component: {fileID: 634734438}
   - component: {fileID: 634734440}
   - component: {fileID: 634734441}
+  - component: {fileID: 634734442}
   m_Layer: 0
   m_Name: WorldSystem
   m_TagString: Untagged
@@ -3654,6 +3651,31 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 1
     m_RotationOrder: 4
+--- !u!114 &634734442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634734437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721f8148f35a74edb85dcd213da121f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 469458061}
+  idleTirednessSubPerDay: 40
+  tirednessMin: 10
+  energyMin: 8
+  targetBodyTemperature: 25
+  bodyTemperatureSpan: 5
+  bodyTemperatureWideness: 0.5
+  bodyTemperatureEnergyRequirements: 0.03
+  bodyTemperatureCreep: 0.05
+  health: 100
+  tiredness: 100
+  energy: 100
+  bodyTemperature: 0
 --- !u!224 &645580622 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8025458902138306711, guid: 5171066d43850be43a80e258714db863,

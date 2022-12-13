@@ -64,6 +64,7 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
         }
     }
 
+    [ContextMenu("Recompute Curve")]
     void ComputeCurve() {
         var secondsPerDay = dayNightParams.secondsPerDay;
         var darknessPercent = dayNightParams.darknessPercent;
