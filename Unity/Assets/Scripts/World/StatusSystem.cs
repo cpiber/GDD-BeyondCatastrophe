@@ -25,7 +25,12 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [SerializeField] [Range(0, 100)] float energy = 100;
     [SerializeField] float bodyTemperature;
     int frameCnt = 0;
+    public float TargetBodyTemperature => targetBodyTemperature;
+    public float BodyTemperature => bodyTemperature;
     public float EffectiveBodyTemperature => bodyTemperature + TemperatureBuffs;
+    public int Health => health;
+    public float Tiredness => tiredness;
+    public float Energy => energy;
 
     public float TemperatureBuffs {
         get {
