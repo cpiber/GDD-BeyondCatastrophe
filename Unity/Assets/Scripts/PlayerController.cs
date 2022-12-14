@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] InventoryManager inventory;
 
-    private GameObject possibleCollectItem;
+    private Item possibleCollectItem;
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -39,10 +39,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void CollectItem() {
-        Item collectItem = null;
-        if (possibleCollectItem != null) possibleCollectItem.TryGetComponent<Item>(out collectItem);
-
-        if (Input.GetButtonDown("CollectItem") && collectItem != null && collectItem.IsCollectible()) {
+        if (Input.GetButtonDown("CollectItem") && possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             // TODO add collision check and other collect features
             inventory.AddBagItem(possibleCollectItem.name);
             int sceneCount = SceneManager.sceneCount;
@@ -51,7 +48,7 @@ public class PlayerController : MonoBehaviour
                 if (SceneManager.GetSceneAt(i).path == testScene)
                     return;
             }
-            possibleCollectItem.SetActive(false);
+            possibleCollectItem.gameObject.SetActive(false);
             possibleCollectItem = null;
         }
     }
@@ -63,11 +60,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void InteractItem() {
-        Item collectItem = null;
-        if (possibleCollectItem != null) possibleCollectItem.TryGetComponent<Item>(out collectItem);
-
-        if (Input.GetButtonDown("Interact") && collectItem != null && collectItem.IsInteractible()) {
-            collectItem.UseItem();
+        if (Input.GetButtonDown("Interact") && possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
+            possibleCollectItem.UseItem();
         }
     }
 
@@ -119,10 +113,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        possibleCollectItem = collider.gameObject;
+        collider.gameObject.TryGetComponent<Item>(out possibleCollectItem);
     }
 
     private void OnTriggerExit2D(Collider2D collider) {
-        possibleCollectItem = null;
+        if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) possibleCollectItem = null;
     }
 }

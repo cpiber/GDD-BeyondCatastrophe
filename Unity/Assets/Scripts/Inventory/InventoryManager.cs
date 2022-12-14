@@ -65,7 +65,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             Debug.LogWarning($"Such an item ({itemName}) does not exist!");
             return;
         }
-       bag.AddBagItem(items[itemName]);
+        bag.AddBagItem(items[itemName]);
     }
 
     public void SelectItemToMove(GameObject itemToMove) {
