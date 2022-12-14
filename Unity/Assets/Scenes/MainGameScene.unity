@@ -3657,8 +3657,9 @@ MonoBehaviour:
   energyMin: 8
   targetBodyTemperature: 25
   bodyTemperatureSpan: 5
-  bodyTemperatureWideness: 0.5
-  bodyTemperatureEnergyRequirements: 0.03
+  bodyTemperatureScale: 0.5
+  bodyTemperatureOffset: 2
+  bodyTemperatureEnergyRequirements: 0.02
   bodyTemperatureCreep: 0.05
   health: 100
   tiredness: 100

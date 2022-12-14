@@ -13,7 +13,8 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [Header("Settings/Body Temperature")]
     [SerializeField] float targetBodyTemperature = 25f;
     [SerializeField] float bodyTemperatureSpan = 5f;
-    [SerializeField] float bodyTemperatureWideness = 0.5f;
+    [SerializeField] float bodyTemperatureScale = 0.5f;
+    [SerializeField] float bodyTemperatureOffset = 2f;
     [SerializeField] float bodyTemperatureEnergyRequirements = 0.03f;
     [SerializeField] float bodyTemperatureCreep = 0.05f;
 
@@ -63,9 +64,9 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [ContextMenu("Calculate Body Temperature")]
     void CalculateBodyTemperature() {
         var evaluation = TemperatureSystem.the().Temperature + TemperatureBuffs - targetBodyTemperature;
-        var ex = Mathf.Exp(bodyTemperatureWideness * evaluation);
-        var target = bodyTemperatureSpan * (ex / (ex + 1) - 0.5f) + targetBodyTemperature;
-        var change = target - bodyTemperature;
+        var sx = bodyTemperatureScale * evaluation;
+        var target = bodyTemperatureSpan * sx / (bodyTemperatureOffset + Mathf.Abs(sx)) + targetBodyTemperature;
+        var change = (target - bodyTemperature) * Time.deltaTime;
         var req = bodyTemperatureEnergyRequirements * evaluation * evaluation * Time.deltaTime;
         bodyTemperature += Mathf.Min(Mathf.Sign(change) * bodyTemperatureCreep, change);
         energy = Mathf.Max(0, energy - req);
