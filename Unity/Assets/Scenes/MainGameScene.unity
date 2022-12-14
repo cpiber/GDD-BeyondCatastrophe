@@ -3572,6 +3572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73251492354e047699e79c528e94bc19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 469458066}
   fallBaseTemperature: 5
   winterBaseTemperature: -15
   springBaseTemperature: 15
@@ -3651,7 +3652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721f8148f35a74edb85dcd213da121f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 469458061}
+  player: {fileID: 469458066}
   idleTirednessSubPerDay: 40
   tirednessMin: 10
   energyMin: 8
@@ -3659,7 +3660,7 @@ MonoBehaviour:
   targetBodyTemperature: 25
   bodyTemperatureSpan: 6
   bodyTemperatureScale: 0.5
-  bodyTemperatureOffset: 2
+  bodyTemperatureSteepness: 2
   bodyTemperatureEnergyRequirements: 0.02
   bodyTemperatureCreep: 0.05
   health: 100

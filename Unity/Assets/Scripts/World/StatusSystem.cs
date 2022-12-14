@@ -4,7 +4,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
 {
     const int EVALUATION_TICKS = 10;
 
-    [SerializeField] GameObject player;
+    [SerializeField] PlayerController player;
 
     [Header("Settings/General")]
     [SerializeField] float idleTirednessSubPerDay = 40f;
@@ -68,6 +68,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         var sx = bodyTemperatureScale * evaluation;
         var target = bodyTemperatureSpan * sx / (bodyTemperatureSteepness + Mathf.Abs(sx)) + targetBodyTemperature;
         var change = (target - bodyTemperature) * Time.deltaTime;
+        if (Mathf.Abs(change) < 1e-6) change = 0;
         var req = bodyTemperatureEnergyRequirements * evaluation * evaluation * Time.deltaTime;
         bodyTemperature += Mathf.Min(Mathf.Sign(change) * bodyTemperatureCreep, change);
         energy = Mathf.Max(0, energy - req);
@@ -86,7 +87,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         if (tempDiff > bodyTemperatureDangerMax) health = Mathf.Max(0, health - (int) tempDiff);
         if (health > 0) return;
         // TODO game over
-        Destroy(player);
+        Destroy(player.gameObject);
     }
 
     public void Sleep() {

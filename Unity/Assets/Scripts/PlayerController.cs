@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InventoryManager inventory;
 
     private Item possibleCollectItem;
+    public HeatedRoom CurrentRoom { get; set; }
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
