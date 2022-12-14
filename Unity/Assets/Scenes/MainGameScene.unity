@@ -3661,7 +3661,7 @@ MonoBehaviour:
   bodyTemperatureSpan: 6
   bodyTemperatureScale: 0.5
   bodyTemperatureSteepness: 2
-  bodyTemperatureEnergyRequirements: 0.02
+  bodyTemperatureEnergyRequirements: 0.005
   bodyTemperatureCreep: 0.05
   health: 100
   tiredness: 100

@@ -16,7 +16,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [SerializeField] float bodyTemperatureSpan = 6f;
     [SerializeField] float bodyTemperatureScale = 0.5f;
     [SerializeField] float bodyTemperatureSteepness = 2f;
-    [SerializeField] float bodyTemperatureEnergyRequirements = 0.02f;
+    [SerializeField] float bodyTemperatureEnergyRequirements = 0.005f;
     [SerializeField] float bodyTemperatureCreep = 0.05f;
 
     [Header("Player Current Status")]
@@ -67,9 +67,9 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         var evaluation = TemperatureSystem.the().Temperature + TemperatureBuffs - targetBodyTemperature;
         var sx = bodyTemperatureScale * evaluation;
         var target = bodyTemperatureSpan * sx / (bodyTemperatureSteepness + Mathf.Abs(sx)) + targetBodyTemperature;
-        var change = (target - bodyTemperature) * Time.deltaTime;
+        var change = (target - bodyTemperature) * Time.deltaTime * EVALUATION_TICKS;
         if (Mathf.Abs(change) < 1e-6) change = 0;
-        var req = bodyTemperatureEnergyRequirements * evaluation * evaluation * Time.deltaTime;
+        var req = bodyTemperatureEnergyRequirements * evaluation * evaluation * Time.deltaTime * EVALUATION_TICKS;
         bodyTemperature += Mathf.Min(Mathf.Sign(change) * bodyTemperatureCreep, change);
         energy = Mathf.Max(0, energy - req);
     }
@@ -85,7 +85,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         if (energy < energyMin) health = Mathf.Max(0, health - energyMin + (int) energy);
         var tempDiff = Mathf.Abs(bodyTemperature - targetBodyTemperature);
         if (tempDiff > bodyTemperatureDangerMax) health = Mathf.Max(0, health - (int) tempDiff);
-        if (health > 0) return;
+        if (health > 0 || player == null) return;
         // TODO game over
         Destroy(player.gameObject);
     }
