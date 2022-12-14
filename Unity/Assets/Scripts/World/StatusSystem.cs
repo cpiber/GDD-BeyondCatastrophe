@@ -10,12 +10,13 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [SerializeField] float idleTirednessSubPerDay = 40f;
     [SerializeField] int tirednessMin = 10;
     [SerializeField] int energyMin = 8;
+    [SerializeField] float bodyTemperatureDangerMax = 5.5f;
     [Header("Settings/Body Temperature")]
     [SerializeField] float targetBodyTemperature = 25f;
-    [SerializeField] float bodyTemperatureSpan = 5f;
+    [SerializeField] float bodyTemperatureSpan = 6f;
     [SerializeField] float bodyTemperatureScale = 0.5f;
-    [SerializeField] float bodyTemperatureOffset = 2f;
-    [SerializeField] float bodyTemperatureEnergyRequirements = 0.03f;
+    [SerializeField] float bodyTemperatureSteepness = 2f;
+    [SerializeField] float bodyTemperatureEnergyRequirements = 0.02f;
     [SerializeField] float bodyTemperatureCreep = 0.05f;
 
     [Header("Player Current Status")]
@@ -65,7 +66,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     void CalculateBodyTemperature() {
         var evaluation = TemperatureSystem.the().Temperature + TemperatureBuffs - targetBodyTemperature;
         var sx = bodyTemperatureScale * evaluation;
-        var target = bodyTemperatureSpan * sx / (bodyTemperatureOffset + Mathf.Abs(sx)) + targetBodyTemperature;
+        var target = bodyTemperatureSpan * sx / (bodyTemperatureSteepness + Mathf.Abs(sx)) + targetBodyTemperature;
         var change = (target - bodyTemperature) * Time.deltaTime;
         var req = bodyTemperatureEnergyRequirements * evaluation * evaluation * Time.deltaTime;
         bodyTemperature += Mathf.Min(Mathf.Sign(change) * bodyTemperatureCreep, change);
@@ -81,6 +82,8 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     void UpdateHealth() {
         if (tiredness < tirednessMin) health = Mathf.Max(0, health - tirednessMin + (int) tiredness);
         if (energy < energyMin) health = Mathf.Max(0, health - energyMin + (int) energy);
+        var tempDiff = Mathf.Abs(bodyTemperature - targetBodyTemperature);
+        if (tempDiff > bodyTemperatureDangerMax) health = Mathf.Max(0, health - (int) tempDiff);
         if (health > 0) return;
         // TODO game over
         Destroy(player);

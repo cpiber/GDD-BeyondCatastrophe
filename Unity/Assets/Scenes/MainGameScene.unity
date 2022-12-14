@@ -3655,8 +3655,9 @@ MonoBehaviour:
   idleTirednessSubPerDay: 40
   tirednessMin: 10
   energyMin: 8
+  bodyTemperatureDangerMax: 5.5
   targetBodyTemperature: 25
-  bodyTemperatureSpan: 5
+  bodyTemperatureSpan: 6
   bodyTemperatureScale: 0.5
   bodyTemperatureOffset: 2
   bodyTemperatureEnergyRequirements: 0.02
