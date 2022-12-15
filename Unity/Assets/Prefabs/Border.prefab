@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5540344653783792241}
   - component: {fileID: 5540344653783792243}
   - component: {fileID: 5540344653783792240}
-  - component: {fileID: 5540344653783792242}
   - component: {fileID: 5540344653783792245}
-  - component: {fileID: 8834947543567235656}
+  - component: {fileID: 6384144910171564033}
+  - component: {fileID: 2090954109145712810}
   m_Layer: 0
   m_Name: Border
   m_TagString: Untagged
@@ -110,8 +110,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &5540344653783792242
-BoxCollider2D:
+--- !u!114 &5540344653783792245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5540344653783792206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1cc1d27cab40058767db1c12b6de8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &6384144910171564033
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,22 +145,21 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &5540344653783792245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5540344653783792206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af1cc1d27cab40058767db1c12b6de8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8834947543567235656
+  m_Points:
+    m_Paths:
+    - - {x: -0.5014473, y: 0.49942693}
+      - {x: -0.4972059, y: -0.6032547}
+      - {x: -0.0380545, y: -0.60441977}
+      - {x: -0.040684126, y: -0.45445022}
+      - {x: -0.48309046, y: -0.4553573}
+      - {x: -0.48214749, y: 0.36893642}
+      - {x: 0.48070115, y: 0.37143606}
+      - {x: 0.4828923, y: -0.45862076}
+      - {x: 0.031316295, y: -0.45475093}
+      - {x: 0.029338399, y: -0.60953707}
+      - {x: 0.49727735, y: -0.6052347}
+      - {x: 0.5, y: 0.5}
+--- !u!114 &2090954109145712810
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShadowGroup: 0
   m_ComponentVersion: 1
-  m_HasRenderer: 0
+  m_HasRenderer: 1
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
@@ -172,6 +183,16 @@ MonoBehaviour:
   - {x: -0.5, y: 0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: 0.5, y: -0.5, z: 0}
-  m_ShapePathHash: 0
+  - {x: 0.025075901, y: -0.49556953, z: -0.00000022351742}
+  - {x: 0.02685475, y: -0.6065453, z: -0.00000022351742}
+  - {x: 0.023418507, y: -0.45753238, z: -0.00000022351742}
+  - {x: 0.48343423, y: -0.4556576, z: -0.00000022351742}
+  - {x: 0.48100835, y: 0.4522452, z: -0.00000022351742}
+  - {x: -0.4845108, y: 0.4549312, z: -0.00000022351742}
+  - {x: -0.479659, y: -0.45297146, z: -0.00000022351742}
+  - {x: -0.026871162, y: -0.45590967, z: -0.00000022351742}
+  - {x: -0.028109077, y: -0.60517484, z: -0.00000022351742}
+  - {x: -0.028416052, y: -0.49881494, z: -0.00000022351742}
+  m_ShapePathHash: 325926622
   m_Mesh: {fileID: 0}
-  m_InstanceId: -347734
+  m_InstanceId: -140174

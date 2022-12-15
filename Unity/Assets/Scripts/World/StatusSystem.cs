@@ -6,6 +6,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     public const int STATUS_MAX = 100;
 
     [SerializeField] PlayerController player;
+    [SerializeField] bool godMode = false;
 
     [Header("Settings/General")]
     [SerializeField] float idleTirednessSubPerDay = 40f;
@@ -92,7 +93,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         if (energy < energyMin) health = Mathf.Max(0, health - energyMin + (int) energy);
         var tempDiff = Mathf.Abs(bodyTemperature - targetBodyTemperature);
         if (tempDiff > bodyTemperatureDangerMax) health = Mathf.Max(0, health - (int) tempDiff);
-        if (health > 0 || player == null) return;
+        if (health > 0 || player == null || godMode) return;
         // TODO game over
         Destroy(player.gameObject);
     }
