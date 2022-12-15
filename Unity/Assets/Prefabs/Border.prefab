@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5540344653783792240}
   - component: {fileID: 5540344653783792242}
   - component: {fileID: 5540344653783792245}
+  - component: {fileID: 9211878514743383239}
   m_Layer: 0
   m_Name: Border
   m_TagString: Untagged
@@ -147,3 +148,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1cc1d27cab40058767db1c12b6de8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9211878514743383239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5540344653783792206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 0000000003819490c93960fdb391b5f9
+  m_ShapePath:
+  - {x: -0.5, y: -0.50000006, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: 0.4999962, y: 0.5, z: 0}
+  - {x: 0.4999962, y: -0.50000006, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -66554
