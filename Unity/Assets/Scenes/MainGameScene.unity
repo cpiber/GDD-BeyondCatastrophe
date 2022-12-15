@@ -1406,6 +1406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!1 &133259194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1813,7 +1814,7 @@ RectTransform:
   - {fileID: 1340681125}
   - {fileID: 1220980467}
   m_Father: {fileID: 1449884900}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.4}
   m_AnchorMax: {x: 1, y: 1}
@@ -2050,6 +2051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!224 &201220513 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8025458902138306711, guid: 5171066d43850be43a80e258714db863,
@@ -2346,7 +2348,7 @@ RectTransform:
   - {fileID: 1399154524}
   - {fileID: 211577087}
   m_Father: {fileID: 1449884900}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.4}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -3175,6 +3177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!1 &555368634 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8025458902138306710, guid: 5171066d43850be43a80e258714db863,
@@ -3658,6 +3661,7 @@ MonoBehaviour:
   tirednessMin: 10
   energyMin: 8
   bodyTemperatureDangerMax: 5.5
+  overeatingDebuff: 3
   targetBodyTemperature: 25
   bodyTemperatureSpan: 6
   bodyTemperatureScale: 0.5
@@ -4574,6 +4578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!1001 &785430734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5213,7 +5218,7 @@ RectTransform:
   - {fileID: 1000321491}
   - {fileID: 1081293566}
   m_Father: {fileID: 1449884900}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.33333334, y: 0.4}
@@ -5773,6 +5778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!1001 &1192172889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6464,7 +6470,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1449884900}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7187,12 +7193,12 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1295999883}
   - {fileID: 370429770}
   - {fileID: 163447467}
   - {fileID: 1014366862}
   - {fileID: 2109922341}
   - {fileID: 1815432412}
-  - {fileID: 1295999883}
   m_Father: {fileID: 1539037717}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9361,6 +9367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!1 &1809836144 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8025458902138306710, guid: 5171066d43850be43a80e258714db863,
@@ -9406,7 +9413,7 @@ RectTransform:
   - {fileID: 370420245}
   - {fileID: 2125251905}
   m_Father: {fileID: 1449884900}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.6666667, y: 0}
   m_AnchorMax: {x: 1, y: 0.4}
@@ -10464,6 +10471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!1001 &2058130832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11221,7 +11229,7 @@ RectTransform:
   - {fileID: 667923872}
   - {fileID: 1880741655}
   m_Father: {fileID: 1449884900}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.33333334, y: 0}
   m_AnchorMax: {x: 0.6666667, y: 0.4}

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Apple : NonPermanentItem
 {
+    [SerializeField] float foodValue = 10f;
+
     public override void UseConcreteItem() {
-        Debug.Log("Apple is now used");
+        StatusSystem.the().Eat(foodValue);
     }
 
     public override string GetItemName() {
@@ -16,7 +18,3 @@ public class Apple : NonPermanentItem
         return "An apple a day keeps the doctor away.";
     }
 }
-
-// inventory manager
-// => alle items
-// => 

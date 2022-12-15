@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class StatusSystem : GenericSingleton<StatusSystem>
 {
-    const int EVALUATION_TICKS = 10;
+    public const int EVALUATION_TICKS = 10;
+    public const int STATUS_MAX = 100;
 
     [SerializeField] PlayerController player;
 
@@ -11,6 +12,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [SerializeField] int tirednessMin = 10;
     [SerializeField] int energyMin = 8;
     [SerializeField] float bodyTemperatureDangerMax = 5.5f;
+    [SerializeField] int overeatingDebuff = 3;
     [Header("Settings/Body Temperature")]
     [SerializeField] float targetBodyTemperature = 25f;
     [SerializeField] float bodyTemperatureSpan = 6f;
@@ -20,9 +22,9 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [SerializeField] float bodyTemperatureCreep = 0.05f;
 
     [Header("Player Current Status")]
-    [SerializeField] [Range(0, 100)] int health = 100;
-    [SerializeField] [Range(0, 100)] float tiredness = 100;
-    [SerializeField] [Range(0, 100)] float energy = 100;
+    [SerializeField] [Range(0, STATUS_MAX)] int health = STATUS_MAX;
+    [SerializeField] [Range(0, STATUS_MAX)] float tiredness = STATUS_MAX;
+    [SerializeField] [Range(0, STATUS_MAX)] float energy = STATUS_MAX;
     [SerializeField] float bodyTemperature;
     int frameCnt = 0;
     public float TargetBodyTemperature => targetBodyTemperature;
@@ -97,5 +99,15 @@ public class StatusSystem : GenericSingleton<StatusSystem>
 
     public void Sleep() {
         tiredness = 100;
+    }
+
+    public void Eat(float foodEnergy) {
+        energy += foodEnergy;
+        if (energy > STATUS_MAX) {
+            // This will be either 0 or 1, depending on how well-fed the player was before
+            health += Mathf.RoundToInt((energy - STATUS_MAX) / foodEnergy);
+            if (health > STATUS_MAX * 0.9) health -= overeatingDebuff;
+            energy = STATUS_MAX;
+        }
     }
 }
