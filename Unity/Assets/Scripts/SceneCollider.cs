@@ -3,6 +3,7 @@ using UnityEngine;
 public class SceneCollider : MonoBehaviour
 {
     public string scene;
+    public GameObject unloadObject;
 
     void Start() {
         Destroy(this.GetComponent<SpriteRenderer>());
@@ -12,12 +13,14 @@ public class SceneCollider : MonoBehaviour
 
         if(collider.tag == "Player"){
             SceneLoader.the().LoadAScene(scene);
+            unloadObject.SetActive(false);
         }
     }
 
     void OnTriggerExit2D(Collider2D collider) {
         if(collider.tag == "Player"){
             SceneLoader.the().UnloadAScene(scene);
+            unloadObject.SetActive(true);
         }
     }
 }
