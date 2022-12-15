@@ -7,6 +7,10 @@ public class SceneCollider : MonoBehaviour
 
     void Start() {
         Destroy(this.GetComponent<SpriteRenderer>());
+        if (unloadObject != null)
+        {
+            unloadObject.SetActive(true);  
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider) {

@@ -9630,6 +9630,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3451291250155440513, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_Sprite
@@ -9654,7 +9689,7 @@ PrefabInstance:
     - target: {fileID: 9197791815492952206, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.56
+      value: 17.1
       objectReference: {fileID: 0}
     - target: {fileID: 9197791815492952206, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
@@ -10095,7 +10130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092500165}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.57, y: 0.45, z: 0}
+  m_LocalPosition: {x: 17.23, y: 0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
