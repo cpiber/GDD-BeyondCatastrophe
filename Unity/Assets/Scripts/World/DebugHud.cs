@@ -9,10 +9,12 @@ public class DebugHud : MonoBehaviour
         var s = SeasonSystem.the();
         var t = TemperatureSystem.the();
         var p = StatusSystem.the();
+        var on = p.godMode ? "ON" : "OFF";
         hud.text = @$"Current time: <b>{d.TimeInDay.ToString("N1")}</b>/{d.GetParams.secondsPerDay} of day <b>{d.Day+1}</b> ({d.SectionInDay})
 Season: <b>{s.CurrentSeason}</b> (day {s.DayInYear + 1} of year)
 Temperature: <b>{t.Temperature.ToString("N1")}</b>
 Body Temperature: <b>{p.EffectiveBodyTemperature.ToString("N1")}</b>/{p.BodyTemperature.ToString("N1")} (target {p.TargetBodyTemperature.ToString("N1")})
-Status: health <b>{p.Health}</b>/100 - tiredness <b>{p.Tiredness.ToString("N1")}</b>/100 - energy <b>{p.Energy.ToString("N1")}</b>/100";
+Status: health <b>{p.Health}</b>/100 - tiredness <b>{p.Tiredness.ToString("N1")}</b>/100 - energy <b>{p.Energy.ToString("N1")}</b>/100
+GOD MODE <b>{on}</b>";
     }
 }

@@ -6,7 +6,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     public const int STATUS_MAX = 100;
 
     [SerializeField] PlayerController player;
-    [SerializeField] bool godMode = false;
+    [SerializeField] public bool godMode = false;
 
     [Header("Settings/General")]
     [SerializeField] float idleTirednessSubPerDay = 40f;
@@ -110,5 +110,9 @@ public class StatusSystem : GenericSingleton<StatusSystem>
             if (health > STATUS_MAX * 0.9) health -= overeatingDebuff;
             energy = STATUS_MAX;
         }
+    }
+
+    public void ToggleGodMode() {
+        godMode = !godMode;
     }
 }
