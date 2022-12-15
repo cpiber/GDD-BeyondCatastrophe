@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SceneCollider : MonoBehaviour
 {
-    public string scene;
+    [SerializeField] [SceneProperty] string scene;
     public GameObject unloadObject;
 
     void Start() {
@@ -10,7 +10,6 @@ public class SceneCollider : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-
         if(collider.tag == "Player"){
             SceneLoader.the().LoadAScene(scene);
             unloadObject.SetActive(false);

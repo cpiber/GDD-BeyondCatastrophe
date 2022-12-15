@@ -1,16 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : GenericSingleton<SceneLoader>
 {
-    static SceneLoader instance = null;
-
     private SerializableDictionary<string, int> scenedata = new SerializableDictionary<string, int>();
-
-    public static SceneLoader the() {
-        if (instance == null) instance = FindObjectOfType<SceneLoader>();
-        return instance;
-    }
 
     public void LoadAScene(string scene) {
         if (scenedata.ContainsKey(scene) && scenedata[scene] > 0) {

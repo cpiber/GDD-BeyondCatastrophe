@@ -4,12 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    String TEST_SCENE = "TestRoom";
-    
-    [SerializeField] int health = 100;
-    [SerializeField] int tiredness = 0;
-    [SerializeField] int hunger = 0;
-    [SerializeField] int thirst = 0;
+    [SerializeField] [SceneProperty] string testScene;
 
     [Serializable]
     public struct Sprites {
@@ -29,12 +24,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] InventoryManager inventory;
 
-    private bool isItemButtonPressed = false;
-    private bool isItemInteractPressed = false;
-    private bool isItemCollectPressed = false;
-    private bool isItemOpenMenuPressed = false;
-
-    private GameObject possibleCollectItem;
+    private Item possibleCollectItem;
+    public HeatedRoom CurrentRoom { get; set; }
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -43,62 +34,41 @@ public class PlayerController : MonoBehaviour
     void Update(){
         MovePlayer();
         UseItem();
-        Inventory();
+        InteractItem();
         CollectItem();
-        UpdatePlayerStatus();
+        Inventory();
     }
 
     void CollectItem() {
-        if (Input.GetAxis("CollectItem") > 0 && possibleCollectItem != null) {
+        if (Input.GetButtonDown("CollectItem") && possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             // TODO add collision check and other collect features
-            isItemCollectPressed = true;
             inventory.AddBagItem(possibleCollectItem.name);
             int sceneCount = SceneManager.sceneCount;
-            bool testRoom = false;
             for (int i = 0; i < sceneCount; i++)
             {
-                if (SceneManager.GetSceneAt(i).name.Equals(TEST_SCENE))
-                {
-                    testRoom = true;
-                    break;
-                }
+                if (SceneManager.GetSceneAt(i).path == testScene)
+                    return;
             }
-            possibleCollectItem.SetActive(testRoom);
+            possibleCollectItem.gameObject.SetActive(false);
             possibleCollectItem = null;
-        } else {
-            isItemCollectPressed = false;
         }
     }
 
     void UseItem() {
-        if (Input.GetAxis("UseItem") > 0){
-            if (!isItemButtonPressed) {
-                isItemButtonPressed = true;
-                // get equipped Item
-                inventory.UseEquippedItem(0);
-            }
-        } else {
-            isItemButtonPressed = false;
+        if (Input.GetButtonDown("UseItem")) {
+            inventory.UseEquippedItem(0);
+        }
+    }
+
+    void InteractItem() {
+        if (Input.GetButtonDown("Interact") && possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
+            possibleCollectItem.UseItem();
         }
     }
 
     void Inventory() {
-        if (Input.GetAxis("Interact") > 0 && possibleCollectItem != null && possibleCollectItem.name == "Chest" ){
-            if (!isItemInteractPressed) {
-                isItemInteractPressed = true;
-                inventory.UseChest();
-            }
-        } else {
-            isItemInteractPressed = false;
-        }
-
-        if (Input.GetAxis("OpenMenu") > 0) {
-            if (!isItemOpenMenuPressed) {
-                isItemOpenMenuPressed = true;
-                inventory.UseBag();
-            }
-        } else {
-            isItemOpenMenuPressed = false;
+        if (Input.GetButtonDown("OpenMenu")) {
+            inventory.UseBag();
         }
     }
 
@@ -144,32 +114,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        possibleCollectItem = collider.gameObject;
+        collider.gameObject.TryGetComponent<Item>(out possibleCollectItem);
     }
 
     private void OnTriggerExit2D(Collider2D collider) {
-        possibleCollectItem = null;
+        if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) possibleCollectItem = null;
     }
-
-    void UpdatePlayerStatus(){
-        if(health <= 0){
-            Destroy(gameObject);
-            // TODO: load menue/end-screen
-        }
-
-        if(tiredness > 100){
-            // TODO: do something
-        }
-
-
-        if(hunger > 100){
-            // TODO: do something
-        }
-
-
-        if(thirst > 100){
-            // TODO: do something
-        }
-    }
-
 }

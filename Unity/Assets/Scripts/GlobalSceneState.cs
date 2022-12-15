@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GlobalSceneState : MonoBehaviour
+public class GlobalSceneState : GenericSingleton<GlobalSceneState>
 {
     [Serializable]
     public struct State {
@@ -14,14 +14,7 @@ public class GlobalSceneState : MonoBehaviour
         }
     }
 
-    static GlobalSceneState instance = null;
-
     private SerializableDictionary<string, State> objectdata = new SerializableDictionary<string, State>();
-
-    public static GlobalSceneState the() {
-        if (instance == null) instance = FindObjectOfType<GlobalSceneState>();
-        return instance;
-    }
 
     public State getState(string key, Vector3 defaultPosition) {
         if (!objectdata.ContainsKey(key)) return objectdata[key] = new State(true, defaultPosition);
