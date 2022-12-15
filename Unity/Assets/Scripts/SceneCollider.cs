@@ -12,14 +12,20 @@ public class SceneCollider : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider) {
         if(collider.tag == "Player"){
             SceneLoader.the().LoadAScene(scene);
-            unloadObject.SetActive(false);
+            if (unloadObject != null)
+            {
+                unloadObject.SetActive(false);  
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D collider) {
         if(collider.tag == "Player"){
             SceneLoader.the().UnloadAScene(scene);
-            unloadObject.SetActive(true);
+            if (unloadObject != null)
+            {
+                unloadObject.SetActive(true); 
+            }
         }
     }
 }
