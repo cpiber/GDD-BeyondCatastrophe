@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StatusSystem : GenericSingleton<StatusSystem>
 {
@@ -96,6 +97,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         if (health > 0 || player == null || godMode) return;
         // TODO game over
         Destroy(player.gameObject);
+        SceneManager.LoadScene("Menu");
     }
 
     public void Sleep() {
