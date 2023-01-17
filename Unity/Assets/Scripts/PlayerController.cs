@@ -106,11 +106,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collider) {
         var s = collider.gameObject.GetComponent<SceneObjectState>();
-        var border = collider.gameObject.GetComponent<Border>();
-        if (border){
-            this.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
-        }
-        else if (s) s.Destroy();
+        if (s) s.Destroy();
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
