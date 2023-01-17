@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    const float INPUT_MIN = 0.225f;
+
     [SerializeField] [SceneProperty] string testScene;
 
     [Serializable]
@@ -27,20 +30,18 @@ public class PlayerController : MonoBehaviour
     private Item possibleCollectItem;
     public HeatedRoom CurrentRoom { get; set; }
 
+    private Vector2 movement = Vector2.zero;
+
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Update(){
+    void FixedUpdate() {
         MovePlayer();
-        UseItem();
-        InteractItem();
-        CollectItem();
-        Inventory();
     }
 
-    void CollectItem() {
-        if (Input.GetButtonDown("CollectItem") && possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
+    void OnCollectItem() {
+        if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             // TODO add collision check and other collect features
             inventory.AddBagItem(possibleCollectItem.name);
             int sceneCount = SceneManager.sceneCount;
@@ -54,32 +55,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UseItem() {
-        if (Input.GetButtonDown("UseItem")) {
-            inventory.UseEquippedItem(0);
-        }
+    void OnUseItem() {
+        inventory.UseEquippedItem(0);
     }
 
-    void InteractItem() {
-        if (Input.GetButtonDown("Interact") && possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
+    void OnInteractItem() {
+        if (possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
             possibleCollectItem.UseItem();
         }
     }
 
-    void Inventory() {
-        if (Input.GetButtonDown("OpenMenu")) {
-            inventory.UseBag();
-        }
+    void OnOpenMenu() {
+        inventory.UseBag();
+    }
+
+    void OnMove(InputValue mv) {
+        movement = mv.Get<Vector2>();
+        if (Mathf.Abs(movement.x) < INPUT_MIN) movement.x = 0;
+        if (Mathf.Abs(movement.y) < INPUT_MIN) movement.y = 0;
     }
 
     void MovePlayer(){
-        var move_x = Input.GetAxis("Horizontal");
-        var move_y = Input.GetAxis("Vertical");
-        var move_vec = new Vector2(move_x, move_y);
-        this.GetComponent<Rigidbody2D>().velocity = move_vec * speed;
+        this.GetComponent<Rigidbody2D>().velocity = movement * speed;
         var camera_position = new Vector3(transform.position.x, transform.position.y, -10);
         Camera.main.transform.position = camera_position;
-        UpdateSprite(move_vec);
+        UpdateSprite(movement);
     }
 
     void UpdateSprite(Vector2 move_vec){
