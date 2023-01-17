@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class DayNightSystem : GenericSingleton<DayNightSystem>
 {
@@ -35,6 +36,7 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
 
     [SerializeField] private AnimationCurve brightnessCurve = null;
     [SerializeField] private Light2D globalLight = null;
+    [SerializeField] private Image nightOverlay = null;
 
     public enum DaySection {
         Night,
@@ -60,8 +62,8 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
     void FixedUpdate() {
         if (!paused) {
             time += UnityEngine.Time.deltaTime;
-            globalLight.intensity = Brightness;
         }
+        globalLight.intensity = Brightness;
     }
 
     [ContextMenu("Recompute Curve")]
@@ -90,19 +92,24 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
     public IEnumerator GoToSleep() {
         paused = true;
         // darken to 0
-        while (globalLight.intensity > 0) {
-            globalLight.intensity = Mathf.Max(0.0f, globalLight.intensity - UnityEngine.Time.deltaTime * fadeTimeFactor);
+        nightOverlay.gameObject.SetActive(true);
+        while (nightOverlay.color.a < 1) {
+            var c = nightOverlay.color;
+            c.a = Mathf.Min(1.0f, nightOverlay.color.a + UnityEngine.Time.deltaTime * fadeTimeFactor);
+            nightOverlay.color = c;
             yield return null;
         }
     }
 
     public IEnumerator WakeUp() {
-        Debug.Assert(paused, "Script relies on intensity being free to manipulate");
         // go to regular brightness
-        while (globalLight.intensity < Brightness) {
-            globalLight.intensity = Mathf.Min(Brightness, globalLight.intensity + UnityEngine.Time.deltaTime * fadeTimeFactor);
+        while (nightOverlay.color.a > 0) {
+            var c = nightOverlay.color;
+            c.a = Mathf.Max(0.0f, nightOverlay.color.a - UnityEngine.Time.deltaTime * fadeTimeFactor);
+            nightOverlay.color = c;
             yield return null;
         }
+        nightOverlay.gameObject.SetActive(false);
         paused = false;
     }
 
@@ -111,7 +118,9 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
         else time += ((float) dayNightParams.secondsPerDay - TimeInDay) + targetTime;
     }
     public void AdvanceToDusk() {
-        AdvanceToTimeInDay((1 - dayNightParams.darknessPercent / 2) * (float) dayNightParams.secondsPerDay);
+        // NOTE: maybe there is a bug in this math, but advancing to the middle of dusk looks crap, because the screen goes bright then immediately dark again
+        //       so we advance directly to the dark part
+        AdvanceToTimeInDay((1 - (dayNightParams.darknessPercent - dayNightParams.darknessEasingPercent) / 2) * (float) dayNightParams.secondsPerDay);
     }
     public void AdvanceToDawn() {
         AdvanceToTimeInDay(dayNightParams.darknessPercent / 2 * (float) dayNightParams.secondsPerDay);
