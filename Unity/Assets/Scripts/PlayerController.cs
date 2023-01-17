@@ -37,10 +37,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
+        if (DayNightSystem.the().IsPaused) return;
         MovePlayer();
     }
 
     void OnCollectItem() {
+        if (DayNightSystem.the().IsPaused) return;
         if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             // TODO add collision check and other collect features
             inventory.AddBagItem(possibleCollectItem.name);
@@ -56,16 +58,19 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnUseItem() {
+        if (DayNightSystem.the().IsPaused) return;
         inventory.UseEquippedItem(0);
     }
 
     void OnInteractItem() {
+        if (DayNightSystem.the().IsPaused) return;
         if (possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
             possibleCollectItem.UseItem();
         }
     }
 
     void OnOpenMenu() {
+        if (DayNightSystem.the().IsPaused) return;
         inventory.UseBag();
     }
 
@@ -83,7 +88,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void UpdateSprite(Vector2 move_vec){
-    
         if(move_vec.x > 0){
             spriteRenderer.sprite = spriteList[characterIndex].right; 
             spriteRenderer.flipX = true;
@@ -101,7 +105,6 @@ public class PlayerController : MonoBehaviour
         if(move_vec.y < 0){
             spriteRenderer.sprite = spriteList[characterIndex].front;    
         }
-
     }
 
     void OnCollisionEnter2D(Collision2D collider) {

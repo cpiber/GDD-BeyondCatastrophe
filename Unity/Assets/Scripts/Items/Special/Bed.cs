@@ -11,7 +11,7 @@ public class Bed : PermanentItem
     }
 
     IEnumerator Sleep() {
-        // TODO disable moving
+        InventoryUIManager.the().CloseAllUI();
         yield return StartCoroutine(DayNightSystem.the().GoToSleep());
         SeasonSystem.the().AllowUpdateSeason();
         switch (DayNightSystem.the().SectionInDay) {

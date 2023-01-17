@@ -33,6 +33,7 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
     public float TimeInDay => time % dayNightParams.secondsPerDay;
     public DayNightParams GetParams => dayNightParams;
     [SerializeField] bool paused = false;
+    public bool IsPaused => paused;
 
     [SerializeField] private AnimationCurve brightnessCurve = null;
     [SerializeField] private Light2D globalLight = null;
