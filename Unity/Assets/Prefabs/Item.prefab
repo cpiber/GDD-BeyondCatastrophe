@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
   numberOfUsagesLeft: 1
+  foodValue: 10
 --- !u!61 &-7908357118172525260
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -114,7 +115,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
