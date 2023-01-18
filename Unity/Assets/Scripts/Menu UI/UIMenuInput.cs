@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,16 +12,26 @@ public class UIMenuInput : MonoBehaviour {
 
     void Start() {
         EventSystem.current.SetSelectedGameObject(firstUIObject);
-        UpdateSelected();
+        UpdateSelected(Vector2.down);
+    }
+
+    void OnSubmit() {
+        var toFocus = EventSystem.current.currentSelectedGameObject?.GetComponent<FocusOnSubmit>()?.Focus;
+        if (toFocus != null) StartCoroutine(FocusNext(toFocus));
+    }
+
+    IEnumerator FocusNext(GameObject toFocus) {
+        yield return null;
+        EventSystem.current.SetSelectedGameObject(toFocus);
     }
 
     void OnMoveMouse(InputValue mv) {
-        EventSystem.current.SetSelectedGameObject(null);
+        if (mv.Get<Vector2>().magnitude > 1) EventSystem.current.SetSelectedGameObject(null);
     }
 
     void OnNavigate(InputValue mv) {
         if (EventSystem.current.currentSelectedGameObject != null) lastUIObject = EventSystem.current.currentSelectedGameObject;
-        UpdateSelected();
+        UpdateSelected(mv.Get<Vector2>());
     }
 
     void OnCancel() {
@@ -28,16 +39,15 @@ public class UIMenuInput : MonoBehaviour {
         else if (creditsBackObject.activeInHierarchy) creditsBackObject.GetComponent<Button>().onClick.Invoke();
     }
 
-    void UpdateSelected() {
+    void UpdateSelected(Vector2 mv) {
         var obj = EventSystem.current.currentSelectedGameObject;
         if (obj == null || !obj.activeSelf || !obj.activeInHierarchy) {
-            obj = FindNextButton();
-            EventSystem.current.SetSelectedGameObject(obj);
+            EventSystem.current.SetSelectedGameObject(FindNextButton(mv));
         }
     }
 
-    GameObject FindNextButton() {
-        var o = lastUIObject?.GetComponent<Button>()?.FindSelectableOnDown()?.gameObject;
+    GameObject FindNextButton(Vector2 mv) {
+        var o = lastUIObject?.GetComponent<Button>()?.FindSelectable(mv)?.gameObject;
         if (o != null) return o;
         return GameObject.FindObjectOfType<Button>().gameObject;
     }
