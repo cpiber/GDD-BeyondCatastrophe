@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SetIndexOne",
+                    "name": "SetIndexZero",
                     "type": "Button",
                     "id": "59c1ea76-3b66-4129-9e15-66be97c540a9",
                     "expectedControlType": "Button",
@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SetIndexTwo",
+                    "name": "SetIndexOne",
                     "type": "Button",
                     "id": "3bf09715-310a-45d6-82ba-7dfd7392473e",
                     "expectedControlType": "Button",
@@ -69,9 +69,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SetIndexThree",
+                    "name": "SetIndexTwo",
                     "type": "Button",
                     "id": "8b4dfb0f-2e65-4ad5-98ee-33601c77c795",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SetIndexController",
+                    "type": "Button",
+                    "id": "aa227c8a-e5bb-4959-ad24-b4d68e8b588a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -306,7 +315,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "SetIndexOne",
+                    "action": "SetIndexZero",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -317,7 +326,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "SetIndexTwo",
+                    "action": "SetIndexOne",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -328,7 +337,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "SetIndexThree",
+                    "action": "SetIndexTwo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2bfd3b7-e5ac-4e6a-a4b0-8ab4391a1bbb",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SetIndexController",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

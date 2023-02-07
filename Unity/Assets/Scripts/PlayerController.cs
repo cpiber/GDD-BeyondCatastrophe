@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
-        OnSetIndexOne();
+        OnSetIndexZero();
     }
 
     void FixedUpdate() {
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Set index of equipped item
-    void OnSetIndexOne() {
+    void OnSetIndexZero() {
         if (DayNightSystem.the().IsPaused) return;
         useEquippedItemIndex = 0;
         
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
     }
 
-    void OnSetIndexTwo() {
+    void OnSetIndexOne() {
         if (DayNightSystem.the().IsPaused) return;
         useEquippedItemIndex = 1;
 
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
     }
 
-    void OnSetIndexThree() {
+    void OnSetIndexTwo() {
         if (DayNightSystem.the().IsPaused) return;
         useEquippedItemIndex = 2;
         InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
@@ -108,7 +108,23 @@ public class PlayerController : MonoBehaviour
         itemSlot2.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
     }
 
-    // TODO: SetIndexOnController
+    // TODO: Test this
+    void OnSetIndexController() {
+        switch(useEquippedItemIndex) {
+            case 0:
+                OnSetIndexOne();
+                break;
+            case 1:
+                OnSetIndexTwo();
+                break;
+            case 2:
+                OnSetIndexZero();
+                break;    
+            default:
+                Debug.LogWarning("This Should not happen");
+                break;
+        }
+    }
 
     void OnInteractItem() {
         if (DayNightSystem.the().IsPaused) return;
