@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
+        OnSetIndexOne();
     }
 
     void FixedUpdate() {
@@ -68,16 +70,42 @@ public class PlayerController : MonoBehaviour
     void OnSetIndexOne() {
         if (DayNightSystem.the().IsPaused) return;
         useEquippedItemIndex = 0;
+        
+        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
+        itemSlot0.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
+
+        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
+        itemSlot1.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+
+        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
+        itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
     }
 
     void OnSetIndexTwo() {
         if (DayNightSystem.the().IsPaused) return;
         useEquippedItemIndex = 1;
+
+        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
+        itemSlot0.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+
+        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
+        itemSlot1.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
+
+        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
+        itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
     }
 
     void OnSetIndexThree() {
         if (DayNightSystem.the().IsPaused) return;
         useEquippedItemIndex = 2;
+        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
+        itemSlot0.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+
+        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
+        itemSlot1.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+
+        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
+        itemSlot2.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
     }
 
     // TODO: SetIndexOnController
