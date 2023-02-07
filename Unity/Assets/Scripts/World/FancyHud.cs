@@ -24,6 +24,17 @@ public class FancyHud : MonoBehaviour
     [SerializeField] Image energyIconShadow;
     [SerializeField] Image energyBorder;
 
+    [Header("Status/Temperature")]
+    [SerializeField] Image tempIcon;
+    [SerializeField] Image tempIconInner;
+    [SerializeField] Image tempBorder;
+    [SerializeField] [Range(0, 1)] float tempMaxSquish = .55f;
+    [SerializeField] float tempGlobalMin = 17f;
+    [SerializeField] float tempGlobalMax = 33f;
+    [SerializeField] Color tempColorMin = Color.blue;
+    [SerializeField] Color tempColorMax = Color.red;
+
+
     [Header("Status/Pulse")]
     [SerializeField] float pulseOffset = 0.5f;
     [SerializeField] AnimationCurve pulseCurve;
@@ -64,6 +75,15 @@ public class FancyHud : MonoBehaviour
         tirednessBorder.color = Color.Lerp(dangerBG, borderColor, Mathf.Min((1f - tirednessIcon.fillAmount) * DANGER_INVPERC, 1));
         energyIcon.fillAmount = (float) status.Energy / StatusSystem.STATUS_MAX;
         energyBorder.color = Color.Lerp(dangerBG, borderColor, Mathf.Min(energyIcon.fillAmount * DANGER_INVPERC, 1));
+
+        var temp = status.BodyTemperature;
+        var tempPerc = (temp - tempGlobalMin) / (tempGlobalMax - tempGlobalMin);
+        var tempCol = Color.Lerp(tempColorMin, tempColorMax, tempPerc);
+        var tempOff = (tempPerc) * (1 - tempMaxSquish) + tempMaxSquish;
+        Debug.Log($"{temp} {tempPerc} {tempOff}");
+        tempIcon.color = tempCol;
+        tempIconInner.color = tempCol;
+        tempIconInner.rectTransform.anchorMax = new Vector2(1, tempOff);
 
         if (dead) {
             // TODO
