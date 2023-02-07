@@ -1,10 +1,14 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class StatusSystem : GenericSingleton<StatusSystem>
 {
     public const int EVALUATION_TICKS = 10;
     public const int STATUS_MAX = 100;
+    [Serializable]
+     public class StatusChangeEvent : UnityEvent<StatusSystem, bool> { }
 
     [SerializeField] PlayerController player;
     [SerializeField] public bool godMode = false;
@@ -35,6 +39,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     public int Health => health;
     public float Tiredness => tiredness;
     public float Energy => energy;
+    public StatusChangeEvent OnStatusChange;
 
     public float TemperatureBuffs {
         get {
@@ -66,6 +71,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         CalculateBodyTemperature();
         UpdateTiredness();
         UpdateHealth();
+        SendUpdatedEffects();
     }
 
     /// <summary>
@@ -94,14 +100,16 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         if (energy < energyMin) health = Mathf.Max(0, health - energyMin + (int) energy);
         var tempDiff = Mathf.Abs(bodyTemperature - targetBodyTemperature);
         if (tempDiff > bodyTemperatureDangerMax) health = Mathf.Max(0, health - (int) tempDiff);
-        if (health > 0 || player == null || godMode) return;
-        // TODO game over
-        Destroy(player.gameObject);
-        SceneManager.LoadScene("Menu");
+    }
+
+    void SendUpdatedEffects() {
+        bool dead = (health <= 0 || player == null) && !godMode;
+        OnStatusChange.Invoke(this, dead);
     }
 
     public void Sleep() {
-        tiredness = 100;
+        tiredness = STATUS_MAX;
+        SendUpdatedEffects();
     }
 
     public void Eat(float foodEnergy) {
@@ -112,6 +120,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
             if (health > STATUS_MAX * 0.9) health -= overeatingDebuff;
             energy = STATUS_MAX;
         }
+        SendUpdatedEffects();
     }
 
     public void ToggleGodMode() {
