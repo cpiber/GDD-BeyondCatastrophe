@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movement = Vector2.zero;
 
+    private int useEquippedItemIndex = 0;
+
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -59,8 +61,26 @@ public class PlayerController : MonoBehaviour
 
     void OnUseItem() {
         if (DayNightSystem.the().IsPaused) return;
-        inventory.UseEquippedItem(0);
+        inventory.UseEquippedItem(useEquippedItemIndex);
     }
+
+    // Set index of equipped item
+    void OnSetIndexOne() {
+        if (DayNightSystem.the().IsPaused) return;
+        useEquippedItemIndex = 0;
+    }
+
+    void OnSetIndexTwo() {
+        if (DayNightSystem.the().IsPaused) return;
+        useEquippedItemIndex = 1;
+    }
+
+    void OnSetIndexThree() {
+        if (DayNightSystem.the().IsPaused) return;
+        useEquippedItemIndex = 2;
+    }
+
+    // TODO: SetIndexOnController
 
     void OnInteractItem() {
         if (DayNightSystem.the().IsPaused) return;
@@ -73,6 +93,7 @@ public class PlayerController : MonoBehaviour
         if (DayNightSystem.the().IsPaused) return;
         inventory.UseBag();
     }
+
 
     void OnMove(InputValue mv) {
         movement = mv.Get<Vector2>();
