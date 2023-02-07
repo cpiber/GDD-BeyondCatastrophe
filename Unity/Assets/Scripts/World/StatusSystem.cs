@@ -49,9 +49,9 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     }
 
     void Start() {
-        health = 100;
-        tiredness = 100;
-        energy = 100;
+        health = STATUS_MAX;
+        tiredness = STATUS_MAX;
+        energy = STATUS_MAX;
         bodyTemperature = targetBodyTemperature;
     }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TemperatureSystem : GenericSingleton<TemperatureSystem>
@@ -24,15 +25,13 @@ public class TemperatureSystem : GenericSingleton<TemperatureSystem>
     }
 
     float BaseTemperature(SeasonSystem.Seasons season) {
-        switch (season) {
-        case SeasonSystem.Seasons.Fall: return fallBaseTemperature;
-        case SeasonSystem.Seasons.Winter: return winterBaseTemperature;
-        case SeasonSystem.Seasons.Spring: return springBaseTemperature;
-        case SeasonSystem.Seasons.Summer: return summerBaseTemperature;
-        default:
-            Debug.Assert(false);
-            return 0;
-        }
+        return season switch {
+            SeasonSystem.Seasons.Fall   => fallBaseTemperature,
+            SeasonSystem.Seasons.Winter => winterBaseTemperature,
+            SeasonSystem.Seasons.Spring => springBaseTemperature,
+            SeasonSystem.Seasons.Summer => summerBaseTemperature,
+            _ => throw new ArgumentOutOfRangeException(nameof(season), $"Unexpected season value {season}"),
+        };
     }
     
     [ContextMenu("Recompute Curve")]
