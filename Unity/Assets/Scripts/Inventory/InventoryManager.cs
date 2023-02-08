@@ -123,4 +123,8 @@ public class InventoryManager : GenericSingleton<InventoryManager>
     public IEnumerable<Item> GetEquippedItems() {
         return GetItemsFromSlot(equippedInventoryItems);
     }
+
+    public InventorySlot GetInventorySlot(int slotIndex) {
+        return equippedInventoryItems.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
+    }
 }
