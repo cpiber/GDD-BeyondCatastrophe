@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FancyHud : MonoBehaviour
@@ -94,10 +95,7 @@ public class FancyHud : MonoBehaviour
         tempIconInner.color = tempCol;
         tempIconInner.rectTransform.anchorMax = new Vector2(1, tempOff);
 
-        if (dead) {
-            // TODO
-            return;
-        }
+        if (dead) SceneManager.LoadScene("GameOver");
     }
 
 #if UNITY_EDITOR
