@@ -34,16 +34,27 @@ public class FancyHud : MonoBehaviour
     [SerializeField] Color tempColorMin = Color.blue;
     [SerializeField] Color tempColorMax = Color.red;
 
-
     [Header("Status/Pulse")]
     [SerializeField] float pulseOffset = 0.5f;
     [SerializeField] AnimationCurve pulseCurve;
     [SerializeField] Color borderColor;
     [SerializeField] Color dangerBG = Color.red;
 
+    [Header("DebugHud")]
+    [SerializeField] GameObject objHud;
+    [SerializeField] GameObject objGodMode;
+#if UNITY_EDITOR
+    [SerializeField] bool enableHud;
+#endif
+
     void Start() {
         SeasonChange(SeasonSystem.the().CurrentSeason);
         StatusChange(StatusSystem.the(), false);
+
+#if !UNITY_EDITOR
+        Destroy(objHud);
+        Destroy(objGodMode);
+#endif
     }
 
     void FixedUpdate() {
@@ -97,6 +108,9 @@ public class FancyHud : MonoBehaviour
             if (im.gameObject.name != "Border") continue;
             im.color = borderColor;
         }
+
+        objHud.SetActive(enableHud);
+        objGodMode.SetActive(enableHud);
     }
 #endif
 }
