@@ -31,8 +31,7 @@ public class FancyHud : MonoBehaviour
     [SerializeField] [Range(0, 1)] float tempMaxSquish = .55f;
     [SerializeField] float tempGlobalMin = 17f;
     [SerializeField] float tempGlobalMax = 33f;
-    [SerializeField] Color tempColorMin = Color.blue;
-    [SerializeField] Color tempColorMax = Color.red;
+    [SerializeField] Gradient tempColorGradient;
 
     [Header("Status/Pulse")]
     [SerializeField] float pulseOffset = 0.5f;
@@ -89,9 +88,8 @@ public class FancyHud : MonoBehaviour
 
         var temp = status.BodyTemperature;
         var tempPerc = (temp - tempGlobalMin) / (tempGlobalMax - tempGlobalMin);
-        var tempCol = Color.Lerp(tempColorMin, tempColorMax, tempPerc);
+        var tempCol = tempColorGradient.Evaluate(tempPerc);
         var tempOff = (tempPerc) * (1 - tempMaxSquish) + tempMaxSquish;
-        Debug.Log($"{temp} {tempPerc} {tempOff}");
         tempIcon.color = tempCol;
         tempIconInner.color = tempCol;
         tempIconInner.rectTransform.anchorMax = new Vector2(1, tempOff);
