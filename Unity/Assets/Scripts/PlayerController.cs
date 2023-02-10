@@ -100,8 +100,9 @@ public class PlayerController : MonoBehaviour
         SetEquippedItem(useEquippedItemIndex - 1);
     }
 
-    void SetEquippedItem(int index) {
+    public void SetEquippedItem(int index) {
         Debug.Assert(0 <= index && index < 3);
+        if (InventoryUIManager.the().IsUIOpen) return;
         useEquippedItemIndex = index;
 
         for (int i = 0; i < 3; i++) {
