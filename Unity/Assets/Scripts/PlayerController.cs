@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         if (DayNightSystem.the().IsPaused) return;
         if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             // TODO add collision check and other collect features
-            inventory.AddBagItem(possibleCollectItem.name);
+            if (!inventory.AddBagItem(possibleCollectItem.name)) return;
             int sceneCount = SceneManager.sceneCount;
             for (int i = 0; i < sceneCount; i++)
             {

@@ -6,7 +6,6 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 {
     [SerializeField] SerializableDictionary<string, Item> items;
     [SerializeField] InventoryUIManager uiManager;
-    [SerializeField] Bag bag;
     private GameObject selectedItemToMove = null;
 
     void Start() {
@@ -57,12 +56,42 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         itemToUse.UseItem();
     }  
 
-    public void AddBagItem(string itemName) {
+    public bool AddBagItem(string itemName) {
         if (!items.ContainsKey(itemName)) {
             Debug.LogWarning($"Such an item ({itemName}) does not exist!");
-            return;
+            return false;
         }
-        bag.AddBagItem(items[itemName]);
+
+        var item = items[itemName];
+        Transform itemFound = null;
+        Transform firstFreeSlot = null;
+        foreach(Transform itemSlot in GetAllItemSlots()) {
+            InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
+            if (slot.GetSlotItemName() == itemName) {
+                itemFound = itemSlot;
+                break;
+            }
+            if (slot.IsSlotEmpty() && firstFreeSlot == null) {
+                firstFreeSlot = itemSlot;
+            }
+        }
+
+        if (itemFound) {
+            InventorySlot slot = itemFound.GetComponent<InventorySlot>();
+            Item itemScript = slot.GetItem();
+            System.Type test = itemScript.GetType();
+            if (itemScript is NonPermanentItem) {
+                NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
+                nonPermanentItem.IncreaseItemCount();
+                slot.SetCount();
+                return true;
+            } else {
+                return false;
+            }
+        } 
+
+        firstFreeSlot.GetComponent<InventorySlot>().SetSlot(item);
+        return true;
     }
 
     public void SelectItemToMove(GameObject itemToMove) {
@@ -120,6 +149,14 @@ public class InventoryManager : GenericSingleton<InventoryManager>
     }
     public IEnumerable<Item> GetEquippedItems() {
         return GetItemsFromSlot(uiManager.EquippedInventoryItems);
+    }
+
+    public IEnumerable<Transform> GetAllItemSlots() {
+        for (int i = 0; i < uiManager.BagInventoryItems.childCount; i++) yield return uiManager.BagInventoryItems.GetChild(i);
+        for (int i = 0; i < uiManager.EquippedInventoryItems.childCount; i++) yield return uiManager.EquippedInventoryItems.GetChild(i);
+        for (int i = 0; i < uiManager.ArmorInventoryItems.childCount; i++) yield return uiManager.ArmorInventoryItems.GetChild(i);
+        // TODO: this allows picking up from anywhere...
+        for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
     }
 
     public InventorySlot GetInventorySlot(int slotIndex) {
