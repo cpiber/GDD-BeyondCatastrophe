@@ -7,6 +7,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     [SerializeField] GameObject armorUI;
     [SerializeField] GameObject equippedUI;
     [SerializeField] GameObject itemDescUI;
+    [SerializeField] GameObject hud;
     
     enum UI {
         Closed,
@@ -23,6 +24,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
             chestUI.SetActive(true);
             armorUI.SetActive(true);
             equippedUI.SetActive(true);
+            hud.SetActive(false);
             openUI = UI.Chest;
         }
     }
@@ -34,6 +36,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
             bagUI.SetActive(true);
             armorUI.SetActive(true);
             equippedUI.SetActive(true);
+            hud.SetActive(false);
             openUI = UI.Bag;
         }
     }
@@ -43,6 +46,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
         chestUI.SetActive(false);
         armorUI.SetActive(false);
         equippedUI.SetActive(false);
+        hud.SetActive(true);
         openUI = UI.Closed;
     }
 }
