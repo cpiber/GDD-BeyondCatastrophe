@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -37,7 +38,12 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
-        OnSetIndexZero();
+        StartCoroutine(SetIndexNextFrame());
+    }
+
+    IEnumerator SetIndexNextFrame() {
+        yield return null;
+        SetEquippedItem(useEquippedItemIndex);
     }
 
     void FixedUpdate() {
@@ -69,60 +75,38 @@ public class PlayerController : MonoBehaviour
     // Set index of equipped item
     void OnSetIndexZero() {
         if (DayNightSystem.the().IsPaused) return;
-        useEquippedItemIndex = 0;
-        
-        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
-        itemSlot0.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
-
-        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
-        itemSlot1.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
-        itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+        SetEquippedItem(0);
     }
 
     void OnSetIndexOne() {
         if (DayNightSystem.the().IsPaused) return;
-        useEquippedItemIndex = 1;
-
-        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
-        itemSlot0.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
-        itemSlot1.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
-
-        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
-        itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+        SetEquippedItem(1);
     }
 
     void OnSetIndexTwo() {
         if (DayNightSystem.the().IsPaused) return;
-        useEquippedItemIndex = 2;
-        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
-        itemSlot0.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
-        itemSlot1.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
-        itemSlot2.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
+        SetEquippedItem(2);
     }
 
-    // TODO: Test this
-    void OnSetIndexController() {
-        switch(useEquippedItemIndex) {
-            case 0:
-                OnSetIndexOne();
-                break;
-            case 1:
-                OnSetIndexTwo();
-                break;
-            case 2:
-                OnSetIndexZero();
-                break;    
-            default:
-                Debug.LogWarning("This Should not happen");
-                break;
+    void OnIncrementIndex() {
+        if (DayNightSystem.the().IsPaused) return;
+        if (useEquippedItemIndex >= 2) return;
+        SetEquippedItem(useEquippedItemIndex + 1);
+    }
+
+    void OnDecrementIndex() {
+        if (DayNightSystem.the().IsPaused) return;
+        if (useEquippedItemIndex <= 0) return;
+        SetEquippedItem(useEquippedItemIndex - 1);
+    }
+
+    void SetEquippedItem(int index) {
+        Debug.Assert(0 <= index && index < 3);
+        useEquippedItemIndex = index;
+
+        for (int i = 0; i < 3; i++) {
+            InventorySlot itemSlot = inventory.GetInventorySlot(i);
+            itemSlot.GetComponent<Image>().color = i == index ? new Color32(0, 0, 0, 123) : new Color32(255, 255, 255, 123);;
         }
     }
 
