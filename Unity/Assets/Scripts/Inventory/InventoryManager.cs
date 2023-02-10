@@ -91,6 +91,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             firstItemSlot.SetSlot(secondItem);
             secondItemSlot.SetSlot(firstItem);
             UnselectButtons();
+            uiManager.UpdateArmorStats();
         }
     }
 

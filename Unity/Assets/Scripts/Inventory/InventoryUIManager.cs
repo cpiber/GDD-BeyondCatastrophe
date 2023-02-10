@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     [SerializeField] GameObject equippedUI;
     [SerializeField] GameObject itemDescUI;
     [SerializeField] GameObject hotbarEquippedUI;
+    [SerializeField] TMP_Text hotbarArmorUI;
     [SerializeField] GameObject hud;
     [SerializeField] GameObject hotbar;
     [SerializeField] DialogueSystem dialogueSystem;
@@ -33,6 +35,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
             Destroy(hotbarEquippedUI.transform.GetChild(i).gameObject);
         }
         ShowHotbar(true);
+        UpdateArmorStats();
     }
     
     [ContextMenu("Toggle Chest")]
@@ -75,6 +78,12 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
         hud.SetActive(true);
         ShowHotbar();
         openUI = UI.Closed;
+    }
+
+    [ContextMenu("Update Armor Stats")]
+    public void UpdateArmorStats() {
+        var buff = StatusSystem.the().TemperatureBuffs;
+        hotbarArmorUI.text = (buff >= 0 ? "+" : "") + buff.ToString("N0");
     }
 
     [ContextMenu("Show Hotbar")]
