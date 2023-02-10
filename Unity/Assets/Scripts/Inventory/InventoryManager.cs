@@ -5,10 +5,7 @@ using UnityEngine.EventSystems;
 public class InventoryManager : GenericSingleton<InventoryManager>
 {
     [SerializeField] SerializableDictionary<string, Item> items;
-    [SerializeField] GameObject bagInventoryItems;
-    [SerializeField] GameObject chestInventoryItems;
-    [SerializeField] GameObject armorInventoryItems;
-    [SerializeField] GameObject equippedInventoryItems;
+    [SerializeField] InventoryUIManager uiManager;
     [SerializeField] Bag bag;
     private GameObject selectedItemToMove = null;
 
@@ -22,11 +19,11 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
     // list is 0 indexed (three weapons => 0,1,2 slot)
     public void UseEquippedItem(int slotIndex) {
-        if (equippedInventoryItems.transform.childCount <= slotIndex) {
+        if (uiManager.EquippedInventoryItems.childCount <= slotIndex) {
             Debug.LogWarning("Such an equiment slot does not exist!");
             return;
         }
-        InventorySlot itemSlot = equippedInventoryItems.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
+        InventorySlot itemSlot = uiManager.EquippedInventoryItems.GetChild(slotIndex).GetComponent<InventorySlot>();
         Item itemToUse = itemSlot.GetItem();
         itemToUse.UseItem();
         itemSlot.SetCount();
@@ -104,27 +101,27 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
     // TODO This does a lot of calls to GetComponent<>, which is slow
     //      For future performance improvements, we might want to cache this
-    private IEnumerable<Item> GetItemsFromSlot(GameObject inv) {
-        foreach (Transform child in armorInventoryItems.transform) {
+    private IEnumerable<Item> GetItemsFromSlot(Transform inv) {
+        foreach (Transform child in inv) {
             var slot = child.gameObject.GetComponent<InventorySlot>();
             yield return slot.GetItem();
         }
     }
 
     public IEnumerable<Item> GetBagItems() {
-        return GetItemsFromSlot(bagInventoryItems);
+        return GetItemsFromSlot(uiManager.BagInventoryItems);
     }
     public IEnumerable<Item> GetChestItems() {
-        return GetItemsFromSlot(chestInventoryItems);
+        return GetItemsFromSlot(uiManager.ChestInventoryItems);
     }
     public IEnumerable<Item> GetArmorItems() {
-        return GetItemsFromSlot(armorInventoryItems);
+        return GetItemsFromSlot(uiManager.ArmorInventoryItems);
     }
     public IEnumerable<Item> GetEquippedItems() {
-        return GetItemsFromSlot(equippedInventoryItems);
+        return GetItemsFromSlot(uiManager.EquippedInventoryItems);
     }
 
     public InventorySlot GetInventorySlot(int slotIndex) {
-        return equippedInventoryItems.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
+        return uiManager.EquippedInventoryItems.GetChild(slotIndex).GetComponent<InventorySlot>();
     }
 }
