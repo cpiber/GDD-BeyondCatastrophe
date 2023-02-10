@@ -8,6 +8,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     [SerializeField] GameObject equippedUI;
     [SerializeField] GameObject itemDescUI;
     [SerializeField] GameObject hud;
+    [SerializeField] DialogueSystem dialogueSystem;
     
     enum UI {
         Closed,
@@ -17,6 +18,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     private UI openUI;
     
     public void ToggleChestUI() {
+        if (dialogueSystem.IsOpen) return;
         // Allow to open bag regardless of whether bag is open
         if (openUI == UI.Chest) CloseAllUI();
         else {
@@ -30,6 +32,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     }
     
     public void ToggleBagUI() {
+        if (dialogueSystem.IsOpen) return;
         // Bag toggles Chest as well
         if (openUI != UI.Closed) CloseAllUI();
         else {

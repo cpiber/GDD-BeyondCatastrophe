@@ -12,8 +12,10 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     [SerializeField] float speed = 0.1f;
     private int lineIndex;
     [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip[] clips;
+    [SerializeField] AudioClip[] clips = {};
     [SerializeField] float volume = 1f;
+
+    public bool IsOpen => gameObject.activeSelf;
   
     void Start(){
         gameObject.SetActive(false);
@@ -49,8 +51,13 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         }
     }
 
+    [ContextMenu("Start Dialogue")]
+    public void StartDialogueAsIs() {
+        StartDialogue(this.lines, this.clips);
+    }
     public void StartDialogue(string[] lines, AudioClip[] clips){
         gameObject.SetActive(true);
+        InventoryUIManager.the().CloseAllUI();
         textComponent.text = "";
         this.lines = lines;
         this.clips = clips;
@@ -61,7 +68,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     IEnumerator TypeLine(){
         // TODO: only play audio if flag set in menue
         audioSource.Stop();
-        audioSource.PlayOneShot(clips[lineIndex], volume);
+        audioSource.PlayOneShot(lineIndex < clips.Length ? clips[lineIndex] : null, volume);
         for (int i = 0; i < lines[lineIndex].Length; i++){
             textComponent.text += lines[lineIndex][i];
             yield return new WaitForSeconds(speed);
