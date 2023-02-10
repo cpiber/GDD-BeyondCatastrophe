@@ -28,6 +28,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
         Chest,
     }
     private UI openUI;
+    public bool IsUIOpen => openUI != UI.Closed;
 
     void Start() {
         // Dummy items for UI

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 // This code was adapted from: https://www.youtube.com/watch?v=8oTYabhj248
 public class DialogueSystem : GenericSingleton<DialogueSystem>
 {
+    [SerializeField] GameObject dialogueBox;
     [SerializeField] TextMeshProUGUI textComponent;
     [SerializeField] string[] lines = {"Hello this is a test", "Test line number 2", "Test Line number three"};
     [SerializeField] float speed = 0.1f;
@@ -15,10 +16,10 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     [SerializeField] AudioClip[] clips = {};
     [SerializeField] float volume = 1f;
 
-    public bool IsOpen => gameObject.activeSelf;
+    public bool IsOpen => dialogueBox.activeSelf;
   
     void Start(){
-        gameObject.SetActive(false);
+        dialogueBox.SetActive(false);
         /* 
         // -> Call Dialogue system like this
         this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1"), 
@@ -43,6 +44,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
 
 
     void CompleteDialogue() {
+        if (!dialogueBox.activeSelf) return;
         StopAllCoroutines();
         if (textComponent.text == lines[lineIndex]){
             NextLine();
@@ -56,7 +58,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         StartDialogue(this.lines, this.clips);
     }
     public void StartDialogue(string[] lines, AudioClip[] clips){
-        gameObject.SetActive(true);
+        dialogueBox.SetActive(true);
         InventoryUIManager.the().CloseAllUI();
         textComponent.text = "";
         this.lines = lines;
@@ -81,7 +83,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
             textComponent.text = "";
             StartCoroutine(TypeLine());
         } else {
-            gameObject.SetActive(false);
+            dialogueBox.SetActive(false);
             // TODO: only stop if audio flag set
             audioSource.Stop();
         }

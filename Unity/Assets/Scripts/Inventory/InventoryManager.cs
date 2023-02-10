@@ -95,6 +95,11 @@ public class InventoryManager : GenericSingleton<InventoryManager>
     }
 
     public void SelectItemToMove(GameObject itemToMove) {
+        if (!uiManager.IsUIOpen) {
+            UnselectButtons();
+            return;
+        }
+
         if (selectedItemToMove == null) {
             // if first item is selected
             selectedItemToMove = itemToMove;
