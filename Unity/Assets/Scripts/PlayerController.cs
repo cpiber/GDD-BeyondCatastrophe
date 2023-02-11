@@ -89,15 +89,13 @@ public class PlayerController : MonoBehaviour
     void OnIncrementIndex() {
         if (DayNightSystem.the().IsPaused) return;
         var ui = InventoryUIManager.the();
-        if (ui.UseEquippedItemIndex >= InventoryUIManager.MAX_EQUIPPED_ITEMS - 1) return;
-        ui.SetSelectedSlot(ui.UseEquippedItemIndex + 1);
+        ui.SetSelectedSlot((ui.UseEquippedItemIndex + 1) % InventoryUIManager.MAX_EQUIPPED_ITEMS);
     }
 
     void OnDecrementIndex() {
         if (DayNightSystem.the().IsPaused) return;
         var ui = InventoryUIManager.the();
-        if (ui.UseEquippedItemIndex <= 0) return;
-        ui.SetSelectedSlot(ui.UseEquippedItemIndex - 1);
+        ui.SetSelectedSlot(ui.UseEquippedItemIndex == 0 ? InventoryUIManager.MAX_EQUIPPED_ITEMS - 1 : ui.UseEquippedItemIndex - 1);
     }
 
     void OnInteractItem() {
