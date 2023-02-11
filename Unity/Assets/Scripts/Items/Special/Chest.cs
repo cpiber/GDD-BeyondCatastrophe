@@ -1,19 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Chest : PermanentItem
 {
-    [SerializeField] List<Item> items;
-
-    public void AddInventoryItem(Item item) {
-        items.Add(item);
-    }
-
-    public void RemoveItem(Item item) {
-        items.Remove(item);
-    }
-
     public override void UseItem () {
         // open chest overlay (chest and inventory)
         InventoryManager.the().UseChest();
