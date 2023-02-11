@@ -163,8 +163,4 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         // TODO: this allows picking up from anywhere...
         for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
     }
-
-    public InventorySlot GetInventorySlot(int slotIndex) {
-        return uiManager.EquippedInventoryItems.GetChild(slotIndex).GetComponent<InventorySlot>();
-    }
 }

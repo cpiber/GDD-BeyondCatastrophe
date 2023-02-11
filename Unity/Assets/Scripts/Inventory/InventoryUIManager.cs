@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class InventoryUIManager : GenericSingleton<InventoryUIManager>
 {
+    public static int MAX_EQUIPPED_ITEMS = 3;
+
     [SerializeField] GameObject bagUI;
     [SerializeField] GameObject chestUI;
     [SerializeField] GameObject armorUI;
@@ -16,6 +18,12 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     [SerializeField] GameObject hotbar;
     [SerializeField] DialogueSystem dialogueSystem;
     Transform equippedActualItems => equippedUI.transform.GetChild(1);
+
+    [Header("Equipped slots")]
+    [SerializeField] Color equippedSelectedCol = new Color32(0, 0, 0, 123);
+    [SerializeField] Color equippedUnselectedCol = new Color32(255, 255, 255, 123);
+    private int useEquippedItemIndex = 0;
+    public int UseEquippedItemIndex => useEquippedItemIndex;
     
     public Transform BagInventoryItems => bagUI.transform.GetChild(1);
     public Transform ChestInventoryItems => chestUI.transform.GetChild(1);
@@ -87,6 +95,17 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
         hotbarArmorUI.text = (buff >= 0 ? "+" : "") + buff.ToString("N0");
     }
 
+    public void SetSelectedSlot(int index) {
+        Debug.Assert(0 <= index && index < 3);
+        if (IsUIOpen) return;
+        useEquippedItemIndex = index;
+
+        for (int i = 0; i < MAX_EQUIPPED_ITEMS; i++) {
+            InventorySlot itemSlot = GetInventorySlot(i);
+            itemSlot.GetComponent<Image>().color = i == index ? equippedSelectedCol : equippedUnselectedCol;
+        }
+    }
+
     [ContextMenu("Show Hotbar")]
     private void ShowHotbar(bool force = false) {
         // Don't mess anything up!
@@ -98,6 +117,11 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
         }
         hotbar.SetActive(true);
         StartCoroutine(Relayout());
+
+        for (int i = 0; i < MAX_EQUIPPED_ITEMS; i++) {
+            InventorySlot itemSlot = GetInventorySlot(i);
+            itemSlot.GetComponent<Image>().color = i == useEquippedItemIndex ? equippedSelectedCol : equippedUnselectedCol;
+        }
     }
 
     [ContextMenu("Hide Hotbar")]
@@ -111,11 +135,20 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
             hotbarEquippedUI.transform.GetChild(0).SetParent(equippedActualItems, false);
         }
         equippedActualItems.GetComponent<InventoryUIGrid>().SetLayoutVertical();
+
+        for (int i = 0; i < MAX_EQUIPPED_ITEMS; i++) {
+            InventorySlot itemSlot = GetInventorySlot(i);
+            itemSlot.GetComponent<Image>().color = equippedUnselectedCol;
+        }
     }
 
     private IEnumerator Relayout() {
         // Apparently the InventoryUIGrid from the equippedUI interferes here? Probably still has references somewhere
         yield return null;
         LayoutRebuilder.ForceRebuildLayoutImmediate(hotbar.GetComponent<RectTransform>());
+    }
+    
+    private InventorySlot GetInventorySlot(int slotIndex) {
+        return EquippedInventoryItems.GetChild(slotIndex).GetComponent<InventorySlot>();
     }
 }

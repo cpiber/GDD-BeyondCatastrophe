@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,8 +33,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movement = Vector2.zero;
 
-    private int useEquippedItemIndex = 0;
-
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
         StartCoroutine(SetIndexNextFrame());
@@ -43,7 +40,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator SetIndexNextFrame() {
         yield return null;
-        SetEquippedItem(useEquippedItemIndex);
+        var ui = InventoryUIManager.the();
+        ui.SetSelectedSlot(ui.UseEquippedItemIndex);
     }
 
     void FixedUpdate() {
@@ -69,46 +67,37 @@ public class PlayerController : MonoBehaviour
 
     void OnUseItem() {
         if (DayNightSystem.the().IsPaused) return;
-        inventory.UseEquippedItem(useEquippedItemIndex);
+        inventory.UseEquippedItem(InventoryUIManager.the().UseEquippedItemIndex);
     }
 
     // Set index of equipped item
     void OnSetIndexZero() {
         if (DayNightSystem.the().IsPaused) return;
-        SetEquippedItem(0);
+        InventoryUIManager.the().SetSelectedSlot(0);
     }
 
     void OnSetIndexOne() {
         if (DayNightSystem.the().IsPaused) return;
-        SetEquippedItem(1);
+        InventoryUIManager.the().SetSelectedSlot(1);
     }
 
     void OnSetIndexTwo() {
         if (DayNightSystem.the().IsPaused) return;
-        SetEquippedItem(2);
+        InventoryUIManager.the().SetSelectedSlot(2);
     }
 
     void OnIncrementIndex() {
         if (DayNightSystem.the().IsPaused) return;
-        if (useEquippedItemIndex >= 2) return;
-        SetEquippedItem(useEquippedItemIndex + 1);
+        var ui = InventoryUIManager.the();
+        if (ui.UseEquippedItemIndex >= InventoryUIManager.MAX_EQUIPPED_ITEMS - 1) return;
+        ui.SetSelectedSlot(ui.UseEquippedItemIndex + 1);
     }
 
     void OnDecrementIndex() {
         if (DayNightSystem.the().IsPaused) return;
-        if (useEquippedItemIndex <= 0) return;
-        SetEquippedItem(useEquippedItemIndex - 1);
-    }
-
-    public void SetEquippedItem(int index) {
-        Debug.Assert(0 <= index && index < 3);
-        if (InventoryUIManager.the().IsUIOpen) return;
-        useEquippedItemIndex = index;
-
-        for (int i = 0; i < 3; i++) {
-            InventorySlot itemSlot = inventory.GetInventorySlot(i);
-            itemSlot.GetComponent<Image>().color = i == index ? new Color32(0, 0, 0, 123) : new Color32(255, 255, 255, 123);;
-        }
+        var ui = InventoryUIManager.the();
+        if (ui.UseEquippedItemIndex <= 0) return;
+        ui.SetSelectedSlot(ui.UseEquippedItemIndex - 1);
     }
 
     void OnInteractItem() {
