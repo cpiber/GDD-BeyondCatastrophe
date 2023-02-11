@@ -1,11 +1,14 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InventoryUIManager : GenericSingleton<InventoryUIManager>
 {
     public static int MAX_EQUIPPED_ITEMS = 3;
+    public static string KEYBOARD_SCHEME = "Keyboard&Mouse";
 
     [SerializeField] GameObject bagUI;
     [SerializeField] GameObject chestUI;
@@ -17,11 +20,13 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     [SerializeField] GameObject hud;
     [SerializeField] GameObject hotbar;
     [SerializeField] DialogueSystem dialogueSystem;
+    [SerializeField] PlayerInput playerInput;
     Transform equippedActualItems => equippedUI.transform.GetChild(1);
 
     [Header("Equipped slots")]
     [SerializeField] Color equippedSelectedCol = new Color32(0, 0, 0, 123);
     [SerializeField] Color equippedUnselectedCol = new Color32(255, 255, 255, 123);
+    [SerializeField] Color slotSelectedForMoveCol = new Color32(100, 0, 0, 123);
     private int useEquippedItemIndex = 0;
     public int UseEquippedItemIndex => useEquippedItemIndex;
     
@@ -37,6 +42,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     }
     private UI openUI;
     public bool IsUIOpen => openUI != UI.Closed;
+    public bool ShouldInhibitMovement => IsUIOpen && playerInput.currentControlScheme != KEYBOARD_SCHEME;
 
     void Start() {
         // Dummy items for UI
@@ -59,6 +65,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
             armorUI.SetActive(true);
             equippedUI.SetActive(true);
             hud.SetActive(false);
+            StartCoroutine(SelectSelectedIfNecessary());
             openUI = UI.Chest;
         }
     }
@@ -74,6 +81,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
             armorUI.SetActive(true);
             equippedUI.SetActive(true);
             hud.SetActive(false);
+            StartCoroutine(SelectSelectedIfNecessary());
             openUI = UI.Bag;
         }
     }
@@ -93,6 +101,15 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     public void UpdateArmorStats() {
         var buff = StatusSystem.the().TemperatureBuffs;
         hotbarArmorUI.text = (buff >= 0 ? "+" : "") + buff.ToString("N0");
+    }
+
+    public void OnAttemptSwapItems(GameObject source, GameObject destination) {
+        source.GetComponent<Image>().color = equippedUnselectedCol;
+        StartCoroutine(SelectSelectedIfNecessary(destination));
+    }
+
+    public void OnSelectSlotForMove(GameObject slot) {
+        slot.GetComponent<Image>().color = slotSelectedForMoveCol;
     }
 
     public void SetSelectedSlot(int index) {
@@ -140,6 +157,13 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
             InventorySlot itemSlot = GetInventorySlot(i);
             itemSlot.GetComponent<Image>().color = equippedUnselectedCol;
         }
+    }
+
+    private IEnumerator SelectSelectedIfNecessary(GameObject obj = null) {
+        if (playerInput.currentControlScheme == KEYBOARD_SCHEME) yield break;
+        if (obj == null) obj = BagInventoryItems.GetChild(0).gameObject;
+        yield return null;
+        EventSystem.current.SetSelectedGameObject(obj);
     }
 
     private IEnumerator Relayout() {

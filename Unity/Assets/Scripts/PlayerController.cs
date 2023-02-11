@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour
 
 
     void OnMove(InputValue mv) {
+        if (InventoryUIManager.the().ShouldInhibitMovement) return;
         movement = mv.Get<Vector2>();
         if (Mathf.Abs(movement.x) < INPUT_MIN) movement.x = 0;
         if (Mathf.Abs(movement.y) < INPUT_MIN) movement.y = 0;
