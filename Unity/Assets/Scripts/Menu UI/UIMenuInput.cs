@@ -11,6 +11,7 @@ public class UIMenuInput : MonoBehaviour {
     private GameObject lastUIObject = null;
 
     void Start() {
+        if (firstUIObject == null) return;
         EventSystem.current.SetSelectedGameObject(firstUIObject);
         UpdateSelected(Vector2.down);
     }
@@ -35,8 +36,8 @@ public class UIMenuInput : MonoBehaviour {
     }
 
     void OnCancel() {
-        if (mainBackObject.activeInHierarchy) mainBackObject.GetComponent<Button>().onClick.Invoke();
-        else if (creditsBackObject.activeInHierarchy) creditsBackObject.GetComponent<Button>().onClick.Invoke();
+        if (mainBackObject != null && mainBackObject.activeInHierarchy) mainBackObject.GetComponent<Button>().onClick.Invoke();
+        else if (creditsBackObject != null && creditsBackObject.activeInHierarchy) creditsBackObject.GetComponent<Button>().onClick.Invoke();
     }
 
     void UpdateSelected(Vector2 mv) {

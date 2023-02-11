@@ -103,6 +103,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         if (selectedItemToMove == null) {
             // if first item is selected
             selectedItemToMove = itemToMove;
+            uiManager.OnSelectSlotForMove(itemToMove);
         } else {
             // if second item is selected => swap
             InventorySlot firstItemSlot = selectedItemToMove.GetComponent<InventorySlot>();
@@ -115,17 +116,20 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
             if (firstItemSlot.name.Contains("Armor") && !secondItem.IsArmor()) {
                 UnselectButtons();
+                uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
                 return;
             } 
             if (secondItemSlot.name.Contains("Armor") && !firstItem.IsArmor()) {
                 UnselectButtons();
+                uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
                 return;
             } 
 
             firstItemSlot.SetSlot(secondItem);
             secondItemSlot.SetSlot(firstItem);
-            UnselectButtons();
             uiManager.UpdateArmorStats();
+            uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
+            UnselectButtons();
         }
     }
 
@@ -162,9 +166,5 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         for (int i = 0; i < uiManager.ArmorInventoryItems.childCount; i++) yield return uiManager.ArmorInventoryItems.GetChild(i);
         // TODO: this allows picking up from anywhere...
         for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
-    }
-
-    public InventorySlot GetInventorySlot(int slotIndex) {
-        return uiManager.EquippedInventoryItems.GetChild(slotIndex).GetComponent<InventorySlot>();
     }
 }
