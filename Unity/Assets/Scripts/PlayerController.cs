@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     private int useEquippedItemIndex = 0;
 
+    public Animator animator;
+
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
         OnSetIndexZero();
@@ -153,6 +155,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void UpdateSprite(Vector2 move_vec){
+        
+        animator.SetFloat("walk_y", move_vec.y);
+        animator.SetFloat("walk_x", move_vec.x);
+        
         if(move_vec.x > 0){
             spriteRenderer.sprite = spriteList[characterIndex].right; 
             spriteRenderer.flipX = true;
