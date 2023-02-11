@@ -265,7 +265,7 @@
                 {
                     "name": "",
                     "id": "b95aaa31-57d6-497e-b9ba-a10a9ad2f8e2",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -276,7 +276,7 @@
                 {
                     "name": "",
                     "id": "66cd1038-b7e5-4d9a-b92d-002611b55f9e",
-                    "path": "<Keyboard>/t",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -302,6 +302,28 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa08efc9-5988-4bc5-b9c9-a2a1e9259e63",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a290575-748d-41f0-a3ae-73a879431d7b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "OpenMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -364,7 +386,7 @@
                 {
                     "name": "",
                     "id": "90fc3367-2d43-426e-8329-3e3fe4033846",
-                    "path": "<Keyboard>/comma",
+                    "path": "<Keyboard>/period",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -386,7 +408,7 @@
                 {
                     "name": "",
                     "id": "580cfcf9-9ae3-478e-b62c-dc37d46edd14",
-                    "path": "<Keyboard>/period",
+                    "path": "<Keyboard>/comma",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
