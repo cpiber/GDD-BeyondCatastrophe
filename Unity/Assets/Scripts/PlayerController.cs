@@ -61,7 +61,8 @@ public class PlayerController : MonoBehaviour
                 if (SceneManager.GetSceneAt(i).path == testScene)
                     return;
             }
-            possibleCollectItem.gameObject.SetActive(false);
+            if (possibleCollectItem.gameObject.TryGetComponent<SceneObjectState>(out var os)) os.Destroy();
+            else Destroy(possibleCollectItem.gameObject);
             possibleCollectItem = null;
         }
     }
