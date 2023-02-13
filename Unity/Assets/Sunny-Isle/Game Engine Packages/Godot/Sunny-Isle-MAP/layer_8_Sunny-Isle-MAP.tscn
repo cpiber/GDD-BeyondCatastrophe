@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="tileset_Sunny-Isle-MAP.tres" type="TileSet" id=1]
+
+[node name="8_Rocks" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 1179662, 84, 0, 1835022, 85, 0, 1048593, 86, 0, 1245201, 87, 0, 1835026, 88, 0, 1376275, 89, 0, 1638419, 89, 0, 786453, 84, 0, 1114133, 84, 0, 720918, 89, 0, 1245206, 85, 0, 917527, 86, 0, 1114137, 88, 0, 786463, 86, 0, 1245216, 88, 0, 1179681, 85, 0, 852003, 88, 0, 1114149, 90, 0, 917547, 88, 0, 1179694, 85, 0, 786482, 86, 0, 1114162, 84, 0 )
