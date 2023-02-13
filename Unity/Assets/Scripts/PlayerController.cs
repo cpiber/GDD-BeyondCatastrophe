@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public HeatedRoom CurrentRoom { get; set; }
 
     private Vector2 movement = Vector2.zero;
+    public Animator animator;
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -60,7 +61,8 @@ public class PlayerController : MonoBehaviour
                 if (SceneManager.GetSceneAt(i).path == testScene)
                     return;
             }
-            possibleCollectItem.gameObject.SetActive(false);
+            if (possibleCollectItem.gameObject.TryGetComponent<SceneObjectState>(out var os)) os.Destroy();
+            else Destroy(possibleCollectItem.gameObject);
             possibleCollectItem = null;
         }
     }
@@ -126,6 +128,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void UpdateSprite(Vector2 move_vec){
+        
+        animator.SetFloat("walk_y", move_vec.y);
+        animator.SetFloat("walk_x", move_vec.x);
+        
         if(move_vec.x > 0){
             spriteRenderer.sprite = spriteList[characterIndex].right; 
             spriteRenderer.flipX = true;
