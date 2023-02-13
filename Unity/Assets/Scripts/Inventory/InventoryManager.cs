@@ -5,11 +5,7 @@ using UnityEngine.EventSystems;
 public class InventoryManager : GenericSingleton<InventoryManager>
 {
     [SerializeField] SerializableDictionary<string, Item> items;
-    [SerializeField] GameObject bagInventoryItems;
-    [SerializeField] GameObject chestInventoryItems;
-    [SerializeField] GameObject armorInventoryItems;
-    [SerializeField] GameObject equippedInventoryItems;
-    [SerializeField] Bag bag;
+    [SerializeField] InventoryUIManager uiManager;
     private GameObject selectedItemToMove = null;
 
     void Start() {
@@ -22,11 +18,11 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
     // list is 0 indexed (three weapons => 0,1,2 slot)
     public void UseEquippedItem(int slotIndex) {
-        if (equippedInventoryItems.transform.childCount <= slotIndex) {
+        if (uiManager.EquippedInventoryItems.childCount <= slotIndex) {
             Debug.LogWarning("Such an equiment slot does not exist!");
             return;
         }
-        InventorySlot itemSlot = equippedInventoryItems.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
+        InventorySlot itemSlot = uiManager.EquippedInventoryItems.GetChild(slotIndex).GetComponent<InventorySlot>();
         Item itemToUse = itemSlot.GetItem();
         itemToUse.UseItem();
         itemSlot.SetCount();
@@ -60,18 +56,54 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         itemToUse.UseItem();
     }  
 
-    public void AddBagItem(string itemName) {
+    public bool AddBagItem(string itemName) {
         if (!items.ContainsKey(itemName)) {
             Debug.LogWarning($"Such an item ({itemName}) does not exist!");
-            return;
+            return false;
         }
-        bag.AddBagItem(items[itemName]);
+
+        var item = items[itemName];
+        Transform itemFound = null;
+        Transform firstFreeSlot = null;
+        foreach(Transform itemSlot in GetAllItemSlots()) {
+            InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
+            if (slot.GetSlotItemName() == itemName) {
+                itemFound = itemSlot;
+                break;
+            }
+            if (slot.IsSlotEmpty() && firstFreeSlot == null) {
+                firstFreeSlot = itemSlot;
+            }
+        }
+
+        if (itemFound) {
+            InventorySlot slot = itemFound.GetComponent<InventorySlot>();
+            Item itemScript = slot.GetItem();
+            System.Type test = itemScript.GetType();
+            if (itemScript is NonPermanentItem) {
+                NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
+                nonPermanentItem.IncreaseItemCount();
+                slot.SetCount();
+                return true;
+            } else {
+                return false;
+            }
+        } 
+
+        firstFreeSlot.GetComponent<InventorySlot>().SetSlot(item);
+        return true;
     }
 
     public void SelectItemToMove(GameObject itemToMove) {
+        if (!uiManager.IsUIOpen) {
+            UnselectButtons();
+            return;
+        }
+
         if (selectedItemToMove == null) {
             // if first item is selected
             selectedItemToMove = itemToMove;
+            uiManager.OnSelectSlotForMove(itemToMove);
         } else {
             // if second item is selected => swap
             InventorySlot firstItemSlot = selectedItemToMove.GetComponent<InventorySlot>();
@@ -84,15 +116,19 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
             if (firstItemSlot.name.Contains("Armor") && !secondItem.IsArmor()) {
                 UnselectButtons();
+                uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
                 return;
             } 
             if (secondItemSlot.name.Contains("Armor") && !firstItem.IsArmor()) {
                 UnselectButtons();
+                uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
                 return;
             } 
 
             firstItemSlot.SetSlot(secondItem);
             secondItemSlot.SetSlot(firstItem);
+            uiManager.UpdateArmorStats();
+            uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
             UnselectButtons();
         }
     }
@@ -104,27 +140,31 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
     // TODO This does a lot of calls to GetComponent<>, which is slow
     //      For future performance improvements, we might want to cache this
-    private IEnumerable<Item> GetItemsFromSlot(GameObject inv) {
-        foreach (Transform child in armorInventoryItems.transform) {
+    private IEnumerable<Item> GetItemsFromSlot(Transform inv) {
+        foreach (Transform child in inv) {
             var slot = child.gameObject.GetComponent<InventorySlot>();
             yield return slot.GetItem();
         }
     }
 
     public IEnumerable<Item> GetBagItems() {
-        return GetItemsFromSlot(bagInventoryItems);
+        return GetItemsFromSlot(uiManager.BagInventoryItems);
     }
     public IEnumerable<Item> GetChestItems() {
-        return GetItemsFromSlot(chestInventoryItems);
+        return GetItemsFromSlot(uiManager.ChestInventoryItems);
     }
     public IEnumerable<Item> GetArmorItems() {
-        return GetItemsFromSlot(armorInventoryItems);
+        return GetItemsFromSlot(uiManager.ArmorInventoryItems);
     }
     public IEnumerable<Item> GetEquippedItems() {
-        return GetItemsFromSlot(equippedInventoryItems);
+        return GetItemsFromSlot(uiManager.EquippedInventoryItems);
     }
 
-    public InventorySlot GetInventorySlot(int slotIndex) {
-        return equippedInventoryItems.transform.GetChild(slotIndex).GetComponent<InventorySlot>();
+    public IEnumerable<Transform> GetAllItemSlots() {
+        for (int i = 0; i < uiManager.BagInventoryItems.childCount; i++) yield return uiManager.BagInventoryItems.GetChild(i);
+        for (int i = 0; i < uiManager.EquippedInventoryItems.childCount; i++) yield return uiManager.EquippedInventoryItems.GetChild(i);
+        for (int i = 0; i < uiManager.ArmorInventoryItems.childCount; i++) yield return uiManager.ArmorInventoryItems.GetChild(i);
+        // TODO: this allows picking up from anywhere...
+        for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
     }
 }

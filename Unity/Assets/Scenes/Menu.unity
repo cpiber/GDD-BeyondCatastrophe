@@ -480,15 +480,12 @@ MonoBehaviour:
 
     WASD or Arrow Keys to move
 
-    M open inventory
+    I/M/TAB open inventory
 
     E
-    use first equipped item
+    use selected (equipped) item
 
-    Q interact with object (chest or bed/coffin)
-
-    T
-    collect item'
+    Q interact with object or collect it'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

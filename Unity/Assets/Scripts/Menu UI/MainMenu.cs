@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject quitButton;
 
     void Start() {
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_EDITOR
         quitButton.SetActive(false);
 #endif
     }

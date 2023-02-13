@@ -1,8 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -32,14 +32,17 @@ public class PlayerController : MonoBehaviour
     public HeatedRoom CurrentRoom { get; set; }
 
     private Vector2 movement = Vector2.zero;
-
-    private int useEquippedItemIndex = 0;
-
     public Animator animator;
 
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
-        OnSetIndexZero();
+        StartCoroutine(SetIndexNextFrame());
+    }
+
+    IEnumerator SetIndexNextFrame() {
+        yield return null;
+        var ui = InventoryUIManager.the();
+        ui.SetSelectedSlot(ui.UseEquippedItemIndex);
     }
 
     void FixedUpdate() {
@@ -51,7 +54,7 @@ public class PlayerController : MonoBehaviour
         if (DayNightSystem.the().IsPaused) return;
         if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             // TODO add collision check and other collect features
-            inventory.AddBagItem(possibleCollectItem.name);
+            if (!inventory.AddBagItem(possibleCollectItem.name)) return;
             int sceneCount = SceneManager.sceneCount;
             for (int i = 0; i < sceneCount; i++)
             {
@@ -65,67 +68,35 @@ public class PlayerController : MonoBehaviour
 
     void OnUseItem() {
         if (DayNightSystem.the().IsPaused) return;
-        inventory.UseEquippedItem(useEquippedItemIndex);
+        inventory.UseEquippedItem(InventoryUIManager.the().UseEquippedItemIndex);
     }
 
     // Set index of equipped item
     void OnSetIndexZero() {
         if (DayNightSystem.the().IsPaused) return;
-        useEquippedItemIndex = 0;
-        
-        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
-        itemSlot0.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
-
-        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
-        itemSlot1.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
-        itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+        InventoryUIManager.the().SetSelectedSlot(0);
     }
 
     void OnSetIndexOne() {
         if (DayNightSystem.the().IsPaused) return;
-        useEquippedItemIndex = 1;
-
-        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
-        itemSlot0.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
-        itemSlot1.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
-
-        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
-        itemSlot2.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
+        InventoryUIManager.the().SetSelectedSlot(1);
     }
 
     void OnSetIndexTwo() {
         if (DayNightSystem.the().IsPaused) return;
-        useEquippedItemIndex = 2;
-        InventorySlot itemSlot0 = inventory.GetInventorySlot(0);
-        itemSlot0.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot1 = inventory.GetInventorySlot(1);
-        itemSlot1.GetComponent<Image>().color = new Color32(255, 255, 255, 123);
-
-        InventorySlot itemSlot2 = inventory.GetInventorySlot(2);
-        itemSlot2.GetComponent<Image>().color = new Color32(0, 0, 0, 123);
+        InventoryUIManager.the().SetSelectedSlot(2);
     }
 
-    // TODO: Test this
-    void OnSetIndexController() {
-        switch(useEquippedItemIndex) {
-            case 0:
-                OnSetIndexOne();
-                break;
-            case 1:
-                OnSetIndexTwo();
-                break;
-            case 2:
-                OnSetIndexZero();
-                break;    
-            default:
-                Debug.LogWarning("This Should not happen");
-                break;
-        }
+    void OnIncrementIndex() {
+        if (DayNightSystem.the().IsPaused) return;
+        var ui = InventoryUIManager.the();
+        ui.SetSelectedSlot((ui.UseEquippedItemIndex + 1) % InventoryUIManager.MAX_EQUIPPED_ITEMS);
+    }
+
+    void OnDecrementIndex() {
+        if (DayNightSystem.the().IsPaused) return;
+        var ui = InventoryUIManager.the();
+        ui.SetSelectedSlot(ui.UseEquippedItemIndex == 0 ? InventoryUIManager.MAX_EQUIPPED_ITEMS - 1 : ui.UseEquippedItemIndex - 1);
     }
 
     void OnInteractItem() {
@@ -142,6 +113,7 @@ public class PlayerController : MonoBehaviour
 
 
     void OnMove(InputValue mv) {
+        if (InventoryUIManager.the().ShouldInhibitMovement) return;
         movement = mv.Get<Vector2>();
         if (Mathf.Abs(movement.x) < INPUT_MIN) movement.x = 0;
         if (Mathf.Abs(movement.y) < INPUT_MIN) movement.y = 0;
