@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-public class DayNightSystem : GenericSingleton<DayNightSystem>, ISerializationCallbackReceiver
+public class DayNightSystem : GenericSingleton<DayNightSystem>
 {
     [Serializable]
     public struct DayNightParams {
@@ -125,13 +125,6 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>, ISerializationCa
     }
     public void AdvanceToDawn() {
         AdvanceToTimeInDay(dayNightParams.darknessPercent / 2 * (float) dayNightParams.secondsPerDay);
-    }
-
-    public void OnBeforeSerialize() {
-        time = 0;
-    }
-
-    public void OnAfterDeserialize() {
     }
 
 #if UNITY_EDITOR
