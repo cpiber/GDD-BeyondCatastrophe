@@ -15,6 +15,7 @@ public class MovementRenderController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     [SerializeField] Sprites[] spriteList;
+    [SerializeField] bool shouldFlip = true;
     public Animator animator;
 
     void Start(){
@@ -22,12 +23,14 @@ public class MovementRenderController : MonoBehaviour
     }
 
     public void UpdateSprite(Vector2 move_vec){
-        animator.SetFloat("walk_y", move_vec.y);
-        animator.SetFloat("walk_x", move_vec.x);
+        if (animator != null) {
+            animator.SetFloat("walk_y", move_vec.y);
+            animator.SetFloat("walk_x", move_vec.x);
+        }
         
         if(move_vec.x > 0){
             spriteRenderer.sprite = spriteList[characterIndex].right; 
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = true && shouldFlip;
         }
 
         if(move_vec.x < 0){

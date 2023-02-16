@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : GenericSingleton<PlayerController>
 {
     const float INPUT_MIN = 0.225f;
 
@@ -18,8 +18,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movement = Vector2.zero;
     [SerializeField] MovementRenderController renderController;
+    public bool allowUserInteraction = true;
+
+    private new Rigidbody2D rigidbody;
 
     void Start(){
+        this.rigidbody = this.GetComponent<Rigidbody2D>();
         StartCoroutine(SetIndexNextFrame());
     }
 
@@ -36,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollectItem() {
         if (DayNightSystem.the().IsPaused) return;
+        if (!allowUserInteraction) return;
         if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             // TODO add collision check and other collect features
             if (!inventory.AddBagItem(possibleCollectItem.name)) return;
@@ -53,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     void OnUseItem() {
         if (DayNightSystem.the().IsPaused) return;
+        if (!allowUserInteraction) return;
         inventory.UseEquippedItem(InventoryUIManager.the().UseEquippedItemIndex);
     }
 
@@ -99,21 +105,26 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue mv) {
         if (InventoryUIManager.the().ShouldInhibitMovement) return;
+        if (!allowUserInteraction) return;
         movement = mv.Get<Vector2>();
         if (Mathf.Abs(movement.x) < INPUT_MIN) movement.x = 0;
         if (Mathf.Abs(movement.y) < INPUT_MIN) movement.y = 0;
     }
 
+    public void Stop() {
+        movement = Vector2.zero;
+    }
+
+    public void SetPosition(Vector2 position) {
+        transform.position = position;
+        MovePlayer();
+    }
+
     void MovePlayer(){
-        this.GetComponent<Rigidbody2D>().velocity = movement * speed;
+        rigidbody.velocity = movement * speed;
         var camera_position = new Vector3(transform.position.x, transform.position.y, -10);
         Camera.main.transform.position = camera_position;
         renderController.UpdateSprite(movement);
-    }
-
-    void OnCollisionEnter2D(Collision2D collider) {
-        var s = collider.gameObject.GetComponent<SceneObjectState>();
-        if (s) s.Destroy();
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
