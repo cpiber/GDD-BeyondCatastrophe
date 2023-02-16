@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,20 +9,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] [SceneProperty] string testScene;
 
-    [Serializable]
-    public struct Sprites {
-        public Sprite left;
-        public Sprite right;
-        public Sprite front;
-        public Sprite back;
-    }
-
-    [SerializeField] int characterIndex = 0;
-
-    private SpriteRenderer spriteRenderer;
-
-    [SerializeField] Sprites[] spriteList;
-
     [SerializeField] Vector2 speed = new Vector2(5, 5);
 
     [SerializeField] InventoryManager inventory;
@@ -32,10 +17,9 @@ public class PlayerController : MonoBehaviour
     public HeatedRoom CurrentRoom { get; set; }
 
     private Vector2 movement = Vector2.zero;
-    public Animator animator;
+    [SerializeField] MovementRenderController renderController;
 
     void Start(){
-        spriteRenderer = GetComponent<SpriteRenderer>();
         StartCoroutine(SetIndexNextFrame());
     }
 
@@ -124,31 +108,7 @@ public class PlayerController : MonoBehaviour
         this.GetComponent<Rigidbody2D>().velocity = movement * speed;
         var camera_position = new Vector3(transform.position.x, transform.position.y, -10);
         Camera.main.transform.position = camera_position;
-        UpdateSprite(movement);
-    }
-
-    void UpdateSprite(Vector2 move_vec){
-        
-        animator.SetFloat("walk_y", move_vec.y);
-        animator.SetFloat("walk_x", move_vec.x);
-        
-        if(move_vec.x > 0){
-            spriteRenderer.sprite = spriteList[characterIndex].right; 
-            spriteRenderer.flipX = true;
-        }
-
-        if(move_vec.x < 0){
-            spriteRenderer.flipX = false;
-            spriteRenderer.sprite = spriteList[characterIndex].left; 
-        }
-
-        if(move_vec.y > 0){
-            spriteRenderer.sprite = spriteList[characterIndex].back;  
-        }
-
-        if(move_vec.y < 0){
-            spriteRenderer.sprite = spriteList[characterIndex].front;    
-        }
+        renderController.UpdateSprite(movement);
     }
 
     void OnCollisionEnter2D(Collision2D collider) {
