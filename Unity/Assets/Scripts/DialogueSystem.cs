@@ -20,14 +20,6 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
   
     void Start(){
         dialogueBox.SetActive(false);
-        /* 
-        // -> Call Dialogue system like this
-        this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1"), 
-                                      Resources.Load<AudioClip>("Audio/test1"),
-                                      Resources.Load<AudioClip>("Audio/test1")};
-        // DialogueSystem.the().StartDialogue(new string[] {"Hello from Bedtime", "My god please work"});
-        StartDialogue(this.lines, this.clips);
-        */
     }
 
     void OnClick (InputValue input) {
@@ -58,6 +50,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         StartDialogue(this.lines, this.clips);
     }
     public void StartDialogue(string[] lines, AudioClip[] clips){
+        StopAllCoroutines();
         dialogueBox.SetActive(true);
         InventoryUIManager.the().CloseAllUI();
         textComponent.text = "";

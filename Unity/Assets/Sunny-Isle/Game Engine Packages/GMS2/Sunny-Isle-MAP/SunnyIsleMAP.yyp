@@ -1,0 +1,52 @@
+{
+    "id": "1412d2d5-4cdf-f638-6da5-cd595f8977d8",
+    "modelName": "GMProject",
+    "mvc": "1.0",
+    "IsDnDProject": true,
+    "configs": [
+        
+    ],
+    "option_ecma": false,
+    "parentProject": {
+        "id": "ef85258a-4378-a816-41d7-4c9501712ab8",
+        "modelName": "GMProjectParent",
+        "mvc": "1.0",
+        "alteredResources": [
+            
+        ],
+        "hiddenResources": [
+            
+        ],
+        "projectPath": "${base_project}"
+    },
+    "resources": [
+        {
+            "Key": "117087c2-6524-4215-db2d-98874e109d73",
+            "Value": {
+                "id": "e9d1390c-fac5-1197-8453-d6e90b711c12",
+                "resourcePath": "rooms\\room_SunnyIsleMAP\\room_SunnyIsleMAP.yy",
+                "resourceType": "GMRoom"
+            }
+        },
+        {
+            "Key": "7428cdc7-cf5a-e328-e303-fdab44841f17",
+            "Value": {
+                "id": "bb53ac5c-d95f-cef2-12ac-b65ba3e0a82c",
+                "resourcePath": "sprites\\sprite_SunnyIsleMAP\\sprite_SunnyIsleMAP.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "b6ad01fe-5e64-3193-9082-2b6035250106",
+            "Value": {
+                "id": "4bf26ee3-c437-78cb-528d-c559bfe4ea9d",
+                "resourcePath": "tilesets\\tileset_SunnyIsleMAP\\tileset_SunnyIsleMAP.yy",
+                "resourceType": "GMTileSet"
+            }
+        }
+    ],
+    "script_order": [
+        
+    ],
+    "tutorial": ""
+}

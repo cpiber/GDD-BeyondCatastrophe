@@ -5,7 +5,7 @@ using UnityEngine.UI;
  * Based on https://answers.unity.com/questions/1653199/how-to-make-gridlayout-dramatically-resize-content.html
  */
 
-public class InventoryUIGrid : GridLayoutGroup
+public class InventoryUIGrid : GridLayoutGroup, ISerializationCallbackReceiver
 {
     [SerializeField] protected float aspectRatio = 1;
     [SerializeField] protected InventoryUIGrid[] others = new InventoryUIGrid[] {};
@@ -29,5 +29,12 @@ public class InventoryUIGrid : GridLayoutGroup
         }
 
         base.SetLayoutVertical();
+    }
+
+    public void OnAfterDeserialize() {
+    }
+
+    public void OnBeforeSerialize() {
+        this.m_CellSize = Vector2.zero;
     }
 }
