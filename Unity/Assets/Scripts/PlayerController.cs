@@ -42,6 +42,7 @@ public class PlayerController : GenericSingleton<PlayerController>
         if (DayNightSystem.the().IsPaused) return;
         if (!allowUserInteraction) return;
         if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
+            Debug.Assert(!possibleCollectItem.IsInteractible());
             // TODO add collision check and other collect features
             if (!inventory.AddBagItem(possibleCollectItem.name)) return;
             int sceneCount = SceneManager.sceneCount;
@@ -93,6 +94,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     void OnInteractItem() {
         if (DayNightSystem.the().IsPaused) return;
         if (possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
+            Debug.Assert(!possibleCollectItem.IsCollectible());
             possibleCollectItem.UseItem();
         }
     }
