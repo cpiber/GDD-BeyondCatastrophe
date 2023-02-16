@@ -14,6 +14,10 @@ public class GlobalSceneState : GenericSingleton<GlobalSceneState>
         return objectdata[key];
     }
 
+    public void setState<T>(string key, T state) where T : State {
+        objectdata[key] = state;
+    }
+
     public void setPosition(string key, Vector3 pos) {
         if (!objectdata.ContainsKey(key)) objectdata[key] = ScriptableObject.CreateInstance<State>();
         objectdata[key].position = pos;
