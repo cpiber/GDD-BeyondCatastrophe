@@ -102,7 +102,6 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [ContextMenu("Update Energy")]
     void UpdateEnergy() {
         if (player.TimeSinceIdle <= idleEnergyRecoverTime) return;
-        Debug.Log(idleEnergyRecoverPerDay * Time.deltaTime * EVALUATION_TICKS / DayNightSystem.the().GetParams.secondsPerDay);
         energy = Mathf.Min(STATUS_MAX, energy + idleEnergyRecoverPerDay * Time.deltaTime * EVALUATION_TICKS / DayNightSystem.the().GetParams.secondsPerDay);
     }
 

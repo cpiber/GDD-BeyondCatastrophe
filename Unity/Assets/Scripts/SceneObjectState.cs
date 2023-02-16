@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SceneObjectState : MonoBehaviour
 {
     [SerializeField] string globalKey;
     
     void Start() {
+        Debug.Assert(globalKey != "", $"You need to fill the globalKey property uniquely ({name})", this.gameObject);
         var state = GlobalSceneState.the().getState(globalKey);
         if (state == null) return;
         if (!state.exists) Destroy(gameObject);
@@ -23,12 +23,4 @@ public class SceneObjectState : MonoBehaviour
         Debug.Log($"Destorying completely {globalKey}");
         Destroy(gameObject);
     }
-
-#if UNITY_EDITOR
-    void OnValidate() {
-        if (globalKey == "") {
-            globalKey = SceneManager.GetActiveScene().name + "." + name;
-        }
-    }
-#endif
 }
