@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HomeChest : PermanentItem
@@ -14,7 +13,12 @@ public class HomeChest : PermanentItem
                                           Resources.Load<AudioClip>("Audio/test1"),};
         }
     
-        DialogueSystem.the().StartDialogue(computer_dialogue, clips);
+        StartCoroutine(ShowDialogueAndOpenActualChest());
+    }
+
+    private IEnumerator ShowDialogueAndOpenActualChest() {
+        yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(computer_dialogue, clips));
+        GetComponent<Chest>().UseItem();
         Destroy(this);
     }
 

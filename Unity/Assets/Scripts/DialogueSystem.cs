@@ -1,8 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.Threading.Tasks;
+using UnityEngine.Events;
+using System;
 
 // This code was adapted from: https://www.youtube.com/watch?v=8oTYabhj248
 public class DialogueSystem : GenericSingleton<DialogueSystem>
@@ -15,6 +17,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] clips = {};
     [SerializeField] float volume = 1f;
+    private UnityEvent dialogueDone = new UnityEvent();
 
     public bool IsOpen => dialogueBox.activeSelf;
   
@@ -50,6 +53,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         StartDialogue(this.lines, this.clips);
     }
     public void StartDialogue(string[] lines, AudioClip[] clips){
+        dialogueDone.Invoke(); // kill previous invocations
         StopAllCoroutines();
         dialogueBox.SetActive(true);
         InventoryUIManager.the().CloseAllUI();
@@ -58,6 +62,15 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         this.clips = clips;
         lineIndex = 0;
         StartCoroutine(TypeLine());
+    }
+    public IEnumerator StartDialogueRoutine(string[] lines, AudioClip[] clips){
+        StartDialogue(lines, clips);
+        // wait for event, based on https://stackoverflow.com/a/51372785/
+        var trigger = false;
+        Action action = () => trigger = true;
+        dialogueDone.AddListener(action.Invoke);
+        yield return new WaitUntil(() => trigger);
+        dialogueDone.RemoveListener(action.Invoke);
     }
 
     IEnumerator TypeLine(){
@@ -77,8 +90,8 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
             StartCoroutine(TypeLine());
         } else {
             dialogueBox.SetActive(false);
-            // TODO: only stop if audio flag set
             audioSource.Stop();
+            dialogueDone.Invoke();
         }
     }
 }
