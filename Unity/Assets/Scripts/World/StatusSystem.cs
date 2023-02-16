@@ -1,14 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class StatusSystem : GenericSingleton<StatusSystem>
 {
     public const int EVALUATION_TICKS = 10;
     public const int STATUS_MAX = 100;
     [Serializable]
-     public class StatusChangeEvent : UnityEvent<StatusSystem, bool> { }
+    public class StatusChangeEvent : UnityEvent<StatusSystem, bool> { }
 
     [SerializeField] PlayerController player;
     [SerializeField] public bool godMode = false;
