@@ -4,10 +4,18 @@ using UnityEngine;
 public class Bed : PermanentItem
 {
     [SerializeField] float bedTimeSeconds = 2f;
+    [SerializeField] int minTiredness = StatusSystem.STATUS_MAX / 4;
+    
+    private string[] dialogue = {"Ugh, what am I doing, I'm not even tired"};
+    private AudioClip[] clips = null;
 
     public override void UseItem () {
-        // TODO disallow sleeping when not tired
-        StartCoroutine(Sleep());
+        if(this.clips == null){
+            this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1")};
+        }
+
+        if (StatusSystem.STATUS_MAX - StatusSystem.the().Tiredness < minTiredness) DialogueSystem.the().StartDialogue(dialogue, clips);
+        else StartCoroutine(Sleep());
     }
 
     IEnumerator Sleep() {

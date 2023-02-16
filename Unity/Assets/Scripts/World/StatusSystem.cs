@@ -1,14 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class StatusSystem : GenericSingleton<StatusSystem>
 {
     public const int EVALUATION_TICKS = 10;
     public const int STATUS_MAX = 100;
     [Serializable]
-     public class StatusChangeEvent : UnityEvent<StatusSystem, bool> { }
+    public class StatusChangeEvent : UnityEvent<StatusSystem, bool> { }
 
     [SerializeField] PlayerController player;
     [SerializeField] public bool godMode = false;
@@ -26,6 +25,11 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [SerializeField] float bodyTemperatureSteepness = 2f;
     [SerializeField] float bodyTemperatureEnergyRequirements = 0.005f;
     [SerializeField] float bodyTemperatureCreep = 0.05f;
+    [Header("Settings/Recovery")]
+    [SerializeField] [Range(0, STATUS_MAX)] float minTirednessForRecover = STATUS_MAX / 15;
+    [SerializeField] [Range(0, STATUS_MAX)] float idleEnergyRecoverPerDay = 10f;
+    [SerializeField] [Min(0)] float idleEnergyRecoverTime = 10f; // seconds
+    [SerializeField] [Range(0, STATUS_MAX)] float sleepEnergyRecover = 20f;
 
     [Header("Player Current Status")]
     [SerializeField] [Range(0, STATUS_MAX)] int health = STATUS_MAX;
@@ -70,6 +74,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     void UpdateStatusEffects() {
         CalculateBodyTemperature();
         UpdateTiredness();
+        UpdateEnergy();
         UpdateHealth();
         SendUpdatedEffects();
     }
@@ -94,6 +99,13 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         tiredness = Mathf.Max(0, tiredness - idleTirednessSubPerDay * Time.deltaTime * EVALUATION_TICKS / DayNightSystem.the().GetParams.secondsPerDay);
     }
 
+    [ContextMenu("Update Energy")]
+    void UpdateEnergy() {
+        if (player.TimeSinceIdle <= idleEnergyRecoverTime) return;
+        Debug.Log(idleEnergyRecoverPerDay * Time.deltaTime * EVALUATION_TICKS / DayNightSystem.the().GetParams.secondsPerDay);
+        energy = Mathf.Min(STATUS_MAX, energy + idleEnergyRecoverPerDay * Time.deltaTime * EVALUATION_TICKS / DayNightSystem.the().GetParams.secondsPerDay);
+    }
+
     [ContextMenu("Update Health")]
     void UpdateHealth() {
         if (tiredness < tirednessMin) health = Mathf.Max(0, health - tirednessMin + (int) tiredness);
@@ -108,7 +120,8 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     }
 
     public void Sleep() {
-        tiredness = STATUS_MAX;
+        if (tiredness > minTirednessForRecover) tiredness = STATUS_MAX;
+        energy = Mathf.Min(STATUS_MAX, energy + sleepEnergyRecover);
         SendUpdatedEffects();
     }
 
