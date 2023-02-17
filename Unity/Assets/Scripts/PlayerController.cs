@@ -21,6 +21,8 @@ public class PlayerController : GenericSingleton<PlayerController>
     public bool allowUserInteraction = true;
 
     private new Rigidbody2D rigidbody;
+    [SerializeField] private float timeSinceIdle = 0;
+    public float TimeSinceIdle => timeSinceIdle;
 
     void Start(){
         this.rigidbody = this.GetComponent<Rigidbody2D>();
@@ -36,6 +38,8 @@ public class PlayerController : GenericSingleton<PlayerController>
     void FixedUpdate() {
         if (DayNightSystem.the().IsPaused) return;
         MovePlayer();
+        if (rigidbody.velocity.SqrMagnitude() > float.Epsilon) timeSinceIdle = 0;
+        else timeSinceIdle += Time.deltaTime;
     }
 
     void OnCollectItem() {

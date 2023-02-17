@@ -1,21 +1,33 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HomeChest : PermanentItem
 {
+    private const string key = "Startroom.HomeChest";
+
     private string[] computer_dialogue = {"All my stuff is gone. Why did they have to rob me now...",
                                           "At least I still got some stashes, so I won't starve."};
     private AudioClip[] clips = null;
 
+    void Start() {
+        var state = GlobalSceneState.the().getState(key);
+        if (state != null && !state.exists) Destroy(this);
+    }
+
     public override void UseItem () {
-         if(this.clips == null){
+        if(this.clips == null){
             this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1"), 
                                           Resources.Load<AudioClip>("Audio/test1"),};
         }
     
-        DialogueSystem.the().StartDialogue(computer_dialogue, clips);
+        StartCoroutine(ShowDialogueAndOpenActualChest());
+    }
+
+    private IEnumerator ShowDialogueAndOpenActualChest() {
+        yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(computer_dialogue, clips));
+        GetComponent<Chest>().UseItem();
         Destroy(this);
+        GlobalSceneState.the().setExists(key, false);
     }
 
     public override string GetItemName() {

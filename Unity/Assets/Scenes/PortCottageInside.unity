@@ -141,6 +141,11 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5110415042366214798, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: globalKey
+      value: PortCottageInside.ShipBlueprint
+      objectReference: {fileID: 0}
     - target: {fileID: 9197791815492952206, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_RootOrder
@@ -223,19 +228,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4b61215c56174cb489119b1357a5b77c, type: 3}
---- !u!114 &955748077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955748075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7c781b4e6b702ca68ac667be2d41e0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalKey: PortCottageInside.ShipBlueprint
 --- !u!1 &1159824875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9197791815492952207, guid: 660f88918238e0d44a2e4531d084924e,

@@ -5,9 +5,12 @@ public class SceneObjectState : MonoBehaviour
     [SerializeField] string globalKey;
     
     void Start() {
-        var state = GlobalSceneState.the().getState(globalKey, transform.position);
+        Debug.Assert(globalKey != "", $"You need to fill the globalKey property uniquely ({name})", this.gameObject);
+        var state = GlobalSceneState.the().getState(globalKey);
+        if (state == null) return;
         if (!state.exists) Destroy(gameObject);
         else transform.position = state.position;
+        Debug.Log($"Loading {globalKey}: exists? {state.exists}");
     }
 
     void OnDestroy() {
