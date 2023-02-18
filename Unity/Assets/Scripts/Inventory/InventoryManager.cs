@@ -4,15 +4,29 @@ using UnityEngine.EventSystems;
 
 public class InventoryManager : GenericSingleton<InventoryManager>
 {
-    [SerializeField] SerializableDictionary<string, Item> items;
+    [SerializeField] SerializableDictionary<string, List<Item>> items;
+
+
     [SerializeField] InventoryUIManager uiManager;
     private GameObject selectedItemToMove = null;
 
     void Start() {
         GameObject itemsObjects = GameObject.Find("Items");
-        items = new SerializableDictionary<string, Item>();
+        items = new SerializableDictionary<string, List<Item>>();
+
         foreach (Transform item in itemsObjects.transform) {
-            items[item.gameObject.name] = item.gameObject.GetComponent<Item>();
+            List<Item> chestAndBagItemList = new List<Item>();
+            chestAndBagItemList.Add(item.gameObject.GetComponent<Item>());
+            items[item.gameObject.name] = chestAndBagItemList;
+        }
+
+        itemsObjects = GameObject.Find("ChestItems");
+
+        foreach (Transform item in itemsObjects.transform) {
+            List<Item> test = items[item.gameObject.name];
+            List<Item> test2 = items[item.gameObject.name];
+
+            items[item.gameObject.name].Add(item.gameObject.GetComponent<Item>());
         }
     }
 
@@ -52,20 +66,22 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             Debug.LogWarning($"Such an item ({itemName}) does not exist!");
             return;
         }
-        Item itemToUse = items[itemName];
+        // zero index for bag items
+        Item itemToUse = items[itemName][0];
         itemToUse.UseItem();
     }  
 
-    public bool AddBagItem(string itemName) {
+    public bool AddItem(string itemName, int slotIndex = 0, int fromIndex = 0) {
         if (!items.ContainsKey(itemName)) {
             Debug.LogWarning($"Such an item ({itemName}) does not exist!");
             return false;
         }
 
-        var item = items[itemName];
+        var itemFrom = items[itemName][slotIndex];
         Transform itemFound = null;
         Transform firstFreeSlot = null;
-        foreach(Transform itemSlot in GetAllItemSlots()) {
+        IEnumerable<Transform> slots = fromIndex == 0 ? GetBagItemSlots() : GetChestSlots();
+        foreach(Transform itemSlot in slots) {
             InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
             if (slot.GetSlotItemName() == itemName) {
                 itemFound = itemSlot;
@@ -79,7 +95,6 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         if (itemFound) {
             InventorySlot slot = itemFound.GetComponent<InventorySlot>();
             Item itemScript = slot.GetItem();
-            System.Type test = itemScript.GetType();
             if (itemScript is NonPermanentItem) {
                 NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
                 nonPermanentItem.IncreaseItemCount();
@@ -89,10 +104,87 @@ public class InventoryManager : GenericSingleton<InventoryManager>
                 return false;
             }
         } 
-
-        firstFreeSlot.GetComponent<InventorySlot>().SetSlot(item);
+        
+        firstFreeSlot.GetComponent<InventorySlot>().SetSlot(itemFrom);
         return true;
     }
+
+
+    public (Item, Item) AddItemInOtherLevel(string itemName, int slotIndex = 0, int fromIndex = 0) {
+        if (!items.ContainsKey(itemName)) {
+            Debug.LogWarning($"Such an item ({itemName}) does not exist!");
+            return (null, null);
+        }
+
+        var itemTo = items[itemName][slotIndex];
+        Transform itemFound = null;
+        Transform firstFreeSlot = null;
+        IEnumerable<Transform> slots = fromIndex == 0 ? GetBagItemSlots() : GetChestSlots();
+        foreach(Transform itemSlot in slots) {
+            InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
+            if (slot.GetSlotItemName() == itemName) {
+                itemFound = itemSlot;
+                break;
+            }
+            if (slot.IsSlotEmpty() && firstFreeSlot == null) {
+                firstFreeSlot = itemSlot;
+            }
+        }
+
+        if (itemFound) {
+            InventorySlot slot = itemFound.GetComponent<InventorySlot>();
+            Item itemScript = slot.GetItem();
+            if (itemScript is NonPermanentItem) {
+                NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
+                NonPermanentItem nonPermanentItemTo = (NonPermanentItem)itemTo;
+                nonPermanentItemTo.IncreaseItemCount();
+                nonPermanentItem.DecreaseItemCount();
+                slot.SetCount();
+                return (itemTo, itemScript);
+            } else {
+                return (null, null);
+            }
+        } 
+        
+        firstFreeSlot.GetComponent<InventorySlot>().SetSlot(itemTo);
+        return (itemTo, items["EmptyItem"][0]);
+    }
+
+
+    public bool RemoveItem(string itemName, int slotIndex = 0) {
+        if (!items.ContainsKey(itemName)) {
+            Debug.LogWarning($"Such an item ({itemName}) does not exist!");
+            return false;
+        }
+
+        var item = items[itemName][slotIndex];
+        Transform itemFound = null;
+
+        IEnumerable<Transform> slots = slotIndex == 0 ? GetBagItemSlots() : GetChestSlots();
+        foreach(Transform itemSlot in slots) {
+            InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
+            if (slot.GetSlotItemName() == itemName) {
+                itemFound = itemSlot;
+                break;
+            }
+        }
+
+        if (itemFound) {
+            InventorySlot slot = itemFound.GetComponent<InventorySlot>();
+            Item itemScript = slot.GetItem();
+            if (itemScript is NonPermanentItem) {
+                NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
+                nonPermanentItem.ResetItemCount();
+                slot.SetCount();
+                return true;
+            } else {
+                slot.SetSlot(items["EmptyItem"][slotIndex]);
+            }
+        } 
+
+        return true;
+    }
+
 
     public void SelectItemToMove(GameObject itemToMove) {
         if (!uiManager.IsUIOpen) {
@@ -125,8 +217,48 @@ public class InventoryManager : GenericSingleton<InventoryManager>
                 return;
             } 
 
-            firstItemSlot.SetSlot(secondItem);
-            secondItemSlot.SetSlot(firstItem);
+            // get name so we can check if it is a bag item or a chest item
+            string firstSlotName = firstItemSlot.gameObject.name;
+            string secondSlotName = secondItemSlot.gameObject.name;
+
+            // check if items are the same
+            if (firstItem.GetItemName() == secondItem.GetItemName()) {
+                // add one instance to the other if there are several uses possible
+
+
+                AddItem(secondItem.GetItemName());
+
+                //check if it is non permanent item 
+                if (firstItem is NonPermanentItem) {
+                    NonPermanentItem nonPermanentItem = (NonPermanentItem)firstItem;
+                    nonPermanentItem.DecreaseItemCount();
+
+                    // if no item or use is left after stacking => set slot to empty
+                    if (nonPermanentItem.Count() == 0) {
+                        if (firstItemSlot.GetName().Contains("BagItem")) {
+                            firstItemSlot.SetSlot(items["EmptyItem"][0]);
+                        } else {
+                            firstItemSlot.SetSlot(items["EmptyItem"][1]);
+                        }
+                    }
+                }
+            } 
+
+
+            Item itemTo = items["EmptyItem"][0];
+            Item itemFrom = items["EmptyItem"][0];
+
+            // swap from bag to chest or from chest to bag
+            if ((!firstItemSlot.GetName().Contains("BagItem") && secondItemSlot.GetName().Contains("BagItem"))
+                ) {
+                (itemTo, itemFrom) = AddItemInOtherLevel(firstItem.GetItemName(), 0, 1);
+
+            } else if (firstItemSlot.GetName().Contains("BagItem") && !secondItemSlot.GetName().Contains("BagItem")) {
+                (itemTo, itemFrom) = AddItemInOtherLevel(firstItem.GetItemName(), 1, 0);
+            }
+
+            firstItemSlot.SetSlot(firstItem);
+            secondItemSlot.SetSlot(itemTo);
             uiManager.UpdateArmorStats();
             uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
             UnselectButtons();
@@ -160,11 +292,13 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         return GetItemsFromSlot(uiManager.EquippedInventoryItems);
     }
 
-    public IEnumerable<Transform> GetAllItemSlots() {
+    public IEnumerable<Transform> GetBagItemSlots() {
         for (int i = 0; i < uiManager.BagInventoryItems.childCount; i++) yield return uiManager.BagInventoryItems.GetChild(i);
         for (int i = 0; i < uiManager.EquippedInventoryItems.childCount; i++) yield return uiManager.EquippedInventoryItems.GetChild(i);
         for (int i = 0; i < uiManager.ArmorInventoryItems.childCount; i++) yield return uiManager.ArmorInventoryItems.GetChild(i);
-        // TODO: this allows picking up from anywhere...
+    }
+
+    public IEnumerable<Transform> GetChestSlots() {
         for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
     }
 }

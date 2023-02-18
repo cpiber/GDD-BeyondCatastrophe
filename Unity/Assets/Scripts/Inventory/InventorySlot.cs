@@ -22,6 +22,10 @@ public class InventorySlot : MonoBehaviour
         return item.GetItemName();
     }
 
+    public string GetName() {
+        return gameObject.name;
+    }
+
     public void SetSlot(Item newItem) {
         item = newItem;
 

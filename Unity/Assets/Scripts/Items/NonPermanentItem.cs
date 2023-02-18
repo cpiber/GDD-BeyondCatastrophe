@@ -50,4 +50,12 @@ public abstract class NonPermanentItem : Item
     public int Count() {
         return numberOfUsagesLeft;
     }
+
+    public int ResetItemCount() {
+        return numberOfUsagesLeft = 0;
+    } 
+
+    public void SetCount(int newUsages) {
+        numberOfUsagesLeft = newUsages;
+    }
 }
