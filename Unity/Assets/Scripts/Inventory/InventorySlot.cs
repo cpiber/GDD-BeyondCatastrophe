@@ -63,4 +63,8 @@ public class InventorySlot : MonoBehaviour
         return item;
     }
 
+    public bool IsBagSlot() {
+        return gameObject.name.Contains("Bag") || gameObject.name.Contains("Equipped") || gameObject.name.Contains("Armor") ? true : false;
+    }
+
 }

@@ -311,43 +311,22 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             string firstSlotName = firstItemSlot.gameObject.name;
             string secondSlotName = secondItemSlot.gameObject.name;
 
-            // check if items are the same
-            /*  if (firstItem.GetItemName() == secondItem.GetItemName()) {
-                 // add one instance to the other if there are several uses possible
-
-
-                 AddItem(secondItem.GetItemName());
-
-                 //check if it is non permanent item 
-                 if (firstItem is NonPermanentItem) {
-                     NonPermanentItem nonPermanentItem = (NonPermanentItem)firstItem;
-                     nonPermanentItem.DecreaseItemCount();
-
-                     // if no item or use is left after stacking => set slot to empty
-                     if (nonPermanentItem.Count() == 0) {
-                         if (firstItemSlot.GetName().Contains("BagItem")) {
-                             firstItemSlot.SetSlot(items["EmptyItem"][0]);
-                         } else {
-                             firstItemSlot.SetSlot(items["EmptyItem"][1]);
-                         }
-                     }
-                 }
-             }  */
-
-
             Item itemTo = items["EmptyItem"][0];
             Item itemFrom = items["EmptyItem"][0];
 
             // swap from bag to chest or from chest to bag
-            if ((!firstItemSlot.GetName().Contains("BagItem") && secondItemSlot.GetName().Contains("BagItem"))
+            if ((!firstItemSlot.IsBagSlot() && secondItemSlot.IsBagSlot())
                 )
             {
                 (itemTo, itemFrom) = AddItemInOtherLevel(firstItem.GetItemName(), 0, 1);
 
             }
-            else if (firstItemSlot.GetName().Contains("BagItem") && !secondItemSlot.GetName().Contains("BagItem"))
+            else if (firstItemSlot.IsBagSlot() && !secondItemSlot.IsBagSlot())
             {
                 (itemTo, itemFrom) = AddItemInOtherLevel(firstItem.GetItemName(), 1, 0);
+            } else {
+                itemFrom = secondItem;
+                itemTo = firstItem;
             }
 
             firstItemSlot.SetSlot(itemFrom);
