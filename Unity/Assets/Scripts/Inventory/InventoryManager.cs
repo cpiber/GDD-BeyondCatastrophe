@@ -176,15 +176,12 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             }
             else if (itemTo is NonPermanentItem) {
                 HandleNonPermanentItem(itemScript, true, fromIndex);
-            } else 
-            {
-                // todo must be done right
-                return (items["EmptyItem"][fromIndex], items["EmptyItem"][fromIndex]);
+            } else {
+                return (itemTo, items["EmptyItem"][fromIndex]);
             }
         }
 
-        firstFreeSlot.GetComponent<InventorySlot>().SetSlot(itemTo);
-        return (itemTo, items["EmptyItem"][0]);
+        return (itemTo, items["EmptyItem"][fromIndex]);
     }
 
     public Item HandlePermanentItem(Item item, int index)
@@ -209,22 +206,6 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         }
         return item;
     }
-
-    public (Item, Item) SwapNonPermanentItems(Item itemScript, Item itemTo, InventorySlot slot, int fromIndex)
-    {
-        NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
-        NonPermanentItem nonPermanentItemTo = (NonPermanentItem)itemTo;
-
-        nonPermanentItem.DecreaseItemCount();
-        if (nonPermanentItem.Count() < 1)
-        {
-            itemScript = items["EmptyItem"][fromIndex];
-        }
-        slot.SetCount();
-        return (itemTo, itemScript);
-    }
-
-
 
     public bool RemoveItem(string itemName, int slotIndex = 0)
     {
