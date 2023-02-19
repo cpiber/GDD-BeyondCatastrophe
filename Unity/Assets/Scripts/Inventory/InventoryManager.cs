@@ -118,6 +118,16 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             return;
         }
 
+        Item firstItem = slotFrom.GetItem();
+        Item secondItem = slotTo.GetItem();
+
+        // pure swap of items
+        if (firstItem.GetItemName() != secondItem.GetItemName() && !secondItem.IsItemEmpty()) {
+            slotFrom.SetSlot(secondItem);
+            slotTo.SetSlot(firstItem);
+            return;
+        }
+
         var itemTo = items[itemName][slotIndex];
 
         InventorySlot slot = GetSlot(itemTo.GetItemName(), slotIndex, true);
@@ -255,6 +265,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
 
             Item itemTo = items["EmptyItem"][0];
             Item itemFrom = items["EmptyItem"][0];
+
 
             // swap from bag to chest or from chest to bag
             if ((!firstItemSlot.IsBagSlot() && secondItemSlot.IsBagSlot())
