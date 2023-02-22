@@ -113,4 +113,8 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     public void SetBlockAudio() {
         blockAudio = !blockAudio;
     }
+
+    public void SetVolume(System.Single newVolume) {
+        volume = newVolume;
+    }
 }
