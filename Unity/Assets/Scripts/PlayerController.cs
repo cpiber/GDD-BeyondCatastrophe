@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     [SerializeField] InventoryManager inventory;
 
     private Item possibleCollectItem;
+    [SerializeField] [HideInInspector] List<Item> possibleCollectItems = new List<Item>();
     [SerializeField] Color itemOutlineColor;
     [SerializeField] float itemOutlineAdd = .1f;
     public HeatedRoom CurrentRoom { get; set; }
@@ -60,7 +62,7 @@ public class PlayerController : GenericSingleton<PlayerController>
             }
             if (possibleCollectItem.gameObject.TryGetComponent<SceneObjectState>(out var os)) os.Destroy();
             else Destroy(possibleCollectItem.gameObject);
-            possibleCollectItem = null;
+            // NOTE: destroying will trigger OnTriggerExit, which will reset the selected item
         }
     }
 
@@ -137,27 +139,47 @@ public class PlayerController : GenericSingleton<PlayerController>
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        collider.gameObject.TryGetComponent<Item>(out possibleCollectItem);
-        var item = possibleCollectItem;
+        collider.gameObject.TryGetComponent<Item>(out var item);
         if (item != null) {
-            var renderer = item.GetComponent<Renderer>();
-            if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
-                renderer.material.SetColor("_OutlineColor", itemOutlineColor);
-                renderer.material.SetFloat("_OutlineSize", renderer.material.GetFloat("_OutlineSize") + itemOutlineAdd);
-            }
+            if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
+            possibleCollectItems.Add(item);
+            possibleCollectItem = item;
+            Debug.Log($"Updated collect item to {item.name}. Maintaining {possibleCollectItems.Count} items total.");
+            HighlightItem(item);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collider) {
         if (collider.gameObject.TryGetComponent<Item>(out var item)) {
-            var renderer = item.GetComponent<Renderer>();
-            if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
-                renderer.material.SetColor("_OutlineColor", Color.white);
-                renderer.material.SetFloat("_OutlineSize", renderer.material.GetFloat("_OutlineSize") - itemOutlineAdd);
-            }
+            possibleCollectItems.Remove(item);
+            Debug.Log($"Removed item {item.name}. Maintaining {possibleCollectItems.Count} items total.");
         }
         if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) {
             possibleCollectItem = null;
+            UnhighlightItem(item);
+            SelectNextCollectItem();
         }
+    }
+
+    private void HighlightItem(Item item) {
+        var renderer = item.GetComponent<Renderer>();
+        if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
+            renderer.material.SetColor("_OutlineColor", itemOutlineColor);
+            renderer.material.SetFloat("_OutlineSize", itemOutlineAdd);
+        }
+    }
+
+    private void UnhighlightItem(Item item) {
+        var renderer = item.GetComponent<Renderer>();
+        if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
+            renderer.material.SetColor("_OutlineColor", Color.white);
+            renderer.material.SetFloat("_OutlineSize", 0);
+        }
+    }
+
+    private void SelectNextCollectItem() {
+        possibleCollectItem = possibleCollectItems.Count > 0 ? possibleCollectItems[0] : null;
+        if (possibleCollectItem != null) HighlightItem(possibleCollectItem);
+        Debug.Log($"Updated collect item to {possibleCollectItem?.name ?? "null"} via select. Maintaining {possibleCollectItems.Count} items total.");
     }
 }
