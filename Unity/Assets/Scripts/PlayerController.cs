@@ -48,7 +48,7 @@ public class PlayerController : GenericSingleton<PlayerController>
         if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
             Debug.Assert(!possibleCollectItem.IsInteractible());
             // TODO add collision check and other collect features
-            if (!inventory.AddBagItem(possibleCollectItem.name)) return;
+            if (!inventory.AddBagItem(possibleCollectItem)) return;
             int sceneCount = SceneManager.sceneCount;
             for (int i = 0; i < sceneCount; i++)
             {

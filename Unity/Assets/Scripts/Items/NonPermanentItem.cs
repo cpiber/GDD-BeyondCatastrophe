@@ -8,8 +8,12 @@ public abstract class NonPermanentItem : Item
 
     public abstract void UseConcreteItem();
     
-    public void IncreaseItemCount() {
-        numberOfUsagesLeft += 1;
+    public void IncreaseItemCount(NonPermanentItem other = null) {
+        numberOfUsagesLeft += other?.numberOfUsagesLeft ?? 1;
+    }
+
+    public void SetUsages(NonPermanentItem other = null) {
+        numberOfUsagesLeft = other?.numberOfUsagesLeft ?? 1;
     }
 
     public override bool IsItemEmpty() {
