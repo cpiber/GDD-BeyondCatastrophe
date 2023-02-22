@@ -54,11 +54,11 @@ Material:
     m_Floats:
     - _EnableExternalAlpha: 0
     - _MaxAlpha: 0.95
-    - _OutlineSize: 0.3
+    - _OutlineSize: 0
     - _TextureScale: 0.77
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 0}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

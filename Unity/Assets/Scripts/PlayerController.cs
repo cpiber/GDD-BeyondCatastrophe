@@ -14,6 +14,8 @@ public class PlayerController : GenericSingleton<PlayerController>
     [SerializeField] InventoryManager inventory;
 
     private Item possibleCollectItem;
+    [SerializeField] Color itemOutlineColor;
+    [SerializeField] float itemOutlineAdd = .1f;
     public HeatedRoom CurrentRoom { get; set; }
 
     private Vector2 movement = Vector2.zero;
@@ -23,6 +25,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     private new Rigidbody2D rigidbody;
     [SerializeField] private float timeSinceIdle = 0;
     public float TimeSinceIdle => timeSinceIdle;
+
 
     void Start(){
         this.rigidbody = this.GetComponent<Rigidbody2D>();
@@ -135,9 +138,26 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     private void OnTriggerEnter2D(Collider2D collider) {
         collider.gameObject.TryGetComponent<Item>(out possibleCollectItem);
+        var item = possibleCollectItem;
+        if (item != null) {
+            var renderer = item.GetComponent<Renderer>();
+            if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
+                renderer.material.SetColor("_OutlineColor", itemOutlineColor);
+                renderer.material.SetFloat("_OutlineSize", renderer.material.GetFloat("_OutlineSize") + itemOutlineAdd);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collider) {
-        if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) possibleCollectItem = null;
+        if (collider.gameObject.TryGetComponent<Item>(out var item)) {
+            var renderer = item.GetComponent<Renderer>();
+            if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
+                renderer.material.SetColor("_OutlineColor", Color.white);
+                renderer.material.SetFloat("_OutlineSize", renderer.material.GetFloat("_OutlineSize") - itemOutlineAdd);
+            }
+        }
+        if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) {
+            possibleCollectItem = null;
+        }
     }
 }
