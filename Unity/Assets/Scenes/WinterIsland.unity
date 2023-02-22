@@ -339,17 +339,22 @@ PrefabInstance:
     - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.64
+      value: 0.84
       objectReference: {fileID: 0}
     - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.74
+      value: 0.94
       objectReference: {fileID: 0}
     - target: {fileID: -7908357118172525260, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451291250155440513, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3451291250155440513, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
@@ -365,13 +370,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1029526657, guid: e90fec12ff85748dfbd80910137721a7,
+      objectReference: {fileID: 21300000, guid: 581bb99113bb0f7f7b5de3c5e965c1cc,
         type: 3}
     - target: {fileID: 3451291250155440513, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3451291250155440513, guid: 660f88918238e0d44a2e4531d084924e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9014539f43f7906788b06232235db1c, type: 2}
     - target: {fileID: 5110415042366214798, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: globalKey
@@ -503,7 +513,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.74}
+    oldSize: {x: 0.84, y: 0.94}
     newSize: {x: 0.64, y: 0.74}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -511,16 +521,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.17999999, y: 0.37}
-      - {x: -0.32, y: 0.22999999}
-      - {x: -0.32, y: -0.34}
-      - {x: -0.26, y: -0.37}
-      - {x: 0.1710006, y: -0.38737193}
-      - {x: 0.16362524, y: -0.37749577}
-      - {x: 0.67573726, y: 0.17532048}
-      - {x: 0.6791023, y: 0.5607598}
-      - {x: 0.5111233, y: 0.73437375}
-      - {x: 0.24212494, y: 0.7348723}
+    - - {x: -0.3499444, y: -0.22651583}
+      - {x: -0.3581738, y: 0.21005946}
+      - {x: 0.21005833, y: 0.76137334}
+      - {x: 0.5474301, y: 0.74445164}
+      - {x: 0.69668925, y: 0.5498266}
+      - {x: 0.68924546, y: 0.15310659}
+      - {x: 0.37289947, y: -0.17557472}
+      - {x: 0.16842301, y: -0.38092247}
+      - {x: -0.15315926, y: -0.40223002}
 --- !u!1 &183124263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,7 +1412,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: b9014539f43f7906788b06232235db1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1424,7 +1433,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 1029526657, guid: e90fec12ff85748dfbd80910137721a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 581bb99113bb0f7f7b5de3c5e965c1cc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3726,7 +3735,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: b9014539f43f7906788b06232235db1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3747,7 +3756,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: 1029526657, guid: e90fec12ff85748dfbd80910137721a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 581bb99113bb0f7f7b5de3c5e965c1cc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
