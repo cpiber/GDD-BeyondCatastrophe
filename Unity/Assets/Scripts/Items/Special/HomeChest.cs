@@ -13,6 +13,13 @@ public class HomeChest : PermanentItem
     void Start() {
         var state = GlobalSceneState.the().getState(key);
         if (state != null && !state.exists) Destroy(this);
+
+        StartCoroutine(SetOutlineObject());
+    }
+
+    private IEnumerator SetOutlineObject() {
+        yield return new WaitForFixedUpdate();
+        outlineObject = GetComponent<Chest>().OutlineObject;
     }
 
     public override void UseItem () {
@@ -36,8 +43,10 @@ public class HomeChest : PermanentItem
     private IEnumerator ShowDialogueAndOpenActualChest() {
         yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(dialogue, clips));
         GetComponent<Chest>().UseItem();
-        Destroy(this);
+        PlayerController.the().UnregisterCollectItem(this);
+        PlayerController.the().RegisterCollectItem(GetComponent<Chest>());
         GlobalSceneState.the().setExists(key, false);
+        Destroy(this);
     }
 
     public override string GetItemName() {

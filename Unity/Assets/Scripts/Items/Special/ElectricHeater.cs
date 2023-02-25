@@ -14,6 +14,7 @@ public class ElectricHeater : Heater
 
     void Start() {
         defaultScale = progressBar.transform.localScale.y;
+        SetSprite();
     }
 
     void Update() {
@@ -68,6 +69,7 @@ public class ElectricHeater : Heater
                 DialogueSystem.the().StartDialogue(dialogue, clips);
             }
             ElectricHeaterProvider.the().AddSolarPanel();
+            PlayerController.the().UnregisterCollectItem(this);
         }
     }
 
@@ -80,7 +82,7 @@ public class ElectricHeater : Heater
     }
 
     public override bool IsInteractible() {
-        return true;
+        return !ElectricHeaterProvider.the().HasSolarPanel;
     }
 
     public override bool IsCollectible() {
