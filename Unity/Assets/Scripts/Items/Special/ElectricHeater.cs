@@ -42,6 +42,7 @@ public class ElectricHeater : Heater
                 DialogueSystem.the().StartDialogue(dialogue_last, clips);
             }
             ElectricHeaterProvider.the().AddSolarPanel();
+            PlayerController.the().UnregisterCollectItem(this);
         }
     }
 
@@ -54,7 +55,7 @@ public class ElectricHeater : Heater
     }
 
     public override bool IsInteractible() {
-        return true;
+        return !ElectricHeaterProvider.the().HasSolarPanel;
     }
 
     public override bool IsCollectible() {

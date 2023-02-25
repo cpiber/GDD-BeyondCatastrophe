@@ -103,6 +103,7 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     void OnInteractItem() {
         if (DayNightSystem.the().IsPaused) return;
+        if (!allowUserInteraction) return;
         if (possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
             Debug.Assert(!possibleCollectItem.IsCollectible());
             possibleCollectItem.UseItem();
@@ -141,7 +142,7 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     private void OnTriggerEnter2D(Collider2D collider) {
         collider.gameObject.TryGetComponent<Item>(out var item);
-        if (item != null) {
+        if (item != null && (item.IsCollectible() || item.IsInteractible())) {
             if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
             possibleCollectItems.Add(item);
             possibleCollectItem = item;
@@ -180,7 +181,7 @@ public class PlayerController : GenericSingleton<PlayerController>
             renderer.material.SetColor("_OutlineColor", itemOutlineColor);
             renderer.material.SetFloat("_OutlineSize", itemOutlineAdd);
         }
-        if (item.OutlineObject != null) {
+        if (item.OutlineObject != null && (item.IsCollectible() || item.IsInteractible())) {
             item.OutlineObject.SetActive(true);
         }
     }
@@ -197,6 +198,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     }
 
     private void SelectNextCollectItem() {
+        if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
         possibleCollectItem = possibleCollectItems.Count > 0 ? possibleCollectItems[0] : null;
         if (possibleCollectItem != null) HighlightItem(possibleCollectItem);
         Debug.Log($"Updated collect item to {possibleCollectItem?.name ?? "null"} via select. Maintaining {possibleCollectItems.Count} items total.");
