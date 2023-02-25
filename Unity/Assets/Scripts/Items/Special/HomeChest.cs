@@ -12,6 +12,13 @@ public class HomeChest : PermanentItem
     void Start() {
         var state = GlobalSceneState.the().getState(key);
         if (state != null && !state.exists) Destroy(this);
+
+        StartCoroutine(SetOutlineObject());
+    }
+
+    private IEnumerator SetOutlineObject() {
+        yield return new WaitForFixedUpdate();
+        outlineObject = GetComponent<Chest>().OutlineObject;
     }
 
     public override void UseItem () {

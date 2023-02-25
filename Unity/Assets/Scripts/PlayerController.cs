@@ -18,6 +18,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     [SerializeField] [HideInInspector] List<Item> possibleCollectItems = new List<Item>();
     [SerializeField] Color itemOutlineColor;
     [SerializeField] float itemOutlineAdd = .1f;
+    public Color ItemOutlineColor => itemOutlineColor;
     public HeatedRoom CurrentRoom { get; set; }
 
     private Vector2 movement = Vector2.zero;
@@ -167,6 +168,9 @@ public class PlayerController : GenericSingleton<PlayerController>
             renderer.material.SetColor("_OutlineColor", itemOutlineColor);
             renderer.material.SetFloat("_OutlineSize", itemOutlineAdd);
         }
+        if (item.OutlineObject != null) {
+            item.OutlineObject.SetActive(true);
+        }
     }
 
     private void UnhighlightItem(Item item) {
@@ -174,6 +178,9 @@ public class PlayerController : GenericSingleton<PlayerController>
         if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
             renderer.material.SetColor("_OutlineColor", Color.white);
             renderer.material.SetFloat("_OutlineSize", 0);
+        }
+        if (item.OutlineObject != null) {
+            item.OutlineObject.SetActive(false);
         }
     }
 

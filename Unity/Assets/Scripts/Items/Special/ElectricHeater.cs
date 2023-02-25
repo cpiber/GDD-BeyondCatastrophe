@@ -15,6 +15,7 @@ public class ElectricHeater : Heater
 
     void Start() {
         defaultScale = progressBar.transform.localScale.y;
+        SetSprite();
     }
 
     void Update() {
