@@ -97,6 +97,25 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         return true;
     }
 
+    public Item TakeBagItem(string itemName) {
+        foreach(Transform itemSlot in GetAllItemSlots()) {
+            InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
+            if (slot.GetSlotItemName() != itemName) continue;
+            var item = slot.GetItem();
+            if (item is NonPermanentItem perm) {
+                Debug.Assert(perm.CanBeUsed());
+                perm.DecreaseItemCount();
+            }
+            slot.SetCount();
+            // if item has no use left => reset item slot to no item
+            if (item is PermanentItem || !((NonPermanentItem)item).CanBeUsed()) {
+                slot.ResetSlot();
+            }
+            return item;
+        }
+        return null;
+    }
+
     public void SelectItemToMove(GameObject itemToMove) {
         if (!uiManager.IsUIOpen) {
             UnselectButtons();

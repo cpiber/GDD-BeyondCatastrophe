@@ -13,6 +13,10 @@ public class GlobalSceneState : GenericSingleton<GlobalSceneState>
         if (!objectdata.ContainsKey(key)) return null;
         return objectdata[key];
     }
+    public T getState<T>(string key) where T : State {
+        if (!objectdata.ContainsKey(key)) return null;
+        return objectdata[key] as T;
+    }
 
     public void setState<T>(string key, T state) where T : State {
         objectdata[key] = state;
