@@ -12156,6 +12156,96 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64cddfc21e04a9c408921968b73a68ad, type: 3}
+--- !u!1 &766143552 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2934803342338198345, guid: 64cddfc21e04a9c408921968b73a68ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 766143551}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &766143553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2934803342795420246, guid: 64cddfc21e04a9c408921968b73a68ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 766143551}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &766143554
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766143552}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.96875, y: 0.84375}
+    newSize: {x: 0.96875, y: 0.84375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.96875, y: 0.84375}
+  m_EdgeRadius: 0
+--- !u!61 &766143555
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766143553}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.23068058, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.15625, y: 0.40625}
+    newSize: {x: 1.125, y: 0.40625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.69488883, y: 0.40625}
+  m_EdgeRadius: 0
+--- !u!114 &766143556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766143553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c781b4e6b702ca68ac667be2d41e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalKey: Forrest.Axe
+--- !u!114 &766143557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766143553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea3523c792444ab69913de79686f39dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 6a08ec4b334ea1c46b8171679417a74f, type: 3}
 --- !u!1001 &768902428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24114,6 +24204,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 516768471}
     m_Modifications:
+    - target: {fileID: 7517545629473287397, guid: 3373af298f123a849a61f9aefe9ec4c4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517545629473287397, guid: 3373af298f123a849a61f9aefe9ec4c4,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7517545629813287398, guid: 3373af298f123a849a61f9aefe9ec4c4,
         type: 3}
       propertyPath: m_Name
@@ -32665,6 +32765,7 @@ Transform:
   - {fileID: 212954364}
   - {fileID: 281414794}
   - {fileID: 1270745717}
+  - {fileID: 1014546557}
   - {fileID: 1198378942}
   - {fileID: 1543246096}
   - {fileID: 2005124596}
@@ -32672,15 +32773,14 @@ Transform:
   - {fileID: 901452430}
   - {fileID: 1084523478}
   - {fileID: 1471892453}
-  - {fileID: 1014546557}
+  - {fileID: 999915282}
   - {fileID: 323479962}
   - {fileID: 1994140301}
-  - {fileID: 105753764}
   - {fileID: 1741228855}
-  - {fileID: 1797381118}
-  - {fileID: 999915282}
+  - {fileID: 105753764}
   - {fileID: 1200934451}
   - {fileID: 1814825239}
+  - {fileID: 1797381118}
   - {fileID: 1740041173}
   m_Father: {fileID: 0}
   m_RootOrder: 0
