@@ -17,7 +17,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] clips = {};
     [SerializeField] float volume = 1f;
-    private UnityEvent dialogueDone = new UnityEvent();
+    [SerializeField] private UnityEvent dialogueDone = new UnityEvent();
 
     public bool IsOpen => dialogueBox.activeSelf;
   
@@ -46,6 +46,14 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         } else {
             textComponent.text = lines[lineIndex];
         }
+    }
+
+    [ContextMenu("Cancel Dialogue")]
+    public void CancelDialogue() {
+        StopAllCoroutines();
+        dialogueBox.SetActive(false);
+        audioSource.Stop();
+        dialogueDone.Invoke();
     }
 
     [ContextMenu("Start Dialogue")]
