@@ -162,6 +162,18 @@ public class PlayerController : GenericSingleton<PlayerController>
         }
     }
 
+    public void UnregisterCollectItem(Item item) {
+        Debug.Log($"Removing possible select item {item} due to request");
+        possibleCollectItems.Remove(item);
+        if (possibleCollectItem == item) SelectNextCollectItem();
+    }
+
+    public void RegisterCollectItem(Item item) {
+        Debug.Log($"Adding possible select item {item} due to request");
+        possibleCollectItems.Add(item);
+        if (possibleCollectItem == null) possibleCollectItem = item;
+    }
+
     private void HighlightItem(Item item) {
         var renderer = item.GetComponent<Renderer>();
         if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {

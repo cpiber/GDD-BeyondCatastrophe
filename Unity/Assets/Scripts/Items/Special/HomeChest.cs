@@ -33,8 +33,10 @@ public class HomeChest : PermanentItem
     private IEnumerator ShowDialogueAndOpenActualChest() {
         yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(computer_dialogue, clips));
         GetComponent<Chest>().UseItem();
-        Destroy(this);
+        PlayerController.the().UnregisterCollectItem(this);
+        PlayerController.the().RegisterCollectItem(GetComponent<Chest>());
         GlobalSceneState.the().setExists(key, false);
+        Destroy(this);
     }
 
     public override string GetItemName() {
