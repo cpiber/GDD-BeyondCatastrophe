@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Heater : PermanentItem
 {
-    [SerializeField] float provideHeat;
+    [SerializeField] protected float provideHeat;
     /// <summary>
     /// The heating this item provides. Taken to be a temperature for now.
     /// </summary>
-    public float Heating => provideHeat;
+    public virtual float Heating => provideHeat;
 
     public override void UseItem () {
         // TODO heating UI?

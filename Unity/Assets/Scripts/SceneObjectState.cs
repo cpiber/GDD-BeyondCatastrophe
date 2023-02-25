@@ -14,7 +14,7 @@ public class SceneObjectState : MonoBehaviour
     }
 
     void OnDestroy() {
-        GlobalSceneState.the().setPosition(globalKey, transform.position);
+        GlobalSceneState.the()?.setPosition(globalKey, transform.position);
         Debug.Log($"Destorying with update position {globalKey}");
     }
 

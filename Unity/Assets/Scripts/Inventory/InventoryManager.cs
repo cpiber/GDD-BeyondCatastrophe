@@ -56,13 +56,15 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         itemToUse.UseItem();
     }  
 
-    public bool AddBagItem(string itemName) {
+    public bool AddBagItem(Item collectItem) {
+        string itemName = collectItem.name;
         if (!items.ContainsKey(itemName)) {
             Debug.LogWarning($"Such an item ({itemName}) does not exist!");
             return false;
         }
 
         var item = items[itemName];
+        Debug.Assert(item.GetType() == collectItem.GetType(), "Excepted items to be of same type");
         Transform itemFound = null;
         Transform firstFreeSlot = null;
         foreach(Transform itemSlot in GetAllItemSlots()) {
@@ -79,10 +81,8 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         if (itemFound) {
             InventorySlot slot = itemFound.GetComponent<InventorySlot>();
             Item itemScript = slot.GetItem();
-            System.Type test = itemScript.GetType();
-            if (itemScript is NonPermanentItem) {
-                NonPermanentItem nonPermanentItem = (NonPermanentItem)itemScript;
-                nonPermanentItem.IncreaseItemCount();
+            if (itemScript is NonPermanentItem nonPermanentItem) {
+                nonPermanentItem.IncreaseItemCount(collectItem as NonPermanentItem);
                 slot.SetCount();
                 return true;
             } else {
@@ -90,8 +90,30 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             }
         } 
 
+        if (item is NonPermanentItem nonPermanentItem1) {
+            nonPermanentItem1.SetUsages(collectItem as NonPermanentItem);
+        }
         firstFreeSlot.GetComponent<InventorySlot>().SetSlot(item);
         return true;
+    }
+
+    public Item TakeBagItem(string itemName) {
+        foreach(Transform itemSlot in GetAllItemSlots()) {
+            InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
+            if (slot.GetSlotItemName() != itemName) continue;
+            var item = slot.GetItem();
+            if (item is NonPermanentItem perm) {
+                Debug.Assert(perm.CanBeUsed());
+                perm.DecreaseItemCount();
+            }
+            slot.SetCount();
+            // if item has no use left => reset item slot to no item
+            if (item is PermanentItem || !((NonPermanentItem)item).CanBeUsed()) {
+                slot.ResetSlot();
+            }
+            return item;
+        }
+        return null;
     }
 
     public void SelectItemToMove(GameObject itemToMove) {
