@@ -137,13 +137,13 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             // check if item is swappable
 
             if (firstItemSlot.name.Contains("Armor") && !secondItem.IsArmor()) {
-                UnselectButtons();
                 uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
+                UnselectButtons();
                 return;
             } 
             if (secondItemSlot.name.Contains("Armor") && !firstItem.IsArmor()) {
-                UnselectButtons();
                 uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
+                UnselectButtons();
                 return;
             } 
 
