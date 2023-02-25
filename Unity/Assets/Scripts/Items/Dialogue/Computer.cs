@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class Computer : PermanentItem
 {
-
-    /**
-
-Player: Has the possibility to walk around his room and explore the environment. When going near items, they are prompted with the buttons to interact and pick up (this is turned off after leaving the house).
-
-Upon leaving the room he sees the telecommunication mast on the right of the screen (island). The idea now is to wait for the water to freeze in order walk there.
-
-This is introduced by another short scene with dialogue: "The phone mast! I need to go over there and give it some electricity. Maybe I can even get some solar panels for myself..."
-    */
-    private string[] computer_dialogue = {"I don't have any communication since the electric grid broke down.", 
-                                        "I'm worried that my family isn't okay. I have to go and find them.", 
-                                        "But this isn't as easy as it used to be, winters and nights are very cold, summers are too hot, I don't have any electricity. I have to be careful with my resources on my journey.",
-                                        "God damn climate crisis..."};
+    private string[] dialogue = null;
     private AudioClip[] clips = null;
+
+    private string audio_path = null;
     public override void UseItem () {
-        if(this.clips == null){
-            this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1"), 
-                                          Resources.Load<AudioClip>("Audio/test1"),
-                                          Resources.Load<AudioClip>("Audio/test1"),
-                                          Resources.Load<AudioClip>("Audio/test1")};
+
+        // TODO: check for language flag
+        if(false){
+            this.audio_path = "Audio/DE/";
+            this.dialogue = new string[] {"Ich habe keine möglichkeit zu kommunizieren weil die Stromversorgung zusammengebrochen ist.",
+                                          "Langsam mache ich mir sorgen das es meiner Familie nicht gut geht. Ich sollte sie finden.",
+                                          "Das ist aber nicht so leicht wie es mal war da die Winter und die Nächte sehr kalt sind und die Sommer viel zu warm. Ich habe keinen Strom. Ich muss auf meine Ressourcen achten auf meiner Reise.",
+                                          "Verfluchte Klimakriese..."};
+        } else {
+            this.audio_path = "Audio/EN/";
+            this.dialogue = new string[] {"I don't have any communication since the electric grid broke down.", 
+                                          "I'm worried that my family isn't okay. I have to go and find them.", 
+                                          "But this isn't as easy as it used to be, winters and nights are very cold, summers are too hot, I don't have any electricity. I have to be careful with my resources on my journey.",
+                                          "God damn climate crisis..."};
         }
-    
-        DialogueSystem.the().StartDialogue(computer_dialogue, clips);
+
+        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Computer1"), 
+                                      Resources.Load<AudioClip>(audio_path + "Computer2"),
+                                      Resources.Load<AudioClip>(audio_path + "Computer3"),
+                                      Resources.Load<AudioClip>(audio_path + "Computer4")};
+            
+        DialogueSystem.the().StartDialogue(dialogue, clips);
     }
 
     public override string GetItemName() {

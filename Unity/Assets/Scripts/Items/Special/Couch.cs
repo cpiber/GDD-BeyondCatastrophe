@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class Couch : PermanentItem
 {
-    private string[] computer_dialogue = {"I should probably look for my family instead of sitting..."};
+    private string[] dialogue = null;
     private AudioClip[] clips = null;
+
+    private string audio_path = null;
     public override void UseItem () {
-        if(this.clips == null){
-            this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1")};
+
+        // TODO: check for language flag
+        if(false){
+            this.audio_path = "Audio/DE/";
+            this.dialogue = new string[] {"Ich sollte lieber nach meiner Familie suchen anstatt hier zu sitzen..."};
+        } else {
+            this.audio_path = "Audio/EN/";
+            this.dialogue = new string[] {"I should probably look for my family instead of sitting..."};
         }
-    
-        DialogueSystem.the().StartDialogue(computer_dialogue, clips);
+
+        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Couch1"), };
+            
+        DialogueSystem.the().StartDialogue(dialogue, clips);
     }
 
     public override string GetItemName() {
