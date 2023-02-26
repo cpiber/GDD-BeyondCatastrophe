@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+
 
 public class PlayerController : GenericSingleton<PlayerController>
 {
@@ -131,6 +133,16 @@ public class PlayerController : GenericSingleton<PlayerController>
         MovePlayer();
     }
 
+    public Vector2 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public InventoryManager GetInventory()
+    {
+        return inventory;
+    }
+    
     void MovePlayer(){
         rigidbody.velocity = movement * speed;
         var camera_position = new Vector3(transform.position.x, transform.position.y, -10);
@@ -181,5 +193,5 @@ public class PlayerController : GenericSingleton<PlayerController>
         possibleCollectItem = possibleCollectItems.Count > 0 ? possibleCollectItems[0] : null;
         if (possibleCollectItem != null) HighlightItem(possibleCollectItem);
         Debug.Log($"Updated collect item to {possibleCollectItem?.name ?? "null"} via select. Maintaining {possibleCollectItems.Count} items total.");
-    }
+    } 
 }
