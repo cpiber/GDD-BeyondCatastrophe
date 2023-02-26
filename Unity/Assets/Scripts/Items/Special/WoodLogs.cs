@@ -13,7 +13,7 @@ namespace Items.Special
         }
 
         public override string GetItemName() {
-            return "WoodLog";
+            return "WoodLogs";
         }
 
         public override string GetItemDescription()
