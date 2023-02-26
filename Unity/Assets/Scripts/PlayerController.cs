@@ -20,6 +20,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     [SerializeField] [HideInInspector] List<Item> possibleCollectItems = new List<Item>();
     [SerializeField] Color itemOutlineColor;
     [SerializeField] float itemOutlineAdd = .1f;
+    public Color ItemOutlineColor => itemOutlineColor;
     public HeatedRoom CurrentRoom { get; set; }
 
     private Vector2 movement = Vector2.zero;
@@ -104,6 +105,7 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     void OnInteractItem() {
         if (DayNightSystem.the().IsPaused) return;
+        if (!allowUserInteraction) return;
         if (possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
             Debug.Assert(!possibleCollectItem.IsCollectible());
             possibleCollectItem.UseItem();
@@ -152,7 +154,7 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     private void OnTriggerEnter2D(Collider2D collider) {
         collider.gameObject.TryGetComponent<Item>(out var item);
-        if (item != null) {
+        if (item != null && (item.IsCollectible() || item.IsInteractible())) {
             if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
             possibleCollectItems.Add(item);
             possibleCollectItem = item;
@@ -173,11 +175,26 @@ public class PlayerController : GenericSingleton<PlayerController>
         }
     }
 
+    public void UnregisterCollectItem(Item item) {
+        Debug.Log($"Removing possible select item {item} due to request");
+        possibleCollectItems.Remove(item);
+        if (possibleCollectItem == item) SelectNextCollectItem();
+    }
+
+    public void RegisterCollectItem(Item item) {
+        Debug.Log($"Adding possible select item {item} due to request");
+        possibleCollectItems.Add(item);
+        if (possibleCollectItem == null) possibleCollectItem = item;
+    }
+
     private void HighlightItem(Item item) {
         var renderer = item.GetComponent<Renderer>();
         if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
             renderer.material.SetColor("_OutlineColor", itemOutlineColor);
             renderer.material.SetFloat("_OutlineSize", itemOutlineAdd);
+        }
+        if (item.OutlineObject != null && (item.IsCollectible() || item.IsInteractible())) {
+            item.OutlineObject.SetActive(true);
         }
     }
 
@@ -187,11 +204,16 @@ public class PlayerController : GenericSingleton<PlayerController>
             renderer.material.SetColor("_OutlineColor", Color.white);
             renderer.material.SetFloat("_OutlineSize", 0);
         }
+        if (item.OutlineObject != null) {
+            item.OutlineObject.SetActive(false);
+        }
     }
 
     private void SelectNextCollectItem() {
+        if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
         possibleCollectItem = possibleCollectItems.Count > 0 ? possibleCollectItems[0] : null;
         if (possibleCollectItem != null) HighlightItem(possibleCollectItem);
+        if (possibleCollectItem == null) possibleCollectItem = null; // Unity magic
         Debug.Log($"Updated collect item to {possibleCollectItem?.name ?? "null"} via select. Maintaining {possibleCollectItems.Count} items total.");
     } 
 }

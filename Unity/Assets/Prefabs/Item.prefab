@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: -2413806693520163455, guid: f46edcc5234a6e641b2dd1114b91cedc, type: 3}
+  outlineMaterial: {fileID: 0}
+  outlineObject: {fileID: 0}
   numberOfUsagesLeft: 1
   foodValue: 10
 --- !u!61 &-7908357118172525260

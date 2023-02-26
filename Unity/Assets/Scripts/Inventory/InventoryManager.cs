@@ -57,6 +57,9 @@ public class InventoryManager : GenericSingleton<InventoryManager>
     }  
 
     public bool AddBagItem(Item collectItem) {
+        return AddSlotItem(collectItem, GetAllItemSlots());
+    }
+    public bool AddSlotItem(Item collectItem, IEnumerable<Transform> slots) {
         string itemName = collectItem.name;
         if (!items.ContainsKey(itemName)) {
             Debug.LogWarning($"Such an item ({itemName}) does not exist!");
@@ -67,7 +70,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         Debug.Assert(item.GetType() == collectItem.GetType(), "Excepted items to be of same type");
         Transform itemFound = null;
         Transform firstFreeSlot = null;
-        foreach(Transform itemSlot in GetAllItemSlots()) {
+        foreach(Transform itemSlot in slots) {
             InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
             if (slot.GetSlotItemName() == itemName) {
                 itemFound = itemSlot;
@@ -137,13 +140,13 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             // check if item is swappable
 
             if (firstItemSlot.name.Contains("Armor") && !secondItem.IsArmor()) {
-                UnselectButtons();
                 uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
+                UnselectButtons();
                 return;
             } 
             if (secondItemSlot.name.Contains("Armor") && !firstItem.IsArmor()) {
-                UnselectButtons();
                 uiManager.OnAttemptSwapItems(selectedItemToMove, itemToMove);
+                UnselectButtons();
                 return;
             } 
 
@@ -188,5 +191,8 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         for (int i = 0; i < uiManager.ArmorInventoryItems.childCount; i++) yield return uiManager.ArmorInventoryItems.GetChild(i);
         // TODO: this allows picking up from anywhere...
         for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
+    }
+    public IEnumerable<Transform> GetAllItemSlots(Transform inv) {
+        for (int i = 0; i < inv.childCount; i++) yield return inv.GetChild(i);
     }
 }

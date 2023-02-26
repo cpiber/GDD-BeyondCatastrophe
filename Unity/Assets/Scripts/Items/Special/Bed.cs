@@ -5,15 +5,24 @@ public class Bed : PermanentItem
 {
     [SerializeField] float bedTimeSeconds = 2f;
     [SerializeField] int minTiredness = StatusSystem.STATUS_MAX / 4;
-    
-    private string[] dialogue = {"Ugh, what am I doing, I'm not even tired"};
+
+    private string[] dialogue = null;
     private AudioClip[] clips = null;
 
+    private string audio_path = null;
     public override void UseItem () {
-        if(this.clips == null){
-            this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1")};
+
+        // TODO: check for language flag
+        if(false){
+            this.audio_path = "Audio/DE/";
+            this.dialogue = new string[] {"Was mach ich da, ich bin noch nichtmal wirklich müde."};
+        } else {
+            this.audio_path = "Audio/EN/";
+            this.dialogue = new string[] {"Ugh, what am I doing, I'm not even tired."};
         }
 
+        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Bed1")};
+            
         if (StatusSystem.STATUS_MAX - StatusSystem.the().Tiredness < minTiredness) DialogueSystem.the().StartDialogue(dialogue, clips);
         else StartCoroutine(Sleep());
     }

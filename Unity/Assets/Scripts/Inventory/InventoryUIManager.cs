@@ -55,7 +55,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     
     [ContextMenu("Toggle Chest")]
     public void ToggleChestUI() {
-        if (dialogueSystem.IsOpen) return;
+        if (dialogueSystem.IsOpen) dialogueSystem.CancelDialogue();
         // Allow to open bag regardless of whether bag is open
         if (openUI == UI.Chest) CloseAllUI();
         else {
@@ -72,7 +72,7 @@ public class InventoryUIManager : GenericSingleton<InventoryUIManager>
     
     [ContextMenu("Toggle Bag")]
     public void ToggleBagUI() {
-        if (dialogueSystem.IsOpen) return;
+        if (dialogueSystem.IsOpen) dialogueSystem.CancelDialogue();
         // Bag toggles Chest as well
         if (openUI != UI.Closed) CloseAllUI();
         else {

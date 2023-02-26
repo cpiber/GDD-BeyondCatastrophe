@@ -4,30 +4,54 @@ using UnityEngine;
 public class HomeChest : PermanentItem
 {
     private const string key = "Startroom.HomeChest";
+    [SerializeField] Item[] itemsToGive;
 
-    private string[] computer_dialogue = {"All my stuff is gone. Why did they have to rob me now...",
-                                          "At least I still got some stashes, so I won't starve."};
+    private string[] dialogue = null;
     private AudioClip[] clips = null;
+
+    private string audio_path = null;
 
     void Start() {
         var state = GlobalSceneState.the().getState(key);
         if (state != null && !state.exists) Destroy(this);
+
+        StartCoroutine(SetOutlineObject());
+    }
+
+    private IEnumerator SetOutlineObject() {
+        yield return new WaitForFixedUpdate();
+        outlineObject = GetComponent<Chest>().OutlineObject;
     }
 
     public override void UseItem () {
-        if(this.clips == null){
-            this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1"), 
-                                          Resources.Load<AudioClip>("Audio/test1"),};
+        foreach (var item in itemsToGive) {
+            InventoryManager.the().AddSlotItem(item, InventoryManager.the().GetAllItemSlots(InventoryUIManager.the().ChestInventoryItems));
         }
+
+        // TODO: check for language flag
+        if(false){
+            this.audio_path = "Audio/DE/";
+            this.dialogue = new string[] {"Mein ganzes Zeug ist weg. Wieso mussten sie mich ausrauben...",
+                                          "Zumindest habe ich noch einen kleine Vorrat damit ich nicht verhungere."};
+        } else {
+            this.audio_path = "Audio/EN/";
+            this.dialogue = new string[] {"All my stuff is gone. Why did they have to rob me now...",
+                                          "At least I still got some stashes, so I won't starve."};
+        }
+
+        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Homechest1"), 
+                                      Resources.Load<AudioClip>(audio_path + "Homechest2")};
     
         StartCoroutine(ShowDialogueAndOpenActualChest());
     }
 
     private IEnumerator ShowDialogueAndOpenActualChest() {
-        yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(computer_dialogue, clips));
+        yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(dialogue, clips));
         GetComponent<Chest>().UseItem();
-        Destroy(this);
+        PlayerController.the().UnregisterCollectItem(this);
+        PlayerController.the().RegisterCollectItem(GetComponent<Chest>());
         GlobalSceneState.the().setExists(key, false);
+        Destroy(this);
     }
 
     public override string GetItemName() {

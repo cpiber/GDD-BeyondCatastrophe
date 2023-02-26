@@ -2,14 +2,23 @@ using UnityEngine;
 
 public class TelephoneMast : PermanentItem
 {
-    private string[] dialogue = {"ring ring ring... No one picks up."};
+    private string[] dialogue = null;
     private AudioClip[] clips = null;
 
+    private string audio_path = null;
     public override void UseItem () {
-        if(this.clips == null){
-            this.clips = new AudioClip[] {Resources.Load<AudioClip>("Audio/test1")};
+
+        // TODO: check for language flag
+        if(false){
+            this.audio_path = "Audio/DE/";
+            this.dialogue = new string[] {"ring ring ring... Keiner hebt ab."};
+        } else {
+            this.audio_path = "Audio/EN/";
+            this.dialogue = new string[] {"ring ring ring... No one picks up."};
         }
-    
+
+        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Telephonemast1")};
+            
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
 
