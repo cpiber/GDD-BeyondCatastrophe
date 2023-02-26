@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: e2fb9ae6915f681428db410cadbf64fb
   - enabled: 1
     path: Assets/Scenes/MainGameScene.unity
-    guid: 9e8026495e5ae8e0b9c823cf00cc8d69
+    guid: bd0e99b1081d68290b9fb8b4c091714c
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: a9183260885ef3423aefe227a035ab56
@@ -26,9 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Startroom.unity
     guid: f18621a3a6ce246a38857fa290d1d555
-  - enabled: 1
-    path: Assets/Scenes/TestRoom.unity
-    guid: 4d52f415888a34093b985f209bc70385
   - enabled: 1
     path: Assets/Scenes/WinterIsland.unity
     guid: 457dcd19ffd8b35eca7e7846b390c476
