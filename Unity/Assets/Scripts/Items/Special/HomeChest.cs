@@ -4,6 +4,7 @@ using UnityEngine;
 public class HomeChest : PermanentItem
 {
     private const string key = "Startroom.HomeChest";
+    [SerializeField] Item[] itemsToGive;
 
     private string[] dialogue = null;
     private AudioClip[] clips = null;
@@ -23,6 +24,10 @@ public class HomeChest : PermanentItem
     }
 
     public override void UseItem () {
+        foreach (var item in itemsToGive) {
+            InventoryManager.the().AddSlotItem(item, InventoryManager.the().GetAllItemSlots(InventoryUIManager.the().ChestInventoryItems));
+        }
+
         // TODO: check for language flag
         if(false){
             this.audio_path = "Audio/DE/";
