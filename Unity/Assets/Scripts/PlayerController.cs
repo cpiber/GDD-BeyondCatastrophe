@@ -201,6 +201,7 @@ public class PlayerController : GenericSingleton<PlayerController>
         if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
         possibleCollectItem = possibleCollectItems.Count > 0 ? possibleCollectItems[0] : null;
         if (possibleCollectItem != null) HighlightItem(possibleCollectItem);
+        if (possibleCollectItem == null) possibleCollectItem = null; // Unity magic
         Debug.Log($"Updated collect item to {possibleCollectItem?.name ?? "null"} via select. Maintaining {possibleCollectItems.Count} items total.");
     }
 }
