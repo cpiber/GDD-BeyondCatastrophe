@@ -22153,7 +22153,7 @@ PrefabInstance:
     - target: {fileID: 9197791815492952207, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_Name
-      value: Apple (2)
+      value: Apple
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9197791815492952205, guid: 660f88918238e0d44a2e4531d084924e, type: 3}
@@ -22608,7 +22608,7 @@ PrefabInstance:
     - target: {fileID: 9197791815492952207, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_Name
-      value: Apple (3)
+      value: Apple
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9197791815492952205, guid: 660f88918238e0d44a2e4531d084924e, type: 3}
@@ -28764,7 +28764,7 @@ PrefabInstance:
     - target: {fileID: 9197791815492952207, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_Name
-      value: Apple (5)
+      value: Apple
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9197791815492952205, guid: 660f88918238e0d44a2e4531d084924e, type: 3}
@@ -30609,7 +30609,7 @@ PrefabInstance:
     - target: {fileID: 9197791815492952207, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_Name
-      value: Apple (1)
+      value: Apple
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9197791815492952205, guid: 660f88918238e0d44a2e4531d084924e, type: 3}
@@ -35402,7 +35402,7 @@ PrefabInstance:
     - target: {fileID: 9197791815492952207, guid: 660f88918238e0d44a2e4531d084924e,
         type: 3}
       propertyPath: m_Name
-      value: Apple (4)
+      value: Apple
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9197791815492952205, guid: 660f88918238e0d44a2e4531d084924e, type: 3}
