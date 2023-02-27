@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class FollowPlayer : MonoBehaviour
+public class FollowPlayer : GenericSingleton<FollowPlayer>
 {
+    public const string CHILD_FOLLOWING = "childCollected";
+
     [SerializeField] [HideInInspector] PlayerController player;
     [SerializeField] [HideInInspector] MovementRenderController render;
     [SerializeField] [HideInInspector] new Rigidbody2D rigidbody;

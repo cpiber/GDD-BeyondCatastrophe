@@ -36,6 +36,7 @@ public class DaddyGreeter : PermanentItem
 
     private IEnumerator ShowDialogueAndDestory() {
         yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(dialogue, clips));
+        ProgressSystem.the().setProgress(FollowPlayer.CHILD_FOLLOWING);
         gameObject.GetComponent<FollowPlayer>().enabled = true;
         PlayerController.the().UnregisterCollectItem(this);
         Destroy(this);
