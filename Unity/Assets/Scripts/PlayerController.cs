@@ -13,6 +13,8 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     [SerializeField] InventoryManager inventory;
 
+    [SerializeField] PauseMenu pauseMenu;
+
     private Item possibleCollectItem;
     public HeatedRoom CurrentRoom { get; set; }
 
@@ -139,5 +141,9 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     private void OnTriggerExit2D(Collider2D collider) {
         if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) possibleCollectItem = null;
+    }
+
+    void OnOpenPauseMenu() {
+        pauseMenu.TogglePause();
     }
 }
