@@ -2,13 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Emerald : NonPermanentItem
+public class Emerald : PermanentItem
 {
-    [SerializeField] float foodValue = -100000f;
+    private string[] dialogue = null;
+    private AudioClip[] clips = null;
 
-    public override void UseConcreteItem() {
-        // TODO: Maybe kill player on pickup
-        StatusSystem.the().Eat(foodValue);
+    private string audio_path = null;
+    public override void UseItem () {
+        if(false){
+            this.audio_path = "Audio/DE/";
+            this.dialogue = new string[] {"Irgendwie fühle ich mich nicht so besonders...",
+                                          "Vielleicht ist dieser Smaragd radioaktiv...",
+                                          "Ich fühle mich so schwach..."};
+        } else {
+            this.audio_path = "Audio/EN/";
+            this.dialogue = new string[] {"Somehow I dont feel very well...",
+                                          "Maybe this emerald is radioactive..",
+                                          "I feel so weak..."};
+        }
+
+        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Emerald1"), 
+                                      Resources.Load<AudioClip>(audio_path + "Emerald2"),
+                                      Resources.Load<AudioClip>(audio_path + "Emerald3")};
+            
+        StartCoroutine(ShowDialogueAndDie());
+
+    }
+
+    private IEnumerator ShowDialogueAndDie() {
+        yield return StartCoroutine(DialogueSystem.the().StartDialogueRoutine(dialogue, clips));
+        StatusSystem.the().Eat(-10000);
+        Destroy(this);
     }
 
     public override string GetItemName() {
@@ -16,6 +40,14 @@ public class Emerald : NonPermanentItem
     }
 
     public override string GetItemDescription() {
-        return "A misterious Emerald.";
+        return "This is a Emerald.";
+    }
+
+    public override bool IsInteractible() {
+        return true;
+    }
+
+    public override bool IsCollectible() {
+        return false;
     }
 }
