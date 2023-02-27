@@ -167,6 +167,7 @@ public class PlayerController : GenericSingleton<PlayerController>
         if (collider.gameObject.TryGetComponent<Item>(out var item)) {
             possibleCollectItems.Remove(item);
             Debug.Log($"Removed item {item.name}. Maintaining {possibleCollectItems.Count} items total.");
+            UnhighlightItem(item);
         }
         if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) {
             possibleCollectItem = null;

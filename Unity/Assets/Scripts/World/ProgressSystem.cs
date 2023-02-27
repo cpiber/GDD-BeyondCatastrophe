@@ -7,6 +7,7 @@ public class ProgressSystem : GenericSingleton<ProgressSystem>
     public UnityEvent progressChanged;
 
     public void setProgress(string name, bool value = true) {
+        Debug.Log($"PROGRESS: {name} = {value}");
         progressValues[name] = value;
         progressChanged.Invoke();
     }

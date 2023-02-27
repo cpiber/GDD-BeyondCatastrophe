@@ -87,6 +87,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             if (itemScript is NonPermanentItem nonPermanentItem) {
                 nonPermanentItem.IncreaseItemCount(collectItem as NonPermanentItem);
                 slot.SetCount();
+                item.OnCollect();
                 return true;
             } else {
                 return false;
@@ -97,6 +98,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             nonPermanentItem1.SetUsages(collectItem as NonPermanentItem);
         }
         firstFreeSlot.GetComponent<InventorySlot>().SetSlot(item);
+        item.OnCollect();
         return true;
     }
 
