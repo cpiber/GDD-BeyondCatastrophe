@@ -8,6 +8,7 @@ namespace Items.Reusable
 {
     public class Axe : PermanentItem
     {
+        public const string AXE_COLLECTED = "axeCollected";
         private float interactableArae = 1.2f;
 
         public override void UseItem()
@@ -30,6 +31,10 @@ namespace Items.Reusable
                     break;
                 }
             }
+        }
+
+        public override void OnCollect() {
+            ProgressSystem.the().setProgress(AXE_COLLECTED);
         }
 
         public override string GetItemName() {

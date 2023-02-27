@@ -48,6 +48,7 @@ public class Raft : PermanentItem
         player.allowUserInteraction = true;
         player.transform.localScale = scale;
         reverse = !reverse;
+        Debug.Log($"End at waypoint {currentWaypoint}, now reverse? {reverse}");
     }
 
     public override string GetItemName() {
