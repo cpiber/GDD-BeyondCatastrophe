@@ -32,29 +32,39 @@ public class PlayerController : GenericSingleton<PlayerController>
     public float TimeSinceIdle => timeSinceIdle;
 
 
-    void Start(){
+    void Start()
+    {
         this.rigidbody = this.GetComponent<Rigidbody2D>();
         StartCoroutine(SetIndexNextFrame());
     }
 
-    IEnumerator SetIndexNextFrame() {
+    IEnumerator SetIndexNextFrame()
+    {
         yield return null;
         var ui = InventoryUIManager.the();
         ui.SetSelectedSlot(ui.UseEquippedItemIndex);
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         if (DayNightSystem.the().IsPaused) return;
         MovePlayer();
         if (rigidbody.velocity.SqrMagnitude() > float.Epsilon) timeSinceIdle = 0;
         else timeSinceIdle += Time.deltaTime;
     }
 
-    void OnCollectItem() {
+    void OnCollectItem()
+    {
         if (DayNightSystem.the().IsPaused) return;
         if (!allowUserInteraction) return;
-        if (possibleCollectItem != null && possibleCollectItem.IsCollectible()) {
+        if (possibleCollectItem != null && possibleCollectItem.IsCollectible())
+        {
             Debug.Assert(!possibleCollectItem.IsInteractible());
+            if (possibleCollectItem.name == "Axe")
+            {
+                showDialogAxePickup();
+            }
+
             // TODO add collision check and other collect features
             if (!inventory.AddBagItem(possibleCollectItem)) return;
             int sceneCount = SceneManager.sceneCount;
@@ -63,62 +73,75 @@ public class PlayerController : GenericSingleton<PlayerController>
                 if (SceneManager.GetSceneAt(i).path == testScene)
                     return;
             }
+
             if (possibleCollectItem.gameObject.TryGetComponent<SceneObjectState>(out var os)) os.Destroy();
             else Destroy(possibleCollectItem.gameObject);
             // NOTE: destroying will trigger OnTriggerExit, which will reset the selected item
         }
     }
 
-    void OnUseItem() {
+    void OnUseItem()
+    {
         if (DayNightSystem.the().IsPaused) return;
         if (!allowUserInteraction) return;
         inventory.UseEquippedItem(InventoryUIManager.the().UseEquippedItemIndex);
     }
 
     // Set index of equipped item
-    void OnSetIndexZero() {
+    void OnSetIndexZero()
+    {
         if (DayNightSystem.the().IsPaused) return;
         InventoryUIManager.the().SetSelectedSlot(0);
     }
 
-    void OnSetIndexOne() {
+    void OnSetIndexOne()
+    {
         if (DayNightSystem.the().IsPaused) return;
         InventoryUIManager.the().SetSelectedSlot(1);
     }
 
-    void OnSetIndexTwo() {
+    void OnSetIndexTwo()
+    {
         if (DayNightSystem.the().IsPaused) return;
         InventoryUIManager.the().SetSelectedSlot(2);
     }
 
-    void OnIncrementIndex() {
+    void OnIncrementIndex()
+    {
         if (DayNightSystem.the().IsPaused) return;
         var ui = InventoryUIManager.the();
         ui.SetSelectedSlot((ui.UseEquippedItemIndex + 1) % InventoryUIManager.MAX_EQUIPPED_ITEMS);
     }
 
-    void OnDecrementIndex() {
+    void OnDecrementIndex()
+    {
         if (DayNightSystem.the().IsPaused) return;
         var ui = InventoryUIManager.the();
-        ui.SetSelectedSlot(ui.UseEquippedItemIndex == 0 ? InventoryUIManager.MAX_EQUIPPED_ITEMS - 1 : ui.UseEquippedItemIndex - 1);
+        ui.SetSelectedSlot(ui.UseEquippedItemIndex == 0
+            ? InventoryUIManager.MAX_EQUIPPED_ITEMS - 1
+            : ui.UseEquippedItemIndex - 1);
     }
 
-    void OnInteractItem() {
+    void OnInteractItem()
+    {
         if (DayNightSystem.the().IsPaused) return;
         if (!allowUserInteraction) return;
-        if (possibleCollectItem != null && possibleCollectItem.IsInteractible()) {
+        if (possibleCollectItem != null && possibleCollectItem.IsInteractible())
+        {
             Debug.Assert(!possibleCollectItem.IsCollectible());
             possibleCollectItem.UseItem();
         }
     }
 
-    void OnOpenMenu() {
+    void OnOpenMenu()
+    {
         if (DayNightSystem.the().IsPaused) return;
         inventory.UseBag();
     }
 
 
-    void OnMove(InputValue mv) {
+    void OnMove(InputValue mv)
+    {
         if (InventoryUIManager.the().ShouldInhibitMovement) return;
         if (!allowUserInteraction) return;
         movement = mv.Get<Vector2>();
@@ -126,11 +149,13 @@ public class PlayerController : GenericSingleton<PlayerController>
         if (Mathf.Abs(movement.y) < INPUT_MIN) movement.y = 0;
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         movement = Vector2.zero;
     }
 
-    public void SetPosition(Vector2 position) {
+    public void SetPosition(Vector2 position)
+    {
         transform.position = position;
         MovePlayer();
     }
@@ -144,17 +169,20 @@ public class PlayerController : GenericSingleton<PlayerController>
     {
         return inventory;
     }
-    
-    void MovePlayer(){
+
+    void MovePlayer()
+    {
         rigidbody.velocity = movement * speed;
         var camera_position = new Vector3(transform.position.x, transform.position.y, -10);
         Camera.main.transform.position = camera_position;
         renderController.UpdateSprite(movement);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider) {
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
         collider.gameObject.TryGetComponent<Item>(out var item);
-        if (item != null && (item.IsCollectible() || item.IsInteractible())) {
+        if (item != null && (item.IsCollectible() || item.IsInteractible()))
+        {
             if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
             possibleCollectItems.Add(item);
             possibleCollectItem = item;
@@ -163,57 +191,102 @@ public class PlayerController : GenericSingleton<PlayerController>
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collider) {
-        if (collider.gameObject.TryGetComponent<Item>(out var item)) {
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent<Item>(out var item))
+        {
             possibleCollectItems.Remove(item);
             Debug.Log($"Removed item {item.name}. Maintaining {possibleCollectItems.Count} items total.");
         }
-        if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject) {
+
+        if (possibleCollectItem != null && possibleCollectItem.gameObject == collider.gameObject)
+        {
             possibleCollectItem = null;
             UnhighlightItem(item);
             SelectNextCollectItem();
         }
     }
 
-    public void UnregisterCollectItem(Item item) {
+    public void UnregisterCollectItem(Item item)
+    {
         Debug.Log($"Removing possible select item {item} due to request");
         possibleCollectItems.Remove(item);
         if (possibleCollectItem == item) SelectNextCollectItem();
     }
 
-    public void RegisterCollectItem(Item item) {
+    public void RegisterCollectItem(Item item)
+    {
         Debug.Log($"Adding possible select item {item} due to request");
         possibleCollectItems.Add(item);
         if (possibleCollectItem == null) possibleCollectItem = item;
     }
 
-    private void HighlightItem(Item item) {
+    private void HighlightItem(Item item)
+    {
         var renderer = item.GetComponent<Renderer>();
-        if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
+        if (renderer.material.shader.name == "Shader Graphs/GlowShader" &&
+            (item.IsCollectible() || item.IsInteractible()))
+        {
             renderer.material.SetColor("_OutlineColor", itemOutlineColor);
             renderer.material.SetFloat("_OutlineSize", itemOutlineAdd);
         }
-        if (item.OutlineObject != null && (item.IsCollectible() || item.IsInteractible())) {
+
+        if (item.OutlineObject != null && (item.IsCollectible() || item.IsInteractible()))
+        {
             item.OutlineObject.SetActive(true);
         }
     }
 
-    private void UnhighlightItem(Item item) {
+    private void UnhighlightItem(Item item)
+    {
         var renderer = item.GetComponent<Renderer>();
-        if (renderer.material.shader.name == "Shader Graphs/GlowShader" && (item.IsCollectible() || item.IsInteractible())) {
+        if (renderer.material.shader.name == "Shader Graphs/GlowShader" &&
+            (item.IsCollectible() || item.IsInteractible()))
+        {
             renderer.material.SetColor("_OutlineColor", Color.white);
             renderer.material.SetFloat("_OutlineSize", 0);
         }
-        if (item.OutlineObject != null) {
+
+        if (item.OutlineObject != null)
+        {
             item.OutlineObject.SetActive(false);
         }
     }
 
-    private void SelectNextCollectItem() {
+    private void SelectNextCollectItem()
+    {
         if (possibleCollectItem != null) UnhighlightItem(possibleCollectItem);
         possibleCollectItem = possibleCollectItems.Count > 0 ? possibleCollectItems[0] : null;
         if (possibleCollectItem != null) HighlightItem(possibleCollectItem);
         if (possibleCollectItem == null) possibleCollectItem = null; // Unity magic
-        Debug.Log($"Updated collect item to {possibleCollectItem?.name ?? "null"} via select. Maintaining {possibleCollectItems.Count} items total.");
-    } 
+        Debug.Log(
+            $"Updated collect item to {possibleCollectItem?.name ?? "null"} via select. Maintaining {possibleCollectItems.Count} items total.");
+    }
+
+    private void showDialogAxePickup(){
+        string[] dialogue = null;
+        AudioClip[] clips = null;
+
+        string audio_path = null;
+
+        // TODO: check for language flag
+        if(false){
+            audio_path = "Audio/DE/";
+            dialogue = new string[] {"Mit dieser Axt kann ich endlich Holz sammeln!",
+                "Wobei ich lieber bei den kleine Bäume bleiben sollte..."};
+        } else {
+            audio_path = "Audio/EN/";
+            dialogue = new string[] {"With this axe, I can gather some wood logs!",
+                "Although this will only work with small trees."};
+        }
+
+        clips = new AudioClip[]
+        {
+            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
+            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+        };
+
+            DialogueSystem.the().StartDialogue(dialogue, clips);
+    }
+
 }
