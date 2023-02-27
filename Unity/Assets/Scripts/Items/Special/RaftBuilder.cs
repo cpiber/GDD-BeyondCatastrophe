@@ -20,7 +20,6 @@ public class RaftBuilder : PermanentItem
             raft.SetActive(true);
             GlobalSceneState.the().setExists(globalKey, false);
             PlayerController.the().UnregisterCollectItem(this);
-            PlayerController.the().RegisterCollectItem(raft.GetComponent<Item>());
             Destroy(this);
         } else {
            if(false){
