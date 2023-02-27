@@ -8,10 +8,12 @@ namespace Items.Reusable
 {
     public class Axe : PermanentItem
     {
+        public const string AXE_COLLECTED = "axeCollected";
         private float interactableArae = 1.2f;
 
         public override void UseItem()
         {
+            ProgressSystem.the().setProgress(AXE_COLLECTED); // TODO might want to set this on collect, not use
             Debug.Log("Trying to find nearby logs...");
             Vector2 playerPosition = PlayerController.the().GetPosition();
             Collider2D[] colliders = Physics2D.OverlapCircleAll(playerPosition, interactableArae);
