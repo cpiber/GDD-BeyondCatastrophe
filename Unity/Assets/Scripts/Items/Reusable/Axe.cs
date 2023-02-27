@@ -21,9 +21,9 @@ namespace Items.Reusable
                 WoodLogs woodLogs = collider.GetComponent<WoodLogs>();
                 if (woodLogs != null)
                 {
-
-                    Debug.Log("Found WOODLOGS!!!!!!!!!!! - Name: " + ((Item) woodLogs).name);
+                    Debug.Log("Found Woodlogs nearby!");
                     InventoryManager inventory = PlayerController.the().GetInventory();
+                    PlayerController.the().GetComponent<Animator>().Play("attack_animation");
                     if (!inventory.AddBagItem(woodLogs)) return;
                     if (woodLogs.gameObject.TryGetComponent<SceneObjectState>(out var os)) os.Destroy();
                     else Destroy(woodLogs.gameObject);
