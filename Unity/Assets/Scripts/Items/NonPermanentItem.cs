@@ -41,9 +41,9 @@ public abstract class NonPermanentItem : Item
     }
 
 
-    public bool DecreaseItemCount() {
-        if (numberOfUsagesLeft > 0) {
-            numberOfUsagesLeft -= 1;
+    public bool DecreaseItemCount(int number = 1) {
+        if (numberOfUsagesLeft >= number) {
+            numberOfUsagesLeft -= number;
             return true;
         }
         else {

@@ -21,9 +21,12 @@ public class Raft : PermanentItem
         var currentWaypoint = !reverse ? 0 : wayPoints.Length - 1;
         var increment = !reverse ? 1 : -1;
         Debug.Log($"Next waypoint: {currentWaypoint} (increment {increment})");
+        var gotChild = ProgressSystem.the().getProgress(FollowPlayer.CHILD_FOLLOWING);
         var render = GetComponent<MovementRenderController>();
         var player = PlayerController.the();
         var playerRender = player.GetComponent<MovementRenderController>();
+        var child = gotChild ? FollowPlayer.the() : null;
+        var childRender = child?.GetComponent<MovementRenderController>();
         var scale = player.transform.localScale;
         player.transform.localScale /= 1.5f;
 
@@ -34,8 +37,10 @@ public class Raft : PermanentItem
             var dir = new Vector2(direction.x, direction.y);
             transform.position = newPos;
             player.SetPosition(newPos);
+            if (child != null) child.transform.position = newPos;
             render.UpdateSprite(dir);
             playerRender.UpdateSprite(dir);
+            if (childRender != null) childRender.UpdateSprite(dir);
 
             if (newPos == wayPoints[currentWaypoint].position) {
                 currentWaypoint += increment;
@@ -45,9 +50,11 @@ public class Raft : PermanentItem
 
         var end = endPoints[reverse ? 0 : 1];
         player.SetPosition(end.position);
+        if (child != null) child.transform.position = end.position;
         player.allowUserInteraction = true;
         player.transform.localScale = scale;
         reverse = !reverse;
+        Debug.Log($"End at waypoint {currentWaypoint}, now reverse? {reverse}");
     }
 
     public override string GetItemName() {

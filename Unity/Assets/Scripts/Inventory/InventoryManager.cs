@@ -87,6 +87,7 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             if (itemScript is NonPermanentItem nonPermanentItem) {
                 nonPermanentItem.IncreaseItemCount(collectItem as NonPermanentItem);
                 slot.SetCount();
+                item.OnCollect();
                 return true;
             } else {
                 return false;
@@ -97,17 +98,19 @@ public class InventoryManager : GenericSingleton<InventoryManager>
             nonPermanentItem1.SetUsages(collectItem as NonPermanentItem);
         }
         firstFreeSlot.GetComponent<InventorySlot>().SetSlot(item);
+        item.OnCollect();
         return true;
     }
 
-    public Item TakeBagItem(string itemName) {
+    public Item TakeBagItem(string itemName, int number = 1) {
         foreach(Transform itemSlot in GetAllItemSlots()) {
             InventorySlot slot = itemSlot.GetComponent<InventorySlot>();
             if (slot.GetSlotItemName() != itemName) continue;
             var item = slot.GetItem();
             if (item is NonPermanentItem perm) {
+                if (perm.Count() < number) return null;
                 Debug.Assert(perm.CanBeUsed());
-                perm.DecreaseItemCount();
+                perm.DecreaseItemCount(number);
             }
             slot.SetCount();
             // if item has no use left => reset item slot to no item

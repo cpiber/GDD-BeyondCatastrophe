@@ -26,6 +26,7 @@ public abstract class Item : MonoBehaviour
     virtual public bool IsInteractible() => false;
     virtual public bool IsCollectible() => true;
     abstract public string GetItemDescription();
+    virtual public void OnCollect() {}
     [SerializeField] Sprite sprite;
     [SerializeField] Material outlineMaterial;
     [SerializeField] [HideInInspector] protected GameObject outlineObject;
