@@ -2,6 +2,8 @@ namespace Items.BluePrints
 {
     public class ShipBluePrint : BluePrint
     {
+        public const string SHIPBLUEPRINT_COLLECTED = "shipBluePrintCollected";
+        
         public override void UseItem() {
             
         }
@@ -12,6 +14,10 @@ namespace Items.BluePrints
         
         public override string GetItemDescription() {
             return "This ship blueprint allows you to repair the ship at the port.";
+        }
+        
+        public override void OnCollect() {
+            ProgressSystem.the().setProgress(SHIPBLUEPRINT_COLLECTED);
         }
     }
 }
