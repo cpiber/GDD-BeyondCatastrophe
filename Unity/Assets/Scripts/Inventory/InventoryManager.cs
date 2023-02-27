@@ -121,21 +121,53 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         Item firstItem = slotFrom.GetItem();
         Item secondItem = slotTo.GetItem();
 
-        // pure swap of items
-        if (firstItem.GetItemName() != secondItem.GetItemName() && !secondItem.IsItemEmpty()) {
-            slotFrom.SetSlot(secondItem);
-            slotTo.SetSlot(firstItem);
-            return;
-        }
-
         var itemTo = items[itemName][slotIndex];
+        Item itemFrom = slotFrom.GetItem();
+
 
         InventorySlot slot = GetSlot(itemTo.GetItemName(), slotIndex, true);
 
+        // pure swap of items
+        if (firstItem.GetItemName() != secondItem.GetItemName() && !secondItem.IsItemEmpty()) {
+            if (slot.GetItem().IsItemEmpty()) {
+                slotTo.SetSlot(firstItem);
+            } else {
+                //add one instance to right slot and getfree slot where one places the other item
+                if (itemFrom is NonPermanentItem && ((NonPermanentItem)itemFrom).Count() > 1) {
+                    
+                    var additionalItemTo = items[itemName][slotIndex];
+                    HandleNonPermanentItem(additionalItemTo, true, slotIndex);
+                    // add additonal nonPermanentItem
+                    slot.SetSlot(additionalItemTo);
+
+                    // reduce nonPermanentItem by 1
+                    itemFrom = HandleNonPermanentItem(itemFrom, false, fromIndex);
+                    slotFrom.SetSlot(itemFrom);
+
+                    // TODO if no free slot is available?
+                    InventorySlot additionalSlotTo = GetSlot(secondItem.GetItemName(), fromIndex, true);
+                    additionalSlotTo.SetSlot(secondItem);
+                    slotTo.SetSlot(items["EmptyItem"][fromIndex]);
+
+                } else if (itemFrom is NonPermanentItem && ((NonPermanentItem)itemFrom).Count() == 1) {
+                    var additionalItemTo = items[itemName][slotIndex];
+                    HandleNonPermanentItem(additionalItemTo, true, slotIndex);
+                    // add additonal nonPermanentItem
+                    slot.SetSlot(additionalItemTo);
+
+                    slotFrom.SetSlot(itemTo);
+
+                    InventorySlot additionalSlotTo = GetSlot(secondItem.GetItemName(), fromIndex, true);
+                    additionalSlotTo.SetSlot(secondItem);
+                    slotTo.SetSlot(items["EmptyItem"][fromIndex]);
+                }
+               
+            }
+            return;
+        }
+
         if (slot)
         {
-            Item itemFrom = slotFrom.GetItem();
-
             // handle case if both items are non permanent
             if (itemFrom is NonPermanentItem && itemTo is NonPermanentItem)
             {
