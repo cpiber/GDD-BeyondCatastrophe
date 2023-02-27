@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DestinyIsland.unity
     guid: f9831dbec9bb111b0b609cad7232a195
+  - enabled: 1
+    path: Assets/Scenes/FamilyScene.unity
+    guid: c0560ae9a6897c14fa4aeafbb1d353d0
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9b84ddcfdbc994c04a2f5e08b07b0b66,
       type: 2}
