@@ -2332,8 +2332,8 @@ TextureImporter:
         y: 946
         width: 36
         height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.9912084, y: 0.5178833}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3595,8 +3595,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TX Village Props - Apple: 21300178
-      TX Village Props - Campfire: 21300128
+      TX Village Props - Spear: 21300164
+      TX Village Props - Clother Hanger Pillar 01: 21300230
       TX Village Props - Banner Pillar: 21300122
       TX Village Props - Heavy Sword: 21300168
       TX Village Props - Cloth 05: 21300248
@@ -3733,12 +3733,12 @@ TextureImporter:
       TX Village Props - Pumpkin 02: 21300258
       TX Village Props - Torch: 21300022
       TX Village Props - Road Sign Text 02: 21300048
+      TX Village Props - Apple: 21300178
       TX Village Props - Cauldron: 21300198
-      TX Village Props - Statue Bouquet: 21300152
       TX Village Props - Hammer: 21300186
-      TX Village Props - Spear: 21300164
+      TX Village Props - Statue Bouquet: 21300152
       TX Village Props - Bread: 21300182
-      TX Village Props - Clother Hanger Pillar 01: 21300230
+      TX Village Props - Campfire: 21300128
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
