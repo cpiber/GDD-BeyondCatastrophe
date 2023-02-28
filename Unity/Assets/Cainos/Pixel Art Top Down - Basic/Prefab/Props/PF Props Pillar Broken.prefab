@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7947911505737750448}
   - component: {fileID: 7947911505737750450}
   - component: {fileID: 2393967728453671181}
+  - component: {fileID: 5815805085439215781}
   m_Layer: 20
   m_Name: PF Props Pillar Broken
   m_TagString: Untagged
@@ -112,6 +113,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.93092084, y: 0.6689366}
   m_EdgeRadius: 0
+--- !u!114 &5815805085439215781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7947911505737750455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8cbff8618c45353e8d6745867efd62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  outlineMaterial: {fileID: 0}
+  outlineObject: {fileID: 0}
+  numberOfUsagesLeft: 0
 --- !u!1 &7947911505844789836
 GameObject:
   m_ObjectHideFlags: 0
