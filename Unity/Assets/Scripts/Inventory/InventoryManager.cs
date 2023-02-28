@@ -195,6 +195,12 @@ public class InventoryManager : GenericSingleton<InventoryManager>
         // TODO: this allows picking up from anywhere...
         for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
     }
+    public IEnumerable<Transform> GetAllItemSlotsChestFirst() {
+        for (int i = 0; i < uiManager.ChestInventoryItems.childCount; i++) yield return uiManager.ChestInventoryItems.GetChild(i);
+        for (int i = 0; i < uiManager.BagInventoryItems.childCount; i++) yield return uiManager.BagInventoryItems.GetChild(i);
+        for (int i = 0; i < uiManager.EquippedInventoryItems.childCount; i++) yield return uiManager.EquippedInventoryItems.GetChild(i);
+        for (int i = 0; i < uiManager.ArmorInventoryItems.childCount; i++) yield return uiManager.ArmorInventoryItems.GetChild(i);
+    }
     public IEnumerable<Transform> GetAllItemSlots(Transform inv) {
         for (int i = 0; i < inv.childCount; i++) yield return inv.GetChild(i);
     }
