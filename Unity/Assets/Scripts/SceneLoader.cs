@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : GenericSingleton<SceneLoader>
 {
     private SerializableDictionary<string, int> scenedata = new SerializableDictionary<string, int>();
+    public bool preventAllUnloading = false;
 
     public void LoadAScene(string scene) {
         if (scenedata.ContainsKey(scene) && scenedata[scene] > 0) {
@@ -32,9 +33,15 @@ public class SceneLoader : GenericSingleton<SceneLoader>
     }
 
     public void UnloadAScene(string scene) {
+
         scenedata[scene]--;
         if (scenedata[scene] > 0) {
             Debug.Log($"Scene {scene} still being loaded ({scenedata[scene]})");
+            return;
+        }
+        
+        if (preventAllUnloading) {
+            Debug.Log($"Not unloading scene {scene} by request");
             return;
         }
 

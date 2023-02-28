@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Items.BluePrints;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShipRepair : PermanentItem
 {
@@ -19,16 +20,10 @@ public class ShipRepair : PermanentItem
     public override void UseItem()
     {
         //Ship already repaired
-        if (ProgressSystem.the().getProgress(SHIP_REPAIRED) && !ProgressSystem.the().getProgress(FollowPlayer.CHILD_FOLLOWING))
+        if (ProgressSystem.the().getProgress(SHIP_REPAIRED))
         {
-            dialogRepairShip();
+            dialoguRepairOrEnd();
             return; 
-        }
-
-        if (ProgressSystem.the().getProgress(SHIP_REPAIRED) && ProgressSystem.the().getProgress(FollowPlayer.CHILD_FOLLOWING))
-        {
-            dialogEnd();
-            return;
         }
         
         //First usage of the ship
@@ -44,7 +39,7 @@ public class ShipRepair : PermanentItem
             (InventoryManager.the().TakeBagItem("WoodLogs", requiredWoodLogs) != null))
         {
             ProgressSystem.the().setProgress(SHIP_REPAIRED);
-            dialogRepairShip();
+            dialoguRepairOrEnd();
             return;
         }
         
@@ -176,6 +171,14 @@ public class ShipRepair : PermanentItem
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
 
+    private void dialoguRepairOrEnd() {
+        if (!ProgressSystem.the().getProgress(FollowPlayer.CHILD_FOLLOWING)) {
+            dialogRepairShip();
+        } else {
+            dialogEnd();
+        }
+    }
+
     private void dialogRepairShip()
     {
         // TODO: check for language flag
@@ -201,6 +204,7 @@ public class ShipRepair : PermanentItem
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
     
+    [ContextMenu("Start End Dialogue")]
     private void dialogEnd()
     {
         // TODO: check for language flag
@@ -222,8 +226,18 @@ public class ShipRepair : PermanentItem
             Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
             Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
         };
-        DialogueSystem.the().StartDialogue(dialogue, clips);
-        
+        StartCoroutine(EndCutScene());
+    }
+
+    private IEnumerator EndCutScene() {
+        yield return DialogueSystem.the().StartDialogueRoutine(dialogue, clips);
+        // Start cut-scene
+        PlayerController.the().cameraFollowPlayer = false;
+        SceneLoader.the().preventAllUnloading = true;
+        var raft = GetComponent<Raft>();
+        raft.enabled = true;
+        yield return raft.StartSequence();
+        SceneManager.LoadScene("GameOver");
     }
         
 }

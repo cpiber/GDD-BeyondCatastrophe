@@ -23,6 +23,8 @@ public class MovementRenderController : MonoBehaviour
     }
 
     public void UpdateSprite(Vector2 move_vec){
+        if (characterIndex < 0) return;
+
         if (animator != null) {
             animator.SetFloat("walk_y", move_vec.y);
             animator.SetFloat("walk_x", move_vec.x);

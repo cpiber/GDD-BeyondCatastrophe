@@ -26,6 +26,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     private Vector2 movement = Vector2.zero;
     [SerializeField] MovementRenderController renderController;
     public bool allowUserInteraction = true;
+    public bool cameraFollowPlayer = true;
 
     private new Rigidbody2D rigidbody;
     [SerializeField] private float timeSinceIdle = 0;
@@ -174,7 +175,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     {
         rigidbody.velocity = movement * speed;
         var camera_position = new Vector3(transform.position.x, transform.position.y, -10);
-        Camera.main.transform.position = camera_position;
+        if (cameraFollowPlayer) Camera.main.transform.position = camera_position;
         renderController.UpdateSprite(movement);
     }
 

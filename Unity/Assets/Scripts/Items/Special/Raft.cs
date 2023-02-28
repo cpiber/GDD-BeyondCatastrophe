@@ -9,11 +9,15 @@ public class Raft : PermanentItem
     private bool reverse = false;
 
     public override void UseItem() {
+        StartCoroutine(StartSequence());
+    }
+
+    public IEnumerator StartSequence() {
         var player = PlayerController.the();
         player.allowUserInteraction = false;
         player.Stop();
         player.SetPosition(transform.position);
-        StartCoroutine(followPath());
+        return followPath();
     }
 
     IEnumerator followPath() {
