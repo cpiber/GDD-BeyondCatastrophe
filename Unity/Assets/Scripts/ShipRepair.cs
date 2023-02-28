@@ -237,7 +237,7 @@ public class ShipRepair : PermanentItem
         var raft = GetComponent<Raft>();
         raft.enabled = true;
         yield return raft.StartSequence();
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("GameEnded");
     }
         
 }

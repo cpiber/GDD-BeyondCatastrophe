@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameOver.unity
     guid: a9183260885ef3423aefe227a035ab56
   - enabled: 1
+    path: Assets/Scenes/GameEnded.unity
+    guid: 5ff5a160aad7584bb90837eb1c4158aa
+  - enabled: 1
     path: Assets/Scenes/Graveyard.unity
     guid: ba54b97862bebed02aa1e5dc4370b5e1
   - enabled: 1
