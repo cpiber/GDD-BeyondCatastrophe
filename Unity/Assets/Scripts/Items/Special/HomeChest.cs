@@ -25,7 +25,7 @@ public class HomeChest : PermanentItem
 
     public override void UseItem () {
         foreach (var item in itemsToGive) {
-            InventoryManager.the().AddSlotItem(item, InventoryManager.the().GetAllItemSlots(InventoryUIManager.the().ChestInventoryItems));
+            InventoryManager.the().AddSlotItem(item, InventoryManager.the().GetAllItemSlotsChestFirst());
         }
 
         // TODO: check for language flag
