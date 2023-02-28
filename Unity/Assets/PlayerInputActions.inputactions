@@ -253,6 +253,17 @@
                 },
                 {
                     "name": "",
+                    "id": "14bd0545-0dca-4dd0-88f5-23f9c603385c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "379194c2-61ce-4beb-911e-c88349cb2267",
                     "path": "<Keyboard>/q",
                     "interactions": "",

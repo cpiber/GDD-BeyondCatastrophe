@@ -57,6 +57,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     void OnCollectItem()
     {
         if (DayNightSystem.the().IsPaused) return;
+        if (DialogueSystem.the().IsOpen) return;
         if (!allowUserInteraction) return;
         if (possibleCollectItem != null && possibleCollectItem.IsCollectible())
         {
@@ -84,6 +85,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     void OnUseItem()
     {
         if (DayNightSystem.the().IsPaused) return;
+        if (DialogueSystem.the().IsOpen) return;
         if (!allowUserInteraction) return;
         inventory.UseEquippedItem(InventoryUIManager.the().UseEquippedItemIndex);
     }
@@ -126,6 +128,7 @@ public class PlayerController : GenericSingleton<PlayerController>
     void OnInteractItem()
     {
         if (DayNightSystem.the().IsPaused) return;
+        if (DialogueSystem.the().IsOpen) return;
         if (!allowUserInteraction) return;
         if (possibleCollectItem != null && possibleCollectItem.IsInteractible())
         {
