@@ -2,8 +2,8 @@ namespace Items.BluePrints
 {
     public class ShipBluePrint : BluePrint
     {
-        public const string SHIPBLUEPRINT_COLLECTED = "shipBluePrintCollected";
-        
+        public const string SHIPBLUEPRINT_COLLECTED_PORT = "shipBluePrintCollected_PORT";
+        public const string SHIPBLUEPRINT_COLLECTED_DI = "shipBluePrintCollected_DI";
         public override void UseItem() {
             
         }
@@ -17,7 +17,15 @@ namespace Items.BluePrints
         }
         
         public override void OnCollect() {
-            ProgressSystem.the().setProgress(SHIPBLUEPRINT_COLLECTED);
+            if (this.name == "ShipBluePrintDI")
+            {
+                ProgressSystem.the().setProgress(SHIPBLUEPRINT_COLLECTED_DI);
+            }
+            
+            if (this.name == "ShipBluePrintPort")
+            {
+                ProgressSystem.the().setProgress(SHIPBLUEPRINT_COLLECTED_PORT);
+            }
         }
     }
 }

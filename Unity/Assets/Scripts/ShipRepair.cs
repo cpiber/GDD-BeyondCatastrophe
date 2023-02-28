@@ -26,15 +26,15 @@ public class ShipRepair : PermanentItem
         }
         
         //First usage of the ship
-        if (ProgressSystem.the().getProgress(SHIP_FIRST_DIALOG))
+        if (!ProgressSystem.the().getProgress(SHIP_FIRST_DIALOG))
         {
             dialogFirstUse();
-            ProgressSystem.the().setProgress(SHIP_FIRST_DIALOG);
             return;
         }
         
         //BluePrints found and enough WoodLogs
-        if (ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED) && 
+        if (ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED_PORT) && 
+            ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED_DI) && 
             (InventoryManager.the().TakeBagItem("WoodLogs", requiredWoodLogs) != null))
         {
             ProgressSystem.the().setProgress(SHIP_REPAIRED);
@@ -42,10 +42,19 @@ public class ShipRepair : PermanentItem
             return;
         }
         
-        //BluePrints found, but WoodLogs missing
-        if (ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED))
+        //PORT BluePrint found - ISLAND missing
+        if (ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED_PORT) &&
+            !ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED_DI))
         {
-            dialogShipBluePrintsFound();
+            dialogMissingIsland();
+            return;
+        }
+        
+        //BluePrints found, but WoodLogs missing
+        if (ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED_PORT) &&
+        ProgressSystem.the().getProgress(ShipBluePrint.SHIPBLUEPRINT_COLLECTED_DI))
+        {
+            dialogBothFound();
             return;
         }
         
@@ -72,6 +81,7 @@ public class ShipRepair : PermanentItem
 
     private void dialogFirstUse()
     {
+        Debug.Log("IN dialogFirstUse");
         // TODO: check for language flag
         if(false){
             audio_path = "Audio/DE/";
@@ -91,9 +101,11 @@ public class ShipRepair : PermanentItem
             Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
         };
         DialogueSystem.the().StartDialogue(dialogue, clips);
+        
+        ProgressSystem.the().setProgress(SHIP_FIRST_DIALOG);
     }
 
-    private void dialogShipBluePrintsFound()
+    private void dialogBothFound()
     {
         // TODO: check for language flag
         if(false){
@@ -112,6 +124,29 @@ public class ShipRepair : PermanentItem
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
 
+    private void dialogMissingIsland()
+    {
+        // TODO: check for language flag
+        if(false){
+            audio_path = "Audio/DE/";
+            
+            //TODO
+            dialogue = new string[] {"Ich muss die Baupläne des Schiffes finden!",
+                "Die sollte doch hier irgendwo sein..." };
+        } else {
+            audio_path = "Audio/EN/";
+            dialogue = new string[] {"Something is missing on this plan...",
+                "Maybe I should take a look around and try to find the second half!"};
+        }
+
+        clips = new AudioClip[]
+        {
+            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
+            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+        };
+        DialogueSystem.the().StartDialogue(dialogue, clips);
+    }
+    
     private void dialogShipBluePrintsMissing()
     {
         // TODO: check for language flag
