@@ -17,6 +17,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     [SerializeField] int tirednessMin = 10;
     [SerializeField] int energyMin = 8;
     [SerializeField] float bodyTemperatureDangerMax = 5.5f;
+    [SerializeField] float bodyTemperatureDangerMaxMult = .12f;
     [SerializeField] int overeatingDebuff = 3;
     [Header("Settings/Body Temperature")]
     [SerializeField] float targetBodyTemperature = 25f;
@@ -110,7 +111,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
         if (tiredness < tirednessMin) health = Mathf.Max(0, health - tirednessMin + (int) tiredness);
         if (energy < energyMin) health = Mathf.Max(0, health - energyMin + (int) energy);
         var tempDiff = Mathf.Abs(bodyTemperature - targetBodyTemperature);
-        if (tempDiff > bodyTemperatureDangerMax) health = Mathf.Max(0, health - (int) tempDiff);
+        if (tempDiff > bodyTemperatureDangerMax) health = Mathf.Max(0, health - (int) (tempDiff * bodyTemperatureDangerMaxMult));
     }
 
     void SendUpdatedEffects() {

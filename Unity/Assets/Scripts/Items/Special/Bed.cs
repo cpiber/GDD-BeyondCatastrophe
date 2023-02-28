@@ -30,7 +30,6 @@ public class Bed : PermanentItem
     IEnumerator Sleep() {
         InventoryUIManager.the().CloseAllUI();
         yield return StartCoroutine(DayNightSystem.the().GoToSleep());
-        SeasonSystem.the().AllowUpdateSeason();
         switch (DayNightSystem.the().SectionInDay) {
             case DayNightSystem.DaySection.Night:
             case DayNightSystem.DaySection.Dusk:
@@ -40,6 +39,7 @@ public class Bed : PermanentItem
                 DayNightSystem.the().AdvanceToDusk();
                 break;
         }
+        SeasonSystem.the().AllowUpdateSeason();
         StatusSystem.the().Sleep();
         yield return new WaitForSeconds(bedTimeSeconds);
         yield return StartCoroutine(DayNightSystem.the().WakeUp());
