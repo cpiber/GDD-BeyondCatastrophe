@@ -19,10 +19,16 @@ public class ShipRepair : PermanentItem
     public override void UseItem()
     {
         //Ship already repaired
-        if (ProgressSystem.the().getProgress(SHIP_REPAIRED))
+        if (ProgressSystem.the().getProgress(SHIP_REPAIRED) && !ProgressSystem.the().getProgress(FollowPlayer.CHILD_FOLLOWING))
         {
             dialogRepairShip();
             return; 
+        }
+
+        if (ProgressSystem.the().getProgress(SHIP_REPAIRED) && ProgressSystem.the().getProgress(FollowPlayer.CHILD_FOLLOWING))
+        {
+            dialogEnd();
+            return;
         }
         
         //First usage of the ship
@@ -180,7 +186,11 @@ public class ShipRepair : PermanentItem
             dialogue = new string[] {"Wow! Ich konnte das Schiff reparieren"};
         } else {
             audio_path = "Audio/EN/";
-            dialogue = new string[] {"Wow! I managed to repair the ship!"};
+            dialogue = new string[]
+            {
+                "Wow! I managed to repair the ship!",
+                "Now I only have to find my child!"
+            };
         }
 
         clips = new AudioClip[]
@@ -190,5 +200,30 @@ public class ShipRepair : PermanentItem
         };
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
+    
+    private void dialogEnd()
+    {
+        // TODO: check for language flag
+        if(false){
+            audio_path = "Audio/DE/";
+            
+            //TODO
+            dialogue = new string[] {"Wow! Ich konnte das Schiff reparieren"};
+        } else {
+            audio_path = "Audio/EN/";
+            dialogue = new string[]
+            {
+                "Lets get away from here!"
+            };
+        }
 
+        clips = new AudioClip[]
+        {
+            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
+            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+        };
+        DialogueSystem.the().StartDialogue(dialogue, clips);
+        
+    }
+        
 }
