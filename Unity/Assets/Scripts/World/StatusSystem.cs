@@ -138,4 +138,9 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     public void ToggleGodMode() {
         godMode = !godMode;
     }
+
+    public void updateHealth(int adjustment)
+    {
+        health = health + adjustment;
+    }
 }
