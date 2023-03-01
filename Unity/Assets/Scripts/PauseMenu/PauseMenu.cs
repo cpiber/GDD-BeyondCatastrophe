@@ -8,18 +8,18 @@ public class PauseMenu : GenericSingleton<PauseMenu>
     public bool IsPaused = false;
     public GameObject PauseMenuObject;
     [SerializeField] InputActionReference pauseMapAction;
+    [SerializeField] RemapController remapController;
 
 
     public void TogglePause() {
+        remapController.CloseMenu();
         if (IsPaused)
         {
             ResumeGame();
-            ActivateInventoryKey();
         }
         else
         {
             PauseGame();
-            DeactivateInventoryKey();
         }
 
         IsPaused = !IsPaused;
@@ -50,13 +50,5 @@ public class PauseMenu : GenericSingleton<PauseMenu>
         }
         PlayerController.the().allowUserInteraction = IsPaused;
         IsPaused = !IsPaused;
-    }
-
-    public void DeactivateInventoryKey() {
-        pauseMapAction.action.Disable();
-    }
-
-    public void ActivateInventoryKey() {
-        pauseMapAction.action.Enable();
     }
 }

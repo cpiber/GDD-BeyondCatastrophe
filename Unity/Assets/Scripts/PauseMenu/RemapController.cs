@@ -20,7 +20,7 @@ public class RemapController : MonoBehaviour
     void Start() {
         int index = 0;
         foreach (var action in triggerActions) {
-            texts[index].text = triggerActions[index].action.bindings[0].effectivePath.Split('/')[1];
+            texts[index].text = triggerActions[index].action.bindings[0].effectivePath.Split('/')[1].ToUpper();
             var name = triggerActions[index].action.name.Contains("OpenPauseMenu");
             index++;
         }
@@ -38,6 +38,12 @@ public class RemapController : MonoBehaviour
         IsOpen = !IsOpen;
     }
 
+    public void CloseMenu() {
+        gameObject.SetActive(false);
+        ActivatePauseKey();
+        IsOpen = false;
+    }
+
 
     void OnDestroy() {
         int index = 0;
@@ -49,13 +55,14 @@ public class RemapController : MonoBehaviour
     }
         
     public void RemapKey(int index) {
+        texts[index].text = "<press any key>";
         triggerActions[index].action.Disable();
         rebindOperation = triggerActions[index].action.PerformInteractiveRebinding().WithControlsExcluding("Mouse").OnComplete(triggerOperation => FinishedRebinding(index)).Start();
     }
 
     public void FinishedRebinding(int index) {
         InputAction act = triggerActions[index].action;
-        texts[index].text = triggerActions[index].action.bindings[0].effectivePath.Split('/')[1];
+        texts[index].text = triggerActions[index].action.bindings[0].effectivePath.Split('/')[1].ToUpper();
         triggerActions[index].action.Enable();
         rebindOperation.Dispose();
         rebindOperation.Reset();
