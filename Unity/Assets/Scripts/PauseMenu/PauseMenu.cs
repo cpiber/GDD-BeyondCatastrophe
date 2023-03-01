@@ -9,6 +9,9 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject PauseMenuObject;
 
+    [SerializeField] InputActionReference pauseMapAction;
+
+
     //public InputAction pauseMenu;
 
     void Start()
@@ -35,11 +38,14 @@ public class PauseMenu : MonoBehaviour
         if (IsPaused)
         {
             ResumeGame();
+            ActivateInventoryKey();
         }
         else
         {
             PauseGame();
+            DeactivateInventoryKey();
         }
+
         IsPaused = !IsPaused;
     }
 
@@ -53,5 +59,25 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuObject.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    public void TogglePauseWithoutTimeChange() {
+        if (IsPaused)
+        {
+            PauseMenuObject.SetActive(false);
+        }
+        else
+        {
+            PauseMenuObject.SetActive(true);
+        }
+        IsPaused = !IsPaused;
+    }
+
+    public void DeactivateInventoryKey() {
+        pauseMapAction.action.Disable();
+    }
+
+    public void ActivateInventoryKey() {
+        pauseMapAction.action.Enable();
     }
 }
