@@ -278,11 +278,11 @@ public class PlayerController : GenericSingleton<PlayerController>
         if(false){
             audio_path = "Audio/DE/";
             dialogue = new string[] {"Mit dieser Axt kann ich endlich Holz sammeln!",
-                "Wobei ich lieber bei den kleine Bäume bleiben sollte..."};
+                                     "Wobei ich lieber bei den kleinen Bäumen bleiben sollte..."};
         } else {
             audio_path = "Audio/EN/";
             dialogue = new string[] {"With this axe, I can gather some wood logs!",
-                "Although this will only work with small trees."};
+                                     "Although this will only work with small trees."};
         }
 
         clips = new AudioClip[]

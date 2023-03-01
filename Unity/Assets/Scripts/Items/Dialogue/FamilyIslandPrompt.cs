@@ -17,7 +17,7 @@ public class FamilyIslandPrompt : MonoBehaviour
                 this.dialogue = new string[] {"That looks like a good spot to build a raft"};
             }
 
-            this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Familyisland1")};
+            this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "FamilyIsland1")};
             
             StartCoroutine(ShowDialogueAndDestroy());
         }

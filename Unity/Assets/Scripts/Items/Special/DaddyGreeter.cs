@@ -26,10 +26,10 @@ public class DaddyGreeter : PermanentItem
                                           "I saw a port a bit below, maybe we can find something to escape there."};
         }
 
-        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Daddydialogue1"),
-                                      Resources.Load<AudioClip>(audio_path + "Daddydialogue2"),
-                                      Resources.Load<AudioClip>(audio_path + "Daddydialogue3"), 
-                                      Resources.Load<AudioClip>(audio_path + "Daddydialogue4")};
+        this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "DaddyGreeter1"),
+                                      Resources.Load<AudioClip>(audio_path + "DaddyGreeter2"),
+                                      Resources.Load<AudioClip>(audio_path + "DaddyGreeter3"), 
+                                      Resources.Load<AudioClip>(audio_path + "DaddyGreeter4")};
     
         StartCoroutine(ShowDialogueAndDestory());
     }

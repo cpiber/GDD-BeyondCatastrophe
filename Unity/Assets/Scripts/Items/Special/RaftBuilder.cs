@@ -24,13 +24,13 @@ public class RaftBuilder : PermanentItem
         } else {
            if(false){
                 this.audio_path = "Audio/DE/";
-                this.dialogue = new string[] {"Ich brauche wohl noch ein paar mehr Hölzer, um das Floß zu bauen..."};
+                this.dialogue = new string[] {"Ich brauche wohl noch ein paar mehr Baumstämme, um das Floß zu bauen..."};
             } else {
                 this.audio_path = "Audio/EN/";
                 this.dialogue = new string[] {"Looks like I still need some more logs to build that raft..."};
             }
 
-            this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Familyisland2")};
+            this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "RaftBuilder1")};
             DialogueSystem.the().StartDialogue(dialogue, clips);
         }
     }

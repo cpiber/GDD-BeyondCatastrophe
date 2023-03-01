@@ -87,19 +87,20 @@ public class ShipRepair : PermanentItem
         if(false){
             audio_path = "Audio/DE/";
             dialogue = new string[] {"Mit diesem Schiff könnte ich von der Insel flüchten!",
-                "Zuerst müsste ich es aber reparieren...",
-                "Mit etwas Holz könnte das klappen!"
-            };
+                                     "Zuerst müsste ich es aber reparieren...",
+                                     "Mit etwas Holz könnte das klappen!"};
         } else {
             audio_path = "Audio/EN/";
             dialogue = new string[] {"With this ship, I can leave this island behind.",
-                "But first, I need to repair it..."};
+                                     "But first, I need to repair it...",
+                                     "That should work with some wooden logs!"};
         }
 
         clips = new AudioClip[]
         {
-            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
-            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+            Resources.Load<AudioClip>(audio_path + "ShipRepair1"),
+            Resources.Load<AudioClip>(audio_path + "ShipRepair2"),
+            Resources.Load<AudioClip>(audio_path + "ShipRepair3")  
         };
         DialogueSystem.the().StartDialogue(dialogue, clips);
         
@@ -111,17 +112,14 @@ public class ShipRepair : PermanentItem
         // TODO: check for language flag
         if(false){
             audio_path = "Audio/DE/";
-            dialogue = new string[] {"10 Holz-Stückchen sollten reichen, um das Schiff wieder intakt zu bringen!"};
+            dialogue = new string[] {"10 Holzstämme sollten reichen, um das Schiff wieder intakt zu bringen!"};
         } else {
             audio_path = "Audio/EN/";
             dialogue = new string[] {"10 wood logs should be enough to fix this ship!"};
         }
 
-        clips = new AudioClip[]
-        {
-            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
-            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
-        };
+        clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "ShipRepair4")};
+
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
 
@@ -131,19 +129,18 @@ public class ShipRepair : PermanentItem
         if(false){
             audio_path = "Audio/DE/";
             
-            //TODO
-            dialogue = new string[] {"Ich muss die Baupläne des Schiffes finden!",
-                "Die sollte doch hier irgendwo sein..." };
+            dialogue = new string[] {"Etwas auf diesem Plan fehlt...!",
+                                     "Vielleicht sollte ich mich umsehen und die zweite Hälfte finden!"};
         } else {
             audio_path = "Audio/EN/";
             dialogue = new string[] {"Something is missing on this plan...",
-                "Maybe I should take a look around and try to find the second half!"};
+                                     "Maybe I should take a look around and try to find the second half!"};
         }
 
         clips = new AudioClip[]
         {
-            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
-            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+            Resources.Load<AudioClip>(audio_path + "ShipRepair5"),
+            Resources.Load<AudioClip>(audio_path + "ShipRepair6") 
         };
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
@@ -154,19 +151,18 @@ public class ShipRepair : PermanentItem
         if(false){
             audio_path = "Audio/DE/";
             
-            //TODO
             dialogue = new string[] {"Ich muss die Baupläne des Schiffes finden!",
-                "Die sollte doch hier irgendwo sein..." };
+                                     "Die sollten doch hier irgendwo sein..." };
         } else {
             audio_path = "Audio/EN/";
             dialogue = new string[] {"I need to find the ship blueprints!",
-                "They should be around here somewhere..."};
+                                     "They should be around here somewhere..."};
         }
 
         clips = new AudioClip[]
         {
-            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
-            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+            Resources.Load<AudioClip>(audio_path + "ShipRepair7"),
+            Resources.Load<AudioClip>(audio_path + "ShipRepair8") 
         };
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
@@ -185,21 +181,18 @@ public class ShipRepair : PermanentItem
         if(false){
             audio_path = "Audio/DE/";
             
-            //TODO
-            dialogue = new string[] {"Wow! Ich konnte das Schiff reparieren"};
+            dialogue = new string[] {"Wow! Ich konnte das Schiff reparieren!",
+                                     "Jetzt muss ich nur noch meine Tochter finden!"};
         } else {
             audio_path = "Audio/EN/";
-            dialogue = new string[]
-            {
-                "Wow! I managed to repair the ship!",
-                "Now I only have to find my child!"
-            };
+            dialogue = new string[] {"Wow! I managed to repair the ship!",
+                                     "Now I only have to find my daughter!"};
         }
 
         clips = new AudioClip[]
         {
-            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
-            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+            Resources.Load<AudioClip>(audio_path + "ShipRepair9"),
+            Resources.Load<AudioClip>(audio_path + "ShipRepair10") 
         };
         DialogueSystem.the().StartDialogue(dialogue, clips);
     }
@@ -211,20 +204,15 @@ public class ShipRepair : PermanentItem
         if(false){
             audio_path = "Audio/DE/";
             
-            //TODO
-            dialogue = new string[] {"Wow! Ich konnte das Schiff reparieren"};
+            dialogue = new string[] {"Lass uns von hier abhauen!"};
         } else {
             audio_path = "Audio/EN/";
-            dialogue = new string[]
-            {
-                "Lets get away from here!"
-            };
+            dialogue = new string[] {"Lets get away from here!"};
         }
 
         clips = new AudioClip[]
         {
-            Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
-            Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
+            Resources.Load<AudioClip>(audio_path + "ShipRepair11"),
         };
         StartCoroutine(EndCutScene());
     }

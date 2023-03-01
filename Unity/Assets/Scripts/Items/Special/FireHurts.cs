@@ -20,18 +20,14 @@ public class FireHurts : MonoBehaviour
             // TODO: check for language flag
             if(false){
                 audio_path = "Audio/DE/";
-                dialogue = new string[] {"Ahhh, das tut weh - Ich sollte nicht zu nahe ans Feuer gehen!"
+                dialogue = new string[] {"Ahh, das tut weh - Ich sollte nicht zu nahe ans Feuer gehen!"
                 };
             } else {
                 audio_path = "Audio/EN/";
                 dialogue = new string[] {"Ahh, that hurts - I shouldn't go to close to the fire!"};
             }
 
-            clips = new AudioClip[]
-            {
-                Resources.Load<AudioClip>(audio_path + "AxePickUp1"),
-                Resources.Load<AudioClip>(audio_path + "AxePickUp2") 
-            };
+            clips = new AudioClip[] { Resources.Load<AudioClip>(audio_path + "FireHurts1") };
             DialogueSystem.the().StartDialogue(dialogue, clips);
             ProgressSystem.the().setProgress(FIRE_HURTS);   
         }
