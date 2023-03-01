@@ -3,36 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : GenericSingleton<PauseMenu>
 {
-    public static bool IsPaused = false;
-
+    public static bool IsPaused = false; // TODO why static?
     public GameObject PauseMenuObject;
-
     [SerializeField] InputActionReference pauseMapAction;
 
-
-    //public InputAction pauseMenu;
-
-    void Start()
-    {
-    }
-
-    /*void Update()
-    {
-        if(pauseMenu.readValue())
-        {
-            if (IsPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
-            IsPaused = !IsPaused;
-        }
-    }*/
 
     public void TogglePause() {
         if (IsPaused)
@@ -53,12 +29,14 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuObject.SetActive(true);
         Time.timeScale = 0f;
+        PlayerController.the().allowUserInteraction = false;
     }
 
     void ResumeGame()
     {
         PauseMenuObject.SetActive(false);
         Time.timeScale = 1f;
+        PlayerController.the().allowUserInteraction = true;
     }
 
     public void TogglePauseWithoutTimeChange() {
@@ -70,6 +48,7 @@ public class PauseMenu : MonoBehaviour
         {
             PauseMenuObject.SetActive(true);
         }
+        PlayerController.the().allowUserInteraction = IsPaused;
         IsPaused = !IsPaused;
     }
 
