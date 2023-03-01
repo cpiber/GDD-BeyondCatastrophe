@@ -1,7 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PauseMenu : GenericSingleton<PauseMenu>
 {
@@ -9,6 +10,8 @@ public class PauseMenu : GenericSingleton<PauseMenu>
     public GameObject PauseMenuObject;
     [SerializeField] InputActionReference pauseMapAction;
     [SerializeField] RemapController remapController;
+    [SerializeField] PlayerInput playerInput;
+    [SerializeField] GameObject rebindButton;
 
 
     public void TogglePause() {
@@ -20,6 +23,8 @@ public class PauseMenu : GenericSingleton<PauseMenu>
         else
         {
             PauseGame();
+            DisableRebindIfNotKeyboard();
+            StartCoroutine(SetSelected());
         }
 
         IsPaused = !IsPaused;
@@ -50,5 +55,16 @@ public class PauseMenu : GenericSingleton<PauseMenu>
         }
         PlayerController.the().allowUserInteraction = IsPaused;
         IsPaused = !IsPaused;
+    }
+
+    private IEnumerator SetSelected() {
+        yield return null;
+        var obj = GetComponentInChildren<Slider>().gameObject;
+        Debug.Log($"Selecting {obj}");
+        EventSystem.current.SetSelectedGameObject(obj);
+    }
+
+    private void DisableRebindIfNotKeyboard() {
+        rebindButton.SetActive(playerInput.currentControlScheme == InventoryUIManager.KEYBOARD_SCHEME);
     }
 }

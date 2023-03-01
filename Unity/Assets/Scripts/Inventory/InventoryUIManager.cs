@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class InventoryUIManager : GenericSingleton<InventoryUIManager>
 {
-    public static int MAX_EQUIPPED_ITEMS = 3;
-    public static string KEYBOARD_SCHEME = "Keyboard&Mouse";
+    public const int MAX_EQUIPPED_ITEMS = 3;
+    public const string KEYBOARD_SCHEME = "Keyboard&Mouse";
 
     [SerializeField] GameObject bagUI;
     [SerializeField] GameObject chestUI;
