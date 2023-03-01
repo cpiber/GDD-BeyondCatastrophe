@@ -8,6 +8,7 @@ public class WinterIslandPrompt : MonoBehaviour
     private string audio_path = null;
 
     void OnTriggerEnter2D(Collider2D collider) {
+        if(DialogueSystem.the().IsOpen) return;
         if (collider.tag == "Player") {
            if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";

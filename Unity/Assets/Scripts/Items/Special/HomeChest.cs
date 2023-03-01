@@ -24,6 +24,8 @@ public class HomeChest : PermanentItem
     }
 
     public override void UseItem () {
+        if(DialogueSystem.the().IsOpen) return;
+        
         foreach (var item in itemsToGive) {
             InventoryManager.the().AddSlotItem(item, InventoryManager.the().GetAllItemSlotsChestFirst());
         }

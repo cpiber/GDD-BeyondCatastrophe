@@ -11,6 +11,7 @@ public class DaddyGreeter : PermanentItem
     private string audio_path = null;
 
     public override void UseItem () {
+        if(DialogueSystem.the().IsOpen) return;
         
         if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
