@@ -295,7 +295,15 @@ public class PlayerController : GenericSingleton<PlayerController>
 
             DialogueSystem.the().StartDialogue(dialogue, clips);
     }
+    
+    private void OnClick (InputValue input) {
+        DialogueSystem.the().OnClick(input);
+    }
 
+    private void OnSubmit () {
+        DialogueSystem.the().OnSubmit();
+    }
+    
     void OnOpenPauseMenu() {
         pauseMenu.TogglePause();
     }

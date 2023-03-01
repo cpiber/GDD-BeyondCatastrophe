@@ -28,14 +28,14 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         dialogueBox.SetActive(false);
     }
 
-    void OnClick (InputValue input) {
+    public void OnClick (InputValue input) {
         // LeftClick
         if (input.Get<float>() > 0.5){
             CompleteDialogue();
         }
     }
 
-    void OnSubmit () {
+    public void OnSubmit () {
         // Enter
         CompleteDialogue();
     }
