@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Unity/Assets/Scenes/DestinyIsland.unity.meta
 guid: f9831dbec9bb111b0b609cad7232a195
+========
+guid: 63d512690fd7649f8a1794e6f4a236a6
+folderAsset: yes
+>>>>>>>> origin/feature/SettingsScreen:Unity/Assets/Scripts/PauseMenu.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

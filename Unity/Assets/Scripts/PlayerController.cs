@@ -16,6 +16,8 @@ public class PlayerController : GenericSingleton<PlayerController>
 
     [SerializeField] InventoryManager inventory;
 
+    [SerializeField] PauseMenu pauseMenu;
+
     private Item possibleCollectItem;
     [SerializeField] [HideInInspector] List<Item> possibleCollectItems = new List<Item>();
     [SerializeField] Color itemOutlineColor;
@@ -294,4 +296,7 @@ public class PlayerController : GenericSingleton<PlayerController>
             DialogueSystem.the().StartDialogue(dialogue, clips);
     }
 
+    void OnOpenPauseMenu() {
+        pauseMenu.TogglePause();
+    }
 }

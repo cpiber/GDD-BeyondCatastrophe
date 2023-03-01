@@ -18,8 +18,11 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     [SerializeField] AudioClip[] clips = {};
     [SerializeField] float volume = 1f;
     [SerializeField] private UnityEvent dialogueDone = new UnityEvent();
-
+    
     public bool IsOpen => dialogueBox.activeSelf;
+    private bool blockDialogue = false;
+    private bool blockAudio = false;
+
   
     void Start(){
         dialogueBox.SetActive(false);
@@ -63,7 +66,6 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     public void StartDialogue(string[] lines, AudioClip[] clips){
         dialogueDone.Invoke(); // kill previous invocations
         StopAllCoroutines();
-        dialogueBox.SetActive(true);
         InventoryUIManager.the().CloseAllUI();
         textComponent.text = "";
         this.lines = lines;
@@ -81,15 +83,25 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         dialogueDone.RemoveListener(action.Invoke);
     }
 
-    IEnumerator TypeLine(){
-        // TODO: only play audio if flag set in menue
+    void PlayAudio() {
         audioSource.Stop();
         audioSource.PlayOneShot(lineIndex < clips.Length ? clips[lineIndex] : null, volume);
-        for (int i = 0; i < lines[lineIndex].Length; i++){
-            textComponent.text += lines[lineIndex][i];
-            yield return new WaitForSeconds(speed);
+    }
+
+    IEnumerator TypeLine(){
+        if (!blockAudio) {
+            PlayAudio();
+        } 
+        if (!blockDialogue) {
+            dialogueBox.SetActive(true);
+
+            for (int i = 0; i < lines[lineIndex].Length; i++){
+                textComponent.text += lines[lineIndex][i];
+                yield return new WaitForSeconds(speed);
+            }
         }
     }
+
 
     void NextLine(){
         if (lineIndex < lines.Length - 1){
@@ -101,5 +113,16 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
             audioSource.Stop();
             dialogueDone.Invoke();
         }
+    }
+
+    public void SetBlockDialogue() {
+        blockDialogue = !blockDialogue;
+    }
+    public void SetBlockAudio() {
+        blockAudio = !blockAudio;
+    }
+
+    public void SetVolume(System.Single newVolume) {
+        volume = newVolume;
     }
 }
