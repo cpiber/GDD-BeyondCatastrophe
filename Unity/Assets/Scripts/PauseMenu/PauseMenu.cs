@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PauseMenu : GenericSingleton<PauseMenu>
 {
-    public static bool IsPaused = false; // TODO why static?
+    public bool IsPaused = false;
     public GameObject PauseMenuObject;
     [SerializeField] InputActionReference pauseMapAction;
 
