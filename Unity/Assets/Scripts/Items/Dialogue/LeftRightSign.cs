@@ -10,8 +10,8 @@ public class LeftRightSign : PermanentItem
     private string audio_path = null;
     public override void UseItem () {
 
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"Wilkommen auf Destiny Island.",
                                           "Wähle deinen Weg weise und falle nicht auf Versuchungen rein... "};

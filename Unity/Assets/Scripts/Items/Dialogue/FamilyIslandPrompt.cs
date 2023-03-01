@@ -9,7 +9,7 @@ public class FamilyIslandPrompt : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.tag == "Player") {
-           if(false){
+           if(!DialogueSystem.the().english){
                 this.audio_path = "Audio/DE/";
                 this.dialogue = new string[] {"Das sieht nach einem super Platz für ein Floß aus"};
             } else {

@@ -11,8 +11,8 @@ public class DaddyGreeter : PermanentItem
     private string audio_path = null;
 
     public override void UseItem () {
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"(Kind) Papa! Du hast mich gefunden!",
                                           "...",

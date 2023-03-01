@@ -276,8 +276,8 @@ public class PlayerController : GenericSingleton<PlayerController>
 
         string audio_path = null;
 
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             audio_path = "Audio/DE/";
             dialogue = new string[] {"Mit dieser Axt kann ich endlich Holz sammeln!",
                                      "Wobei ich lieber bei den kleinen Bäumen bleiben sollte..."};

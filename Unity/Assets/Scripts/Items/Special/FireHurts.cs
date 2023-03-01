@@ -17,8 +17,8 @@ public class FireHurts : MonoBehaviour
         if (!ProgressSystem.the().getProgress(FIRE_HURTS))
         {
             Debug.Log("IN dialogFirstUse");
-            // TODO: check for language flag
-            if(false){
+            
+            if(!DialogueSystem.the().english){
                 audio_path = "Audio/DE/";
                 dialogue = new string[] {"Ahh, das tut weh - Ich sollte nicht zu nahe ans Feuer gehen!"
                 };

@@ -22,6 +22,7 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     public bool IsOpen => dialogueBox.activeSelf;
     private bool blockDialogue = false;
     private bool blockAudio = false;
+    public bool english = true;
 
   
     void Start(){
@@ -121,5 +122,9 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
 
     public void SetVolume(System.Single newVolume) {
         volume = newVolume;
+    }
+
+    public void SetEnglish(System.Int32 value) {
+        english = value == 0;
     }
 }

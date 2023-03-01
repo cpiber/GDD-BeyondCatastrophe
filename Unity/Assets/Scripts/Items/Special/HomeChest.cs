@@ -28,8 +28,8 @@ public class HomeChest : PermanentItem
             InventoryManager.the().AddSlotItem(item, InventoryManager.the().GetAllItemSlotsChestFirst());
         }
 
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"Mein ganzes Zeug ist weg. Wieso mussten sie mich ausrauben...",
                                           "Zumindest habe ich noch einen kleine Vorrat damit ich nicht verhungere."};

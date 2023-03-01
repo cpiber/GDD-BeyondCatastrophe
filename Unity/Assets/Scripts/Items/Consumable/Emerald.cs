@@ -9,7 +9,7 @@ public class Emerald : PermanentItem
 
     private string audio_path = null;
     public override void UseItem () {
-        if(false){
+        if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"Irgendwie fühle ich mich nicht so besonders...",
                                           "Vielleicht ist dieser Smaragd radioaktiv...",

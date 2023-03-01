@@ -22,7 +22,7 @@ public class RaftBuilder : PermanentItem
             PlayerController.the().UnregisterCollectItem(this);
             Destroy(this);
         } else {
-           if(false){
+           if(!DialogueSystem.the().english){
                 this.audio_path = "Audio/DE/";
                 this.dialogue = new string[] {"Ich brauche wohl noch ein paar mehr Baumstämme, um das Floß zu bauen..."};
             } else {

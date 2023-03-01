@@ -83,8 +83,8 @@ public class ShipRepair : PermanentItem
     private void dialogFirstUse()
     {
         Debug.Log("IN dialogFirstUse");
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             audio_path = "Audio/DE/";
             dialogue = new string[] {"Mit diesem Schiff könnte ich von der Insel flüchten!",
                                      "Zuerst müsste ich es aber reparieren...",
@@ -109,8 +109,8 @@ public class ShipRepair : PermanentItem
 
     private void dialogBothFound()
     {
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             audio_path = "Audio/DE/";
             dialogue = new string[] {"10 Holzstämme sollten reichen, um das Schiff wieder intakt zu bringen!"};
         } else {
@@ -125,8 +125,8 @@ public class ShipRepair : PermanentItem
 
     private void dialogMissingIsland()
     {
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             audio_path = "Audio/DE/";
             
             dialogue = new string[] {"Etwas auf diesem Plan fehlt...!",
@@ -147,8 +147,8 @@ public class ShipRepair : PermanentItem
     
     private void dialogShipBluePrintsMissing()
     {
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             audio_path = "Audio/DE/";
             
             dialogue = new string[] {"Ich muss die Baupläne des Schiffes finden!",
@@ -177,8 +177,8 @@ public class ShipRepair : PermanentItem
 
     private void dialogRepairShip()
     {
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             audio_path = "Audio/DE/";
             
             dialogue = new string[] {"Wow! Ich konnte das Schiff reparieren!",
@@ -200,8 +200,8 @@ public class ShipRepair : PermanentItem
     [ContextMenu("Start End Dialogue")]
     private void dialogEnd()
     {
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             audio_path = "Audio/DE/";
             
             dialogue = new string[] {"Lass uns von hier abhauen!"};

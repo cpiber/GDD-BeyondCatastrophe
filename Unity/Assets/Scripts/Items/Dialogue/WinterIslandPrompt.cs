@@ -9,7 +9,7 @@ public class WinterIslandPrompt : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.tag == "Player") {
-           if(false){
+           if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"Der Telefonmast! Ich muss da unten hin und ihn mit Strom versorgen.",
                                           "Vielleicht kann ich sogar irgendwo Solarpanels für mich selbst auch finden."};

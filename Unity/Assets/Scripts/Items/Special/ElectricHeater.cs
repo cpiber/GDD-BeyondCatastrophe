@@ -32,7 +32,7 @@ public class ElectricHeater : Heater
         
         if (solar == null) {
 
-            if(false){
+            if(!DialogueSystem.the().english){
                 this.audio_path = "Audio/DE/";
                 this.dialogue = new string[] {"Die Energie ist bald aus, vielleicht kann ich irgendwo Solarpanels finden."};
             } else {
@@ -45,7 +45,7 @@ public class ElectricHeater : Heater
         } else {
             if (Mathf.Approximately(ElectricHeaterProvider.the().Energy, 0)) {
 
-                if(false){
+                if(!DialogueSystem.the().english){
                     this.audio_path = "Audio/DE/";
                     this.dialogue = new string[] {"Endlich ist es wieder warm..."};
                 } else {
@@ -57,7 +57,7 @@ public class ElectricHeater : Heater
                 DialogueSystem.the().StartDialogue(dialogue, clips);
             } else {
 
-                if(false){
+                if(!DialogueSystem.the().english){
                     this.audio_path = "Audio/DE/";
                     this.dialogue = new string[] {"Das sollte für eine weile reichen."};
                 } else {

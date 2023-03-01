@@ -10,8 +10,8 @@ public class Computer : PermanentItem
     private string audio_path = null;
     public override void UseItem () {
 
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"Ich habe keine möglichkeit zu kommunizieren weil die Stromversorgung zusammengebrochen ist.",
                                           "Langsam mache ich mir sorgen das es meiner Familie nicht gut geht. Ich sollte sie finden.",

@@ -12,8 +12,8 @@ public class Bed : PermanentItem
     private string audio_path = null;
     public override void UseItem () {
 
-        // TODO: check for language flag
-        if(false){
+        
+        if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"Was mach ich da, ich bin noch nichtmal wirklich müde."};
         } else {
