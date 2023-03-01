@@ -115,11 +115,11 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
         }
     }
 
-    public void SetBlockDialogue() {
-        blockDialogue = !blockDialogue;
+    public void SetBlockDialogue(bool value) {
+        blockDialogue = !value;
     }
-    public void SetBlockAudio() {
-        blockAudio = !blockAudio;
+    public void SetBlockAudio(bool value) {
+        blockAudio = !value;
     }
 
     public void SetVolume(System.Single newVolume) {
