@@ -42,9 +42,9 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
 
 
     void CompleteDialogue() {
-        if (!dialogueBox.activeSelf) return;
+        if (!dialogueBox.activeSelf && !blockDialogue) return;
         StopAllCoroutines();
-        if (textComponent.text == lines[lineIndex]){
+        if (textComponent.text == lines[lineIndex] || blockDialogue){
             NextLine();
         } else {
             textComponent.text = lines[lineIndex];
@@ -91,14 +91,11 @@ public class DialogueSystem : GenericSingleton<DialogueSystem>
     IEnumerator TypeLine(){
         if (!blockAudio) {
             PlayAudio();
-        } 
-        if (!blockDialogue) {
-            dialogueBox.SetActive(true);
-
-            for (int i = 0; i < lines[lineIndex].Length; i++){
-                textComponent.text += lines[lineIndex][i];
-                yield return new WaitForSeconds(speed);
-            }
+        }
+        dialogueBox.SetActive(!blockDialogue);
+        for (int i = 0; i < lines[lineIndex].Length; i++){
+            textComponent.text += lines[lineIndex][i];
+            yield return new WaitForSeconds(speed);
         }
     }
 
