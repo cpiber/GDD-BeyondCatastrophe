@@ -1,0 +1,642 @@
+\documentclass[a4paper]{scrreprt}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+%\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{tocloft}
+\usepackage{eurosym}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage[backend=biber,
+            style=authoryear,
+            minalphanames=3, maxalphanames=4,
+            natbib=true,
+            labeldate=false,
+            maxbibnames=20]{biblatex} % to generate the bibliography
+\addbibresource{main.bib}
+
+\title{Beyond Catastrophe}
+\subtitle{Hollow Knight but as top-down survival mixed with DayZ aspects}
+\author{Mario Comanici, Niklas Lorber, Lukas Mathä,\\ Constantin Piber, Jan-Heliodor Tscherko}
+\titlehead{\centering\includegraphics[width=6cm]{cloudy_ocean.png}}
+\parindent 0pt
+\parskip 8pt
+\setlength\cftparskip{-2pt}
+\setlength\cftbeforesecskip{1pt}
+
+
+\begin{document}
+\maketitle
+
+\null\vfill
+Game Design Document Template\\ 
+Version v1.1, Nov 2016\\
+Version v1.2, Dec 2017\\
+Version v1.3, Nov 2019\\
+Version v1.4, Mar 2020\\
+Copyright 2017-2020 - Johanna Pirker \#tugamedev\\
+\newpage
+
+\begin{abstract}
+Due to climate changes and dramatic disasters in the world's environment,
+nations started to attack each other to ensure essential resources. This war
+nearly destroyed the world as we know it, and new challenges and catastrophes
+arose. Before the war began, you moved away from
+civilization to calm your stressful life as a software developer and would never
+think this would save your life. Due to this fortunate circumstance, you are one
+of the last persons who survived the war on resources. But now this fact
+revenges since you got to gather food, fuel for your generator, and most of all
+-- find your family! 
+\end{abstract}
+
+\tableofcontents
+
+% ______________________
+% chapter Overview
+% ______________________
+\chapter{Overview}
+
+\section{Main Concept}
+The main concept of the game is a world, destroyed by war and climate catastrophes where the player starts in a desolated region with low health and resources. The island he lives on is not affected by the war but the effects of climate change are very present. His main goal is to progress through the world and explore it to find resources that keep him alive while also trying to find his family. Resources not only have to be found but sometimes they have to be combined and the knowledge on how to do so has to be appropriated. New regions are unlocked by tools and knowledge gathered along the way.
+
+\section{Unique Selling Point}
+Exploring a turbulent world full of little secrets, dangerous objects, and
+heavy weather conditions while trying to survive in order to find your family.
+
+
+% ______________________
+% chapter References
+% ______________________
+
+\chapter{References} 
+\begin{itemize}
+    % \item \cite{metroid}
+    \item \cite{frostpunk}:\newline
+    Similarly to our game, Frostpunk plays in a post-apocalyptic world. There, the world is frozen over and actively cooling down, with the player having to lead the town to survive. The story is pushed on mostly based on multiple-choice decisions, which drastically alter the endings. In our game, we incorporate both extremes, i.e. the summer is extremely hot and the winter cold. The story is driven mostly by gameplay-integrated decisions, like the order in which to explore/unlock regions and how the resources are allocated.
+    % \item A few other survivors
+    \item \cite{dayz}:\newline 
+    Day-Z is also a game that focuses very strongly on the survival aspect. You have to constantly manage your resources and if you make the wrong decisions, it can mean the death of the player. Our game similarly tries to focus on the survival aspect, but also puts a lot of emphasis on the story-line. In addition, the player moves in a 2D world and must fight through different seasons, which influence the course of the game. Another difference is that, compared to Day-Z, beyond catastrophe is only playable as a single player and has to rely on an exciting story to ensure long-term fun. In the end, our game can also be won and there is an end to the story, whereas in Day-Z you can play as long as you want, or until you are killed (which can happen very quickly). 
+    \item \cite{bindingofisaac}:\newline
+    The Binding of Isaac is a game that relies on 2D visuals and takes a top-down camera approach. In the game, the goal is to finish one level after another. You have to search through rooms and destroy all the enemies. As soon as you die, you have to start all over again. Each level is more difficult than the previous one. The goal is to defeat a boss, which means that you win the game. During the game you can find random items and use them. Similarities between Beyond Catastrophe and The Binding of Isaac can be found in the camera perspective, the 2D look and the dark level design. However, the games are fundamentally different. While the Binding of Isaac focuses on a classic level-based game experience, our game wants to focus more on an open-world approach. It's also supposed to be trickier and the story is much more pronounced. Another difference is that the binding of Isaac mainly relies on combat to make the game exciting, we want to keep the tension high with good story and strategic survival.
+    % \item \cite{rust}
+    % \item \cite{scum}
+    \item \cite{hollowknight}:\newline 
+    Hollow Knight is a Metroidvania game where the player controls the character through a fallen kingdom. While playing the world is explored, new abilities are unlocked and new areas can be entered while also encountering friendly and hostile characters along the way. Some of those aspects can be found in our game as well. The ability to learn new skills with the goal of unlocking new regions as well as encountering hostile and friendly characters is mirrored in our idea. Hollow Knight gives a dark but also charming feeling of atmosphere while playing, as the world you explore is a fallen kingdom, whereas we try to achieve the same effect in a world rather untouched but with environmental catastrophes, taking the fantasy aspect from hollow knight and converting it into a "real-life" scenario.
+    \item \cite{terraria}:\newline
+    Terraria is a 2D game where the player's goal is defined by exploring the world and crafting things to unlock areas and boss-fights. Starting out in a random area with little health and mana the player has to find resources to increase his stats. Not all resources and items can be found everywhere so the exploration aspect is strongly encouraged by that. Also there is a day/night cycle with different difficulties depending on the current time. We want to adapt those ideas to our game with different opportunities/difficulties depending on daytime but also strongly depending on the seasons. Also not everything can be upgraded/achieved in every region but one has to explore the world to progress in the story. The player starts with low stats regarding health/stamina/resources and then with that can start exploring and progressing.
+    \item \cite{monstersexpedition}:\newline
+    Though "A monster's expedition" is generally a puzzle game, there are some similarities in the world building. In this game, the player permanently alters the world by solving puzzles, thus unlocking new content. The player is given freedom in the order in which to play puzzles, and can freely move through solved puzzles. Our game will feature a similar mechanic, where instead of puzzles, other in-game actions lead to the "expansion" of the available world.
+\end{itemize}
+% ______________________
+% chapter Specification and Market Analysis 
+% ______________________
+
+\chapter{Specification}
+
+\section{Player(s) / Target-group}
+People interested in logistic games, climate change, story based games and post-apocalyptic scenarios.
+The game will require the player to also strategize and make decisions.
+
+\section{Genre}
+Its a combination of adventure, role-playing, logistics and strategy. 
+
+\section{Art Style}
+The art style we will use is pixel art.
+\begin{figure}
+\centering
+\includegraphics[width=0.3\textwidth]{Screenshot from 2022-11-13 14-37-51.png}
+\caption{\label{fig:art} Art example \citep{artexample}}
+\end{figure}
+
+\section{Forms of Engagement}
+%thinking of Hunicke's 8 kinds of "fun" - what would you like to focus on?\\
+% (1. Sensation - Game as sense-pleasure 
+% 2. Fantasy - Game as make-believe
+% 3. Narrative - Game as drama
+% 4. Challenge - Game as obstacle course
+% 5. Fellowship -  Game as social framework
+% 6. Discovery - Game as uncharted territory 
+% 7. Expression - Game as self-discovery 
+% 8. Submission - Game as pastime)
+
+
+\textbf{Narrative - Game as drama}\\[4pt]
+While exploring the world a story is told. You encounter the dangers of climate change
+and the personal story of the main character searching for his family in this hazardous world.
+
+\textbf{Discovery - Game as uncharted territory}\\[4pt]
+Discovering new levels full of dangers and destruction as consequence of climate change. Collecting, managing and using items gathered along the way as part of discovering new possibilities the game offers.
+
+% ______________________
+% chapter Game Details
+% ______________________
+
+
+\chapter{Gameplay and Game Setting}
+
+\section{Mood and Emotions}
+The game should make you think about the consequences of climate change and war. The overall emotions throughout the game should be oppressive in regards of the players isolation with a small touch of some joyful moments of hope, especially towards the end.
+
+The mood of the game starts as rather dark, with the art-style lightening up as the game progresses and you get closer to finding your family.
+
+\section{Story}
+After the war, the player moves to a isolated island to work remotely from there. Most resources are already there. Those resources can be combined and used to keep yourself alive and unlock new regions by achieving new technologies. His main goal is to escape the island to find them.
+
+Resources are enough for playing the main story, but not in excess.
+
+The backstory is not explicitly told, rather through the ambiance of the game and art.
+
+\section{World/Environment}
+It starts out as a desolate, barren land. The player then transforms the world immediately around him. The globe mirrors Earth in continents and climate, but after being ravaged by the consequences of climate change.
+
+Objects in the world are aligned with a grid.
+
+\section{Objects in the Game}
+\begin{itemize}
+    \item Environmental (visual) elements (trees, stones, etc)
+    \item Objects for progress (tools, etc)
+    \item People (daugther)
+    \item Consumables (food, water, etc)
+    \item Obstacles (walls, fences, water, etc)
+    \item Miscellaneous Items (clothing sets, etc)
+\end{itemize}
+
+\section{Characters in the Game}
+\begin{itemize}
+    \item Player
+    \item The player's daughter
+\end{itemize}
+
+\section{Main Objective}
+The main objective of the game is to keep yourself alive while exploring the world to reunite with your family.
+
+\section{Core Mechanics}
+The game is open-world, the player can move freely (no grid). They need to manage their health and stamina. If the player does not take care of themselves, they receive negative status effects and might die.
+% Types of status effects?
+
+In this world, game-related objects (for progress) can be acquired. Methods of acquiring include: Finding the object, destroying objects, building the objects.
+
+Time moves in a fixed manner, and the player can skip time (sleep). During the night, if not sleeping, the range of vision is drastically reduced. The world changes as the seasons pass on, enabling new opportunities. As night and day are more extreme due to climate change (night cold, day hot), the player might prefer a play-style based on season (due to climate change, the seasons are also more extreme -- the changing seasons fall and spring are very short).
+% Dynamic difficulty
+
+If status effects are not taken care of, the player might be forced to spend time in unfavorable environments. To combat status effects, e.g. hunger, the player has slots and can bring items.
+% Weight of items...
+
+When the player dies, they must start over.
+
+\section{Controls PC}
+\begin{itemize}
+    \item WASD/Arrow-keys: movement
+    \item I/M/TAB open: inventory
+    \item E: use selected (equipped) item
+    \item Q: collect item or interact with item
+    \item 1/2/3: change equipped item slot
+    \item ENTER: dialogue progress
+    \item P: open menu
+    \item Mouse: interact with inventory items    
+\end{itemize}
+
+\section{Controls Controller}
+\begin{itemize}
+    \item Left Joystick: movement
+    \item Start: open inventory
+    \item Button West: use selected (equipped) item
+    \item Button North: collect item or interact with item
+    \item Left/Right Shoulder: cycle through equipped item slots
+    \item Button South: dialogue progress/confirm
+    \item Select: menu
+\end{itemize}
+
+\section{Wireframe gameplay}
+\label{sec:gameplay}
+
+Spawnpoint: Homebase/Home 
+
+Start setup:
+\begin{itemize}
+    \item Generator which runs with gas (heating, cooling is all done with electricity) => with solar energy, you can use already existing systems
+    \item Start consumables, clothing
+    \item Pre-game: NPCs stole most useful stuff except electronics and hidden reserves
+\end{itemize}
+
+General mechanics:
+\begin{itemize}
+    \item Heating
+    \begin{itemize}
+        \item If one doesn't have according clothes for the season/night, the player will get damage
+        \item Has an oil heater, but not sustainable (not enough fuel -- time limit)
+        \item If the player doesn't find alternative heating methods or electricity generation, they will freeze
+    \end{itemize}
+    \item Instruction parts for rescuing 
+    \item Unlock regions
+    \item Mini quests with some story elements, mostly exploring and gathering resources
+    \item Random dialogues (flower bed, couch, ...) to push story
+    \item Using the raft/boat starts a predetermined cut scene where the boat goes to its destination
+\end{itemize}
+
+\pagebreak
+\section{Story + Level design}
+
+This chapter contains details about the gameplay and story. Do NOT read this chapter if you don't want to be spoilered before playing the game yourself.
+
+\subsection{Home-base}
+
+This is the spawnpoint. See also gameplay \ref{sec:gameplay}.
+
+Game begins with a scripted scene.
+The character starts inside the basement and walks to a computer (character is a programmer).
+
+A dialogue (monologue) starts: ``I don't have any communication since the electric grid broke down. I'm worried that my family isn't okay. I have to go and find them. But this isn't as easy as it used to be, winters and nights are very cold, summers are too hot, I don't have any electricity. I have to be careful with my resources on my journey. God damn climate crisis...''
+
+After walking to the chest: ``All my stuff is gone. Why did they have to rob me now... At least I still got some stashes, so I won't starve.''
+
+Player: Has the possibility to walk around his room and explore the environment.
+
+Upon leaving the room he sees the telecommunication mast on the right of the screen (island). The idea is to use the raft to get there.
+
+This is introduced by another short scene with dialogue: "The phone mast! I need to go over there and give it some electricity. Maybe I can even get some solar panels for myself..."
+
+Options to go:
+\begin{itemize}
+    \item Island with telecommunication mast
+    \item Forest on main island
+    \item Graveyard on main island
+    \item Harbor on main island
+    \item Family island
+    \item Destiny island
+\end{itemize}
+
+\rule{\textwidth}{0.1pt}
+
+The house has a gas generator with limited fuel. It runs out in 2 in-game days.
+Fuel availability can be checked by interacting with the object.
+
+It also has electric heating. This requires at least 1 solar panel to be present in the house.
+
+
+\subsection{Telecommunication Island}
+
+The island housing the telecommunication mast can be reached with a small raft from the main island.
+
+In the middle of the island is a communications mast.
+Slightly behind the mast are some solar panels (3).
+
+Interacting with the mast calls the character's family. A dialogue pops up: "ring ring ring. No one picks up."
+
+Options to go:
+\begin{itemize}
+    \item Back to main island
+\end{itemize}
+
+\subsection{Port}
+\label{sec:port}
+
+In the port, there is a big ship docked. It is broken however and requires fixing by the player. Once it is repaired, this serves as the get-away method to return to civilization and to the player's family.
+
+Inside the port house, the player can find one out of the two plans to repair the big ship. This is required for the end game \ref{sec:endgame}.
+
+The boat can be repaired with 10 wooden logs and the two plans.
+
+\subsection{Forrest}
+\label{sec:forrest}
+
+Coming into this area, the player can quickly find an axe, stuck in a tree.
+
+As the character is a software engineer and not a craftsman, he/she cannot properly take down trees. The axe can only be used to knock down small trees.
+
+
+The acquired wood can be used in the upper area to build a raft or complete the ship.
+
+\subsection{Family Island}
+\label{sec:familyIsland}
+On the top-left corner of the main island there is a place to build a raft with four wooden logs. This then takes you to Family Island where you find your daughter. She follows you from now and you can not end the game before picking her up.
+
+Options to go:
+\begin{itemize}
+    \item Back to main island
+\end{itemize}
+
+\subsection{Graveyard}
+\label{sec:graveyard}
+The graveyard is at the top-right corner of the main island. There are some apples and a a grave that tells a story when interacting with it.
+Behind the graveyard to the left there is a raft that takes you to Destiny Island \ref{sec:destinyIsland}.
+
+\subsection{Destiny Island}
+\label{sec:destinyIsland}
+This island contains a hammer that lets you smash rocks on the left upper path to find the second ship-plan. Also there is a emerald that kills you on interaction. The right path contains a mushroom that kills you when eaten. Additionally on this island one can find more food and also armor for cold winter nights. 
+
+Options to go:
+\begin{itemize}
+    \item Back to main island
+\end{itemize}
+
+\section{End Game}
+\label{sec:endgame}
+
+After completing some necessary regions, the player can finally use the big ship in the harbour to leave the island together with the daughter to reunite with the whole family. After the ship leaves the end-screen is presented with a message thanking the player for playing Beyond Catastrophe.
+
+
+\section{More}
+\label{sec:more}
+Not all dialogues and all possible options of interaction were listed in this chapter. 
+  
+% ______________________
+% chapter Front End
+% ______________________
+
+
+\chapter{Front End}
+
+\section{Start Screen}
+There will be three buttons (Start, Settings, Credits). When the player presses start, the game starts.
+
+\section{Menus}
+\begin{itemize}
+    \item Accessibility Settings
+    \begin{itemize}
+        \item Sound, Screen reader
+        \item Subtitles
+        \item Language (German/English) (Dialogue only)
+        \item Keyboard/Controller rebinding
+    \end{itemize}
+\end{itemize}
+%Gameplay?
+
+\section{End Screen}
+If you die you get to the end screen. On this screen below will be a button to go back to the Start screen. There will be no re-spawning.
+
+If the player died, a slightly different message is shown from when they won.
+
+% ______________________
+% chapter Technology
+% ______________________
+
+
+\chapter{Technology}
+
+\section{Target Systems}
+The game is designed mainly for PC, to be run in a browser. There will also be a possibility to play an offline version.
+
+\section{Hardware}
+No specific hardware is required, any modern PC should be able to run it (if it can run a browser).
+
+Either a keyboard or a controller is required. Keyboard is recommended.
+
+\section{Development Systems/Tools}
+For game development, we used Unity as the game engine. Inkscape, Pixel Mash, and Gimp were used for art (drawing, modifying). The webpage \url{https://freetts.com} was used for text-to-speech.
+
+% ______________________
+% chapter Topics
+% ______________________
+
+
+\chapter{Topic and Inclusion}
+
+\section{Main Theme}
+The whole game and story build on a climate catastrophe. Hence, the player will learn that this is a big problem that will change their lives forever. Additionally, we plan to change the seasons inside the game to bring new gameplay mechanics. The player will need some special suit or tools to survive these tremendous temperature changes.
+
+\section{Inclusion}
+
+\subsection{Diversity}
+The players gender is not mentioned and is to be assumed as gender neutral.
+
+\subsection{Accessibility}
+
+The following guidelines for our project are built on the \cite{accessibilityList} (basic list).
+
+\begin{itemize}
+    \item Motor
+    \begin{itemize}
+        \item As user it is possible to remap the function keys
+        \item The input method for the user interface is the same as for the gameplay
+        \item Reduce the controls to a minimum and optimise them in terms of simplicity
+    \end{itemize}
+    \item Cognitive
+    \begin{itemize}
+        \item Playing the game takes the user only one to two clicks
+        \item Text prompts will wait for input to allow the user to progress at their own pace
+        \item Overall no flickering images and repetitive patterns are used.
+    \end{itemize}
+    \item Vision
+    \begin{itemize} 
+        \item The game features an easily readable font style, font size, text formatting, and language
+        \item High contrast ensures to differ between text, UI, and background
+        \item A text-to-speech component is incorporated for visual elements
+    \end{itemize}
+    \item Hearing
+    \begin{itemize}
+        \item Subtitles are provided for all speech
+        \item There are separate volume controls for speech, and music.
+        \item No information is conveyed only by sound
+        \item If any subtitles / captions are used, present them in a clear, easy to read way
+    \end{itemize}
+    \item Speech
+    \begin{itemize}
+        \item No speech input is required
+    \end{itemize}
+    \item General
+    \begin{itemize}
+        \item Details of accessibility features are provided in-game and on the game page
+        \item We ask for feedback on accessibility
+        \item The game supports two languages (English and German)
+    \end{itemize}
+\end{itemize}
+
+%\subsection{Humanity}
+
+% ______________________
+% chapter Marketing
+% ______________________
+
+
+\chapter{Marketing and Publishing Strategy}
+To increase sales, we contact YouTubers and Twitch streamers to promote the game. Presenting the game at Gaming events, like GameDevDays or VulkanLan will also be a big part of gaining attention and interacting with customers.
+
+Since "Cloud Fish" is a little indie studio run by only 5 poor students, big publicity events will not be possible. We instead rely on small YouTubers wanting to be first to present novel games, as well as word-of-mouth.
+
+Depending on schedule, we might also stream some of the progress of the development to attract some interest.
+
+% ______________________
+% chapter Timeline
+% ______________________
+
+
+\chapter{Timeline and Cost Estimation}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{0.9\textwidth}{|l|X|l|}
+\hline
+Milestone & Description & Date \\\hline
+& Official Start Date & 21.11.22 \\
+1 & Setup Git \& Unity \quad {\ttfamily git setup -\--all} & 22.11.22 \\
+2 & First framework \newline {\small player controller, start point, basic progression system, inventory, placeholder sprites} & 01.12.22 \\
+3 & Prototype \newline {\small open world, basic item handling, first progress scene} & 16.12.22 \\
+4 & Story \newline {\small flesh out story line, complete world} & 27.01.23 \\
+5 & Polishing \newline {\small final sprites, accessibility options, balancing} & 10.02.23 \\
+6 & Play testing \& Bug fixing & 03.03.23 \\
+& End of Project & 03.03.23 \\
+\hline
+\end{tabularx}
+\caption{\label{tab:schedule}Estimated Schedule.}
+\end{table}
+
+\section{Time Estimation}
+
+We expect the following hours for each milestone:
+
+\begin{enumerate}
+    \item 3 hours per person: Git and Unity setup
+    \item First framework \\
+    \begin{tabularx}{\linewidth}{lX}
+        20 hours / 2 persons & planning \& implementing scene loading and data sharing \\
+        20 hours / 2 persons & setup a starting point/test room \\
+        10 hours / 1 person & player controller \\
+        10 hours / 1 person & searching for starter/placeholder sprites \\
+        15 hours / 2 persons & rough layout for starter room and menus \\
+        10 hours / 1 person & setup basic inventory \\
+        \cline{2-2} & total: 140 hours \\
+    \end{tabularx}
+    \item Prototype \\
+    \begin{tabularx}{\linewidth}{lX}
+        30 hours / 2 persons & world system with sections including temperature system \\
+        10 hours / 1 person & item handling and integration \\
+        10 hours / 1 person & implement first progress scene using world system \\
+        \cline{2-2} & total: 80 hours \\
+    \end{tabularx}
+    \item Story \\
+    \begin{tabularx}{\linewidth}{lX}
+        10 hours / 3 persons & detailed story line \\
+        15 hours / 5 persons & implement all game scenes individually \\
+        \cline{2-2} & total: 105 hours \\
+    \end{tabularx}
+    \item Polishing \\
+    \begin{tabularx}{\linewidth}{lX}
+        10 hours / 3 persons & drawing main sprites \\
+        20 hours / 2 persons & find and integrate final assets \\
+        30 hours / 2 persons & accessibility options \\
+        10 hours / 5 persons & playing the game, balancing \\
+        \cline{2-2} & total: 200 hours \\
+    \end{tabularx}
+    \item Play testing, bug fixing \\
+    \begin{tabularx}{\linewidth}{lX}
+        10 hours / 5 persons & playing the game, provoking bugs \\
+        10 hours / 1 person & compiling feedback \\
+        20 hours / 5 persons & fixing bugs \\
+        \cline{2-2} & total: 160 hours \\
+    \end{tabularx}
+\end{enumerate}
+
+All total: 685 hours
+
+\section{Cost Estimation}
+
+As a baseline, we assume an hourly rate of $100$\euro.
+
+With this baseline and the hours estimated above, we estimate the costs at $68'500$\euro. We do not plan to incorporate paid assets or other third-party expenses.
+
+% ______________________
+% chapter Credits
+% ______________________
+\section{Actual Time}
+
+While working, every member of Cloud Fish was advised to track the time. This includes all of the development/planing phases. The project took about 310 hours in total leading to less than half of the time that was originally planned.
+
+% ______________________
+% chapter Credits
+% ______________________
+
+
+\chapter{Full Walk-through}
+
+This chapter will contain a full walk-through of the game.
+
+\section{Disclaimer}
+
+This chapter contains a full walk-through of the game. Do NOT read this if you don't want to be spoilered and you want to find out everything by your own.
+
+\section{Player Behaviour}
+
+The game contains all four seasons of the year that change when sleeping a few times. Also there is a day and night system. To survive keep in mind how to behave when this changes. 
+
+Nights in winter are very cold and will kill you rather fast. Either avoid the night in winter or keep a lot of apples/other foods with you to avoid dying. Additionally armor can be found that will protect you from the cold. 
+
+In the summer the day is very hot and thus you should also avoid this time or use the food technique. Keep in mind that the armor mentioned earlier will harm you when its warm because you will overheat.
+
+Spring and fall are not that harmful to you but nonetheless keep food and armor with you if possible.
+
+All of the season aspects only apply when the player is outside of his home-base because the base has optimal temperature. Fireplaces keep you warm but will harm you when it's to warm outside.
+
+To survive it is crucial to take the apples out of the chest inside the start room as there are a lot of them and they can keep you alive while searching for more food and playing the story.
+
+\section{Story}
+
+This section will contain everything that has to be done in order to complete the game.
+
+\subsection{Axe + Wooden Logs}
+
+In order to repair a ship that brings you away from the island one first needs to find the axe. This axe can be found left from your home-base/spawn-point inside of the forest at the log on the right sight of the fireplace.
+With this axe small trees can be chopped down in order to gather logs for the ship where 10 logs are needed. Also to build a small raft to go to another island you need to find 4 more logs. All of the small trees can be found on the main island.
+
+\subsection{Build Raft + Find Daughter}
+
+When gathering the wood you finally arrive at a place where you can build a small raft. This place is at the top-left corner of the map (when starting from the home-base). After crafting the raft you can go to the new island with this and pick up your daughter.
+
+To build the raft, interact with the wooden post next to the water plank.
+
+\subsection{Hammer + Ship-Blueprint}
+
+Go to the top-right corner of the main island to use the raft taking you to another island. On the left side of this island (above the wheatfield) you can find a hammer that allows you to crush stones. Go up along the island, taking the left path, and smash the rocks blocking your way to find the ship-blueprint (1/2).
+Note that if you interact with the green emerald you will die.
+If you go the right path there is a mushroom that when eaten also kills you.
+
+\subsection{Second Ship-Blueprint}
+
+At the harbor where the ship is (bottom to bottom-left of the home-base) the second ship-blueprint can be found inside of the little house.
+
+\subsection{Finishing the game}
+
+If you have 10 wooden logs, two ship-blueprints and your daughter you can interact with the ship to leave the island and finish the game.
+
+\subsection{Additional Elements}
+
+Many items can be interacted with that tell the story and help you understand what happened and what you can/should do.
+\bigskip
+
+Food can be found lying around the map.
+
+One part of the armor is right in front of your house. The other two parts can be found on the island that can be reached at the top-right end of the main island.
+
+
+
+% ______________________
+% chapter Credits
+% ______________________
+
+
+\chapter{Team and Credits}
+
+\begin{tabularx}{0.9\textwidth}{lX}
+    Project Management: & Mario Comanici, Constantin Piber \\
+    Programming: & Mario Comanici, Niklas Lorber, Lukas Mathä, Constantin Piber, Jan-Heliodor Tscherko \\
+    Art: & Jan-Heliodor Tscherko, Constantin Piber \\
+    Design: & Jan-Heliodor Tscherko, Niklas Lorber \\
+    Story \& Layout: & Mario Comanici, Lukas Mathä, Constantin Piber \\
+    Sound: & Mario Comanici  \\
+\end{tabularx}
+
+\printbibliography{}
+
+\end{document}
