@@ -23,6 +23,7 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
 
     [SerializeField] float time = 0;
     [SerializeField] DayNightParams dayNightParams = new DayNightParams(5 * 60, 0.3f, 0.08f);
+    [SerializeField] DayNightParams dayNightParamsForCutscene = new DayNightParams(5 * 60, 0.3f, 0.08f);
     [SerializeField] [Range(0, 1)] float minBrightness = 0.2f;
     [SerializeField] float fadeTimeFactor = 0.5f;
     public float MinBrightness => minBrightness;
@@ -125,6 +126,12 @@ public class DayNightSystem : GenericSingleton<DayNightSystem>
     }
     public void AdvanceToDawn() {
         AdvanceToTimeInDay(dayNightParams.darknessPercent / 2 * (float) dayNightParams.secondsPerDay);
+    }
+
+    public void SetCutscene() {
+        dayNightParams = dayNightParamsForCutscene;
+        minBrightness = 0.1f;
+        ComputeCurve();
     }
 
 #if UNITY_EDITOR

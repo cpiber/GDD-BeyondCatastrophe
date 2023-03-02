@@ -14,7 +14,7 @@ public class TemperatureSystem : GenericSingleton<TemperatureSystem>
     [SerializeField] [Min(0)] float easingMultiplier = 2f;
 
     // TODO this should consider if we're in a heated room -> add colliders and heat sources
-    public float Temperature => player.CurrentRoom != null ? player.CurrentRoom.Heating : OutsideTemperature;
+    public float Temperature => player?.CurrentRoom != null ? player.CurrentRoom.Heating : OutsideTemperature;
     public float OutsideTemperature => temperatureCurve.Evaluate(DayNightSystem.the().Time);
 
     [SerializeField] private AnimationCurve temperatureCurve = null;

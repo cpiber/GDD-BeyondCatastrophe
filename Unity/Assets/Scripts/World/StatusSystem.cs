@@ -49,6 +49,7 @@ public class StatusSystem : GenericSingleton<StatusSystem>
     public float TemperatureBuffs {
         get {
             float buff = 0;
+            if (InventoryManager.the() == null) return buff;
             foreach (var it in InventoryManager.the().GetArmorItems()) {
                 Debug.Assert(it.IsArmor(), "Expected armor here");
                 if (it is EmptyItem) continue;

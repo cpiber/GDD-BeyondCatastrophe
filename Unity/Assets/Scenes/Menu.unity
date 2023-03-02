@@ -2130,7 +2130,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!224 &749729673
 RectTransform:
@@ -2147,8 +2147,8 @@ RectTransform:
   - {fileID: 1266161228}
   - {fileID: 1793758415}
   - {fileID: 1241977276}
-  - {fileID: 1003090641}
   - {fileID: 1098835751}
+  - {fileID: 1003090641}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2180,14 +2180,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003090640}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6309599118299688668}
   m_Father: {fileID: 749729673}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2364,7 +2364,7 @@ RectTransform:
   - {fileID: 1865988932}
   - {fileID: 1500404989}
   m_Father: {fileID: 749729673}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2666,7 +2666,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266161227}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4214,6 +4214,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quitButton: {fileID: 1477557823}
+  mainScene: Assets/Scenes/MainGameScene.unity
+  pointsToFocus:
+  - Graveyard
+  - Forrest
+  - Port
+  - Sunflowers
+  - Emerald
+  daysPerPoint: 3
+  cameraSpeed: 5
 --- !u!1 &1865988931
 GameObject:
   m_ObjectHideFlags: 0
@@ -4658,7 +4667,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -14192,7 +14201,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 20
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -14264,7 +14273,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
