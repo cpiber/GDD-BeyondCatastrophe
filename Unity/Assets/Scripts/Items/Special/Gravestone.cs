@@ -13,10 +13,10 @@ public class Gravestone : PermanentItem
         
         if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
-            this.dialogue = new string[] {"Ich frage mich wirklich wer hier begraben ist.",
+            this.dialogue = new string[] {"Ich frage mich wirklich, wer hier begraben ist.",
                                           "Muss wohl jemand wichtiges gewesen sein bei diesem schönen Grab.",
                                           "Vielleicht hat diese Person einmal über diese Insel geherrscht? Wer weiß...",
-                                          "Na gut, ich sollte weiter machen damit ich meine Familie finde und hoffentlich ergeht es Ihnen nicht so wie dieser Person hier..."};
+                                          "Na gut, ich sollte weiter machen, damit ich meine Familie finde und hoffentlich ergeht es Ihnen nicht so wie dieser Person hier..."};
         } else {
             this.audio_path = "Audio/EN/";
             this.dialogue = new string[] {"I really wonder who lies here.",

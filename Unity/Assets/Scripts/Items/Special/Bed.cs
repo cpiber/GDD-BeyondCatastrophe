@@ -15,10 +15,10 @@ public class Bed : PermanentItem
         
         if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
-            this.dialogue = new string[] {"Was mach ich da, ich bin noch nichtmal wirklich müde."};
+            this.dialogue = new string[] {"Was mach' ich da, ich bin noch nicht mal wirklich müde."};
         } else {
             this.audio_path = "Audio/EN/";
-            this.dialogue = new string[] {"Ugh, what am I doing, I'm not even tired."};
+            this.dialogue = new string[] {"Ugh, what am I doing? I'm not even tired."};
         }
 
         this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Bed1")};

@@ -13,14 +13,14 @@ public class IndoorPlant : PermanentItem
         
         if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
-            this.dialogue = new string[] {"Es ist schwer zu glauben das Pflanzen kaum mehr wachsen...",
+            this.dialogue = new string[] {"Es ist schwer zu glauben, dass Pflanzen kaum mehr wachsen...",
                                           "Auf diese Insel zu leben ist nahezu wie ein Traum...",
-                                          "Aber ich sollte jetzt wirklich versuchen meine familie zu finden selbst wenn das bedeutet das ich hier weg muss..."};
+                                          "Aber ich sollte jetzt wirklich versuchen meine Familie zu finden, selbst wenn das bedeutet, dass ich hier wegmuss..."};
         } else {
             this.audio_path = "Audio/EN/";
-            this.dialogue = new string[] {"Its hard to believe that plants hardly grow anymore...",
+            this.dialogue = new string[] {"It's hard to believe that plants hardly grow anymore...",
                                           "Living on this island is like a dream...",
-                                          "But i should really find my family even if this means i have to leave here!"};
+                                          "But I should really find my family even if this means I have to leave here!"};
         }
 
         this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Indoorplant1"), 

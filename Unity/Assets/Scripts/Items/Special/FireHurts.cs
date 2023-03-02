@@ -24,7 +24,7 @@ public class FireHurts : MonoBehaviour
                 };
             } else {
                 audio_path = "Audio/EN/";
-                dialogue = new string[] {"Ahh, that hurts - I shouldn't go to close to the fire!"};
+                dialogue = new string[] {"Ahh, that hurts - I shouldn't go too close to the fire!"};
             }
 
             clips = new AudioClip[] { Resources.Load<AudioClip>(audio_path + "FireHurts1") };

@@ -13,7 +13,7 @@ public class Couch : PermanentItem
         
         if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
-            this.dialogue = new string[] {"Ich sollte lieber nach meiner Familie suchen anstatt hier zu sitzen..."};
+            this.dialogue = new string[] {"Ich sollte lieber nach meiner Familie suchen, anstatt hier zu sitzen..."};
         } else {
             this.audio_path = "Audio/EN/";
             this.dialogue = new string[] {"I should probably look for my family instead of sitting..."};

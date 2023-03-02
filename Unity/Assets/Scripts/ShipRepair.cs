@@ -207,7 +207,7 @@ public class ShipRepair : PermanentItem
             dialogue = new string[] {"Lass uns von hier abhauen!"};
         } else {
             audio_path = "Audio/EN/";
-            dialogue = new string[] {"Lets get away from here!"};
+            dialogue = new string[] {"Let's get away from here!"};
         }
 
         clips = new AudioClip[]

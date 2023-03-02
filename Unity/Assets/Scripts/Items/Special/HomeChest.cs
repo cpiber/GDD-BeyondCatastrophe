@@ -34,7 +34,7 @@ public class HomeChest : PermanentItem
         if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
             this.dialogue = new string[] {"Mein ganzes Zeug ist weg. Wieso mussten sie mich ausrauben...",
-                                          "Zumindest habe ich noch einen kleine Vorrat damit ich nicht verhungere."};
+                                          "Zumindest habe ich noch einen kleinen Vorrat, damit ich nicht verhungere."};
         } else {
             this.audio_path = "Audio/EN/";
             this.dialogue = new string[] {"All my stuff is gone. Why did they have to rob me now...",

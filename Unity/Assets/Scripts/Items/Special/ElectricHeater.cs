@@ -37,7 +37,7 @@ public class ElectricHeater : Heater
                 this.dialogue = new string[] {"Die Energie ist bald aus, vielleicht kann ich irgendwo Solarpanels finden."};
             } else {
                 this.audio_path = "Audio/EN/";
-                this.dialogue = new string[] {"Energy is running out, maybe I can find some solar panels."};
+                this.dialogue = new string[] {"Energy is running out; maybe I can find some solar panels."};
             }
 
             this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "Electricheater1")};

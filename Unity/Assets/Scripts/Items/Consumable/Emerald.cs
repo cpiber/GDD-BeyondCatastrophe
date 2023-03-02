@@ -16,7 +16,7 @@ public class Emerald : PermanentItem
                                           "Ich fühle mich so schwach..."};
         } else {
             this.audio_path = "Audio/EN/";
-            this.dialogue = new string[] {"Somehow I dont feel very well...",
+            this.dialogue = new string[] {"Somehow, I don't feel very well...",
                                           "Maybe this emerald is radioactive..",
                                           "I feel so weak..."};
         }

@@ -24,7 +24,7 @@ public class DaddyGreeter : PermanentItem
             this.dialogue = new string[] {"(Child) Daddy! You found me!",
                                           "...",
                                           "(You) We should leave this island. Something is coming.",
-                                          "I saw a port a bit below, maybe we can find something to escape there."};
+                                          "I saw a port a bit below. Maybe we can find something to escape there."};
         }
 
         this.clips = new AudioClip[] {Resources.Load<AudioClip>(audio_path + "DaddyGreeter1"),

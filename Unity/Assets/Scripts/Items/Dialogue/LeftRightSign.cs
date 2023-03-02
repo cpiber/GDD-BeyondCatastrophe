@@ -13,7 +13,7 @@ public class LeftRightSign : PermanentItem
         
         if(!DialogueSystem.the().english){
             this.audio_path = "Audio/DE/";
-            this.dialogue = new string[] {"Wilkommen auf Destiny Island.",
+            this.dialogue = new string[] {"Willkommen auf Destiny Island.",
                                           "Wähle deinen Weg weise und falle nicht auf Versuchungen rein... "};
         } else {
             this.audio_path = "Audio/EN/";
