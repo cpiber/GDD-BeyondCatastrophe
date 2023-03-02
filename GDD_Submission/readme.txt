@@ -52,6 +52,8 @@
 	- https://immunitys.itch.io/pixel-top-down-character
 	- https://rishikiram.itch.io/ship-pixel-sprite
 	- + Own Contribution
+	Music:
+	- https://motionarray.com/royalty-free-music/epic-rock-trailer-45586/
 	
 ----------------------------------------------------------------------------------------	
 (5) Link to build for feature on website (such as on https://gamelabgraz.com/games/)
